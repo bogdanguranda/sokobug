@@ -1,3 +1,3 @@
 sokobug
 =======
-Game made with libGDX.
+Game made with libGDX!
