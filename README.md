@@ -1,3 +1,3 @@
 sokobug
 =======
-Game made with libGDX.
+It's a 2D game made with libGDX.
