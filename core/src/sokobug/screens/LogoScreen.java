@@ -28,7 +28,8 @@ public class LogoScreen implements Screen {
 	public void render(float delta) {
 		pasedTimeCounter += delta;
 		if (pasedTimeCounter >= 2.0f) { // dupa ce au trecut 2 sec trece la Main Menu
-			game.setScreen(game.mainMenuScreen); 
+			game.setScreen(game.mainMenuScreen);
+			return;
 		}
 		
 		Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
