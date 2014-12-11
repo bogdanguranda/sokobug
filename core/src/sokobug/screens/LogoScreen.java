@@ -20,7 +20,7 @@ public class LogoScreen implements Screen {
 		game = myGame;
 		
 		batch = new SpriteBatch();
-		img = new Texture("MasterKorin.png");
+		img = new Texture("KorinCircle.png");
 		pasedTimeCounter = 0.0f;
 	}
 
