@@ -20,14 +20,14 @@ public class LogoScreen implements Screen {
 		game = myGame;
 		
 		batch = game.batch;
-		img = new Texture("KorinCircle.png");
+		img = new Texture("Logo1.png");
 		pasedTimeCounter = 0.0f;
 	}
 
 	@Override
 	public void render(float delta) {
 		pasedTimeCounter += delta;
-		if (pasedTimeCounter >= 2.0f) { // dupa ce au trecut 2 sec trece la Main Menu
+		if (pasedTimeCounter >= 5.0f) { // dupa ce au trecut 2 sec trece la Main Menu
 			game.setScreen(game.mainMenuScreen);
 			return;
 		}
