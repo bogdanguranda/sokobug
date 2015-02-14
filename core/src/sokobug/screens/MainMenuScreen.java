@@ -18,8 +18,8 @@ public class MainMenuScreen implements Screen{
 	public MainMenuScreen(Sokobug myGame) {
 		game = myGame;
 		
-		batch = new SpriteBatch();
-		font = new BitmapFont();
+		batch = game.batch;
+		font = game.font;
 		font.setColor(Color.CYAN);
 	}
 	
@@ -35,8 +35,6 @@ public class MainMenuScreen implements Screen{
 	
 	@Override
 	public void dispose() {
-		font.dispose();
-		batch.dispose();
 		
 	}
 

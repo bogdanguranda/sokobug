@@ -11,23 +11,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class LogoScreen implements Screen {
 
-	Sokobug game;
-	SpriteBatch batch;
-	Texture img;
+	private Sokobug game;
+	private Texture img;
+	private SpriteBatch batch;
 	float pasedTimeCounter;
 	
 	public LogoScreen(Sokobug myGame) {
 		game = myGame;
 		
-		batch = new SpriteBatch();
-		img = new Texture("KorinCircle.png");
+		batch = game.batch;
+		img = new Texture("Logo1.png");
 		pasedTimeCounter = 0.0f;
 	}
 
 	@Override
 	public void render(float delta) {
 		pasedTimeCounter += delta;
-		if (pasedTimeCounter >= 2.0f) { // dupa ce au trecut 2 sec trece la Main Menu
+		if (pasedTimeCounter >= 5.0f) { // dupa ce au trecut 2 sec trece la Main Menu
 			game.setScreen(game.mainMenuScreen);
 			return;
 		}
@@ -47,14 +47,12 @@ public class LogoScreen implements Screen {
 
 	@Override
 	public void hide() {
-		dispose();
-
+		
 	}
 	
 	@Override
 	public void dispose() {
 		img.dispose();
-		batch.dispose();
 	}
 	
 	@Override
