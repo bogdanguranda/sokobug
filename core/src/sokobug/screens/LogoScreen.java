@@ -27,7 +27,7 @@ public class LogoScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		pasedTimeCounter += delta;
-		if (pasedTimeCounter >= 5.0f) { // dupa ce au trecut 2 sec trece la Main Menu
+		if (pasedTimeCounter >= 2.0f) { // dupa ce au trecut 2 sec trece la Main Menu
 			game.setScreen(game.mainMenuScreen);
 			return;
 		}
