@@ -4,8 +4,10 @@ import sokobug.screens.LogoScreen;
 import sokobug.screens.MainMenuScreen;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 
 public class Sokobug extends Game {
 	public LogoScreen logoScreen;
@@ -16,8 +18,19 @@ public class Sokobug extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
 	
+	public final float VIRTUAL_WIDTH = 1366;
+	public final float VIRTUAL_HEIGHT = 768;
+	public OrthographicCamera camera;
+	public FillViewport viewport;
+	
 	@Override
 	public void create() {
+		//float ratio = (float)Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth();
+		camera = new OrthographicCamera();
+		viewport = new FillViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+		viewport.apply();
+		camera.position.set(VIRTUAL_WIDTH / 2.f, VIRTUAL_HEIGHT / 2.f, 0.f);
+		
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		
@@ -34,5 +47,5 @@ public class Sokobug extends Game {
 		font.dispose();
 		batch.dispose();
 	}
-
+	
 }

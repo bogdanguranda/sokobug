@@ -7,18 +7,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainMenuScreen implements Screen{
 
 	Sokobug game;
-    private SpriteBatch batch;
     private BitmapFont font;
 	
 	public MainMenuScreen(Sokobug myGame) {
 		game = myGame;
 		
-		batch = game.batch;
 		font = game.font;
 		font.setColor(Color.CYAN);
 	}
@@ -27,10 +24,14 @@ public class MainMenuScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
+		
+		game.camera.update();
+		game.batch.setProjectionMatrix(game.camera.combined);
+		
+		game.batch.begin();
 		String text = "MAIN MENU";
-		font.draw(batch, text, (Gdx.graphics.getWidth() / 2) - font.getBounds(text).width / 2, (Gdx.graphics.getHeight() / 2) - font.getBounds(text).height / 2);
-		batch.end();
+		font.draw(game.batch, text, (game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2, (game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
+		game.batch.end();
 	}
 	
 	@Override
@@ -41,7 +42,8 @@ public class MainMenuScreen implements Screen{
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		game.viewport.update(width, height);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override
