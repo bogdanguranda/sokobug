@@ -13,15 +13,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class LogoScreen implements Screen {
 
 	private Sokobug game;
-	private Sprite background;
+	private Sprite titleImage;
 	float pasedTimeCounter;
 	
 	public LogoScreen(Sokobug myGame) {
 		game = myGame;
 		
-		background = new Sprite(new Texture(Gdx.files.internal("Title.png")));
-		background.setPosition(0.f, 0.f);
+		titleImage = new Sprite(new Texture(Gdx.files.internal("Title.png")));
+		titleImage.setPosition(0.f, 0.f);
 		pasedTimeCounter = 0.0f;
+		
+		
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class LogoScreen implements Screen {
 		pasedTimeCounter += delta;
 		if(pasedTimeCounter <= 7.0f) {
 			game.batch.begin();
-			background.draw(game.batch);
+			titleImage.draw(game.batch);
 			game.batch.end();
 				
 	        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -61,7 +63,7 @@ public class LogoScreen implements Screen {
 	
 	@Override
 	public void dispose() {
-		background.getTexture().dispose();
+		titleImage.getTexture().dispose();
 	}
 	
 	@Override
