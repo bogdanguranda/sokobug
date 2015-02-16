@@ -18,11 +18,12 @@ public class MainMenuScreen implements Screen{
 		
 		font = game.font;
 		font.setColor(Color.CYAN);
+		
+		Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
 	}
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.camera.update();
