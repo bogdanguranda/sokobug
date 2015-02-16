@@ -32,15 +32,20 @@ public class LogoScreen implements Screen {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
-		game.batch.begin();
-		background.draw(game.batch);
-		game.batch.end();
+		if(pasedTimeCounter <= 7.0f) {
+			game.batch.begin();
+			background.draw(game.batch);
+			game.batch.end();
+			
+			pasedTimeCounter += delta;
+	        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+	        	game.setScreen(game.mainMenuScreen);
+	        	return;
+	        }
+		}
+		else
+			game.setScreen(game.mainMenuScreen);
 		
-		pasedTimeCounter += delta;
-        if((pasedTimeCounter >= 7.0f) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-        	game.setScreen(game.mainMenuScreen);
-        	return;
-        }
 	}
 
 	@Override
