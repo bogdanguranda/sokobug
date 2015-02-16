@@ -3,6 +3,7 @@ package sokobug.screens;
 import sokobug.Sokobug;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -36,10 +37,10 @@ public class LogoScreen implements Screen {
 		game.batch.end();
 		
 		pasedTimeCounter += delta;
-		if (pasedTimeCounter >= 7.0f) { // dupa ce au trecut 2 sec trece la Main Menu
-			game.setScreen(game.mainMenuScreen);
-			return;
-		}
+        if((pasedTimeCounter >= 7.0f) || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        	game.setScreen(game.mainMenuScreen);
+        	return;
+        }
 	}
 
 	@Override
