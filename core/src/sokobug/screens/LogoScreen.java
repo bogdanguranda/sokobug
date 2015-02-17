@@ -5,6 +5,8 @@ import sokobug.domain.AnimationWrapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.InputProcessorQueue;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class LogoScreen implements Screen {
+public class LogoScreen implements Screen, InputProcessor {
 
 	private Sokobug game;
 	
@@ -31,7 +33,7 @@ public class LogoScreen implements Screen {
 		
 		titleImage = new Sprite(new Texture(Gdx.files.internal("Title.png")));
 		titleImage.setPosition(0.f, 0.f);
-		titleImageDuration = 1.0f;
+		titleImageDuration = 5.0f;
 		
 		logo1 = new AnimationWrapper("LogoAndrei.png", 9, 12);
 		logo2 = new AnimationWrapper("LogoPotatoes.png", 9, 12);
@@ -41,6 +43,8 @@ public class LogoScreen implements Screen {
 		displayTitlelogo2 = false;
 		
 		pasedTimeCounter = 0.0f;
+		
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
@@ -51,28 +55,9 @@ public class LogoScreen implements Screen {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
-//        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-//        	if (displayTitle) {
-//	        	displayTitle = false;
-//		    	displayTitlelogo1 = true;
-//		    	pasedTimeCounter = 0.0f;
-//		    	return;
-//        	}
-//        	else if (displayTitlelogo1) {
-//	        	displayTitlelogo1 = false;
-//	        	displayTitlelogo2 = true;
-//	        	pasedTimeCounter = 0.0f;
-//	        	return;
-//        	}
-//        	else if (displayTitlelogo2) {
-//	        	game.setScreen(game.mainMenuScreen);
-//	        	return;
-//        	}
-//        } 
-		
 		pasedTimeCounter += delta;
 		if (displayTitle) {
-	        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) || pasedTimeCounter > titleImageDuration) {
+	        if(pasedTimeCounter > titleImageDuration) {
 	        	displayTitle = false;
 	        	displayTitlelogo1 = true;
 	        	pasedTimeCounter = 0.0f;
@@ -84,7 +69,7 @@ public class LogoScreen implements Screen {
 			game.batch.end();
 		}
 		else if (displayTitlelogo1) {
-	        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) || logo1.mAnimation.isAnimationFinished(pasedTimeCounter)) {
+	        if(logo1.mAnimation.isAnimationFinished(pasedTimeCounter)) {
 	        	displayTitlelogo1 = false;
 	        	displayTitlelogo2 = true;
 	        	pasedTimeCounter = 0.0f;
@@ -97,7 +82,7 @@ public class LogoScreen implements Screen {
 			game.batch.end();
 		}
 		else if (displayTitlelogo2) {
-	        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE) || logo1.mAnimation.isAnimationFinished(pasedTimeCounter)) {
+	        if(logo2.mAnimation.isAnimationFinished(pasedTimeCounter)) {
 	        	game.setScreen(game.mainMenuScreen);
 	        	return;
 	        }  
@@ -143,6 +128,69 @@ public class LogoScreen implements Screen {
 	public void resume() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.ESCAPE) {
+        	if (displayTitle) {
+	        	displayTitle = false;
+		    	displayTitlelogo1 = true;
+		    	pasedTimeCounter = 0.0f;
+        	}
+        	else if (displayTitlelogo1) {
+	        	displayTitlelogo1 = false;
+	        	displayTitlelogo2 = true;
+	        	pasedTimeCounter = 0.0f;
+        	}
+        	else if (displayTitlelogo2) {
+	        	game.setScreen(game.mainMenuScreen);
+        	}
+        	return true; // ca sa arat ca am rezolvat evenimentul
+        } 
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
