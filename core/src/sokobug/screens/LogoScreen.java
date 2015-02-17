@@ -31,45 +31,44 @@ public class LogoScreen implements Screen {
 		
 		titleImage = new Sprite(new Texture(Gdx.files.internal("Title.png")));
 		titleImage.setPosition(0.f, 0.f);
-		titleImageDuration = 7.0f;
+		titleImageDuration = 1.0f;
 		
-		logo1 = new AnimationWrapper("LogoAndrei.png", 9, 13);
-		logo2 = new AnimationWrapper("LogoPotatoes.png", 9, 13);
+		logo1 = new AnimationWrapper("LogoAndrei.png", 9, 12);
+		logo2 = new AnimationWrapper("LogoPotatoes.png", 9, 12);
 		
 		displayTitle = true;
 		displayTitlelogo1 = false;
 		displayTitlelogo2 = false;
 		
 		pasedTimeCounter = 0.0f;
-		
-		Gdx.gl.glClearColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, Color.WHITE.a);
 	}
 
 	@Override
 	public void render(float delta) {
+		Gdx.gl.glClearColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, Color.WHITE.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-        	if (displayTitle) {
-	        	displayTitle = false;
-		    	displayTitlelogo1 = true;
-		    	pasedTimeCounter = 0.0f;
-		    	return;
-        	}
-        	else if (displayTitlelogo1) {
-	        	displayTitlelogo1 = false;
-	        	displayTitlelogo2 = true;
-	        	pasedTimeCounter = 0.0f;
-	        	return;
-        	}
-        	else if (displayTitlelogo2) {
-	        	game.setScreen(game.mainMenuScreen);
-	        	return;
-        	}
-        } 
+//        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+//        	if (displayTitle) {
+//	        	displayTitle = false;
+//		    	displayTitlelogo1 = true;
+//		    	pasedTimeCounter = 0.0f;
+//		    	return;
+//        	}
+//        	else if (displayTitlelogo1) {
+//	        	displayTitlelogo1 = false;
+//	        	displayTitlelogo2 = true;
+//	        	pasedTimeCounter = 0.0f;
+//	        	return;
+//        	}
+//        	else if (displayTitlelogo2) {
+//	        	game.setScreen(game.mainMenuScreen);
+//	        	return;
+//        	}
+//        } 
 		
 		pasedTimeCounter += delta;
 		if (displayTitle) {
