@@ -6,11 +6,12 @@ import sokobug.domain.AnimationWrapper;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.InputProcessorQueue;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -31,17 +32,24 @@ public class LogoScreen implements Screen, InputProcessor {
 	public LogoScreen(Sokobug myGame) {
 		game = myGame;
 		
-		titleImage = new Sprite(new Texture(Gdx.files.internal("Title.png")));
-		titleImage.setPosition(0.f, 0.f);
-		titleImageDuration = 5.0f;
+		TextureParameter param = new TextureParameter();
+		param.minFilter = TextureFilter.Linear;
+		game.assetManager.load("Title.png", Texture.class, param);
+		game.assetManager.load("LogoAndrei.png", Texture.class, param);
+		game.assetManager.load("LogoPotatoes.png", Texture.class, param);
 		
-		logo1 = new AnimationWrapper("LogoAndrei.png", 9, 12);
-		logo2 = new AnimationWrapper("LogoPotatoes.png", 9, 12);
+		game.assetManager.finishLoading();
+		
+		titleImage = new Sprite(game.assetManager.get("Title.png", Texture.class));
+		titleImage.setPosition(0.f, 0.f);
+		titleImageDuration = 7.0f;
+		
+		logo1 = new AnimationWrapper(game.assetManager.get("LogoAndrei.png", Texture.class), 9, 12);
+		logo2 = new AnimationWrapper(game.assetManager.get("LogoPotatoes.png", Texture.class), 10, 10);
 		
 		displayTitle = true;
 		displayTitlelogo1 = false;
 		displayTitlelogo2 = false;
-		
 		pasedTimeCounter = 0.0f;
 		
 		Gdx.input.setInputProcessor(this);
@@ -106,9 +114,9 @@ public class LogoScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void dispose() {
-		titleImage.getTexture().dispose();
-		logo1.mAnimation.getKeyFrame(0.f).getTexture().dispose();
-		logo2.mAnimation.getKeyFrame(0.f).getTexture().dispose();
+		game.assetManager.unload("Title.png");
+		game.assetManager.unload("LogoAndrei.png");
+		game.assetManager.unload("LogoPotatoes.png");
 	}
 	
 	@Override

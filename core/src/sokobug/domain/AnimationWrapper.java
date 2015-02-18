@@ -1,6 +1,5 @@
 package sokobug.domain;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,9 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AnimationWrapper {
     public Animation mAnimation;
     
-    public AnimationWrapper(String atlasFilePath, int frameColumns, int frameRows) {
-        Texture spriteAtlas = new Texture(Gdx.files.internal(atlasFilePath));
-        TextureRegion[][] tmp = TextureRegion.split(spriteAtlas, spriteAtlas.getWidth()/frameColumns, spriteAtlas.getHeight()/frameRows);              // #10
+    public AnimationWrapper(Texture framesAtlas, int frameColumns, int frameRows) {
+        TextureRegion[][] tmp = TextureRegion.split(framesAtlas, framesAtlas.getWidth()/frameColumns, framesAtlas.getHeight()/frameRows);              // #10
         TextureRegion[] frames = new TextureRegion[frameColumns * frameRows];
         int index = 0;
         for (int i = 0; i < frameRows; i++) {
