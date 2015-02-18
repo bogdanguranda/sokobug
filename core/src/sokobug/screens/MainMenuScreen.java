@@ -16,7 +16,7 @@ public class MainMenuScreen implements Screen{
 	public MainMenuScreen(Sokobug myGame) {
 		game = myGame;
 		
-		font = game.font;
+		font = game.assetManager.get("Papyrus.fnt", BitmapFont.class);
 		font.setColor(Color.CYAN);
 	}
 	
