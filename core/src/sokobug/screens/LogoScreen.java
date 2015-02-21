@@ -51,8 +51,6 @@ public class LogoScreen implements Screen, InputProcessor {
 		displayTitlelogo1 = false;
 		displayTitlelogo2 = false;
 		pasedTimeCounter = 0.0f;
-		
-		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
@@ -104,7 +102,7 @@ public class LogoScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
