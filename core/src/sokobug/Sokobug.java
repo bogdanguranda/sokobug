@@ -1,5 +1,6 @@
 package sokobug;
 
+import sokobug.screens.ChooseLevelScreen;
 import sokobug.screens.CreditsScreen;
 import sokobug.screens.LogoScreen;
 import sokobug.screens.MainMenuScreen;
@@ -17,6 +18,7 @@ public class Sokobug extends Game {
 	public MainMenuScreen mainMenuScreen;
 	public CreditsScreen creditsScreen;
 	public OptionsScreen optionsScreen;
+	public ChooseLevelScreen chooseLevelScreen;
 	//si asa mai departe, alte screens(game states... ex. OptionsScreen, InGameScreen, InGamePauseScreen etc. )
 	// bla bla
 	
@@ -44,6 +46,7 @@ public class Sokobug extends Game {
 		mainMenuScreen = new MainMenuScreen(this); // sau i-am putea da new doar in logoScreen, asa am face mai putin load dintr-odata...
 		creditsScreen = new CreditsScreen(this);
 		optionsScreen = new OptionsScreen(this);
+		chooseLevelScreen = new ChooseLevelScreen(this);
 		this.setScreen(logoScreen);
 	}
 	
