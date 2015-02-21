@@ -10,12 +10,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class MainMenuScreen implements Screen, InputProcessor {
+public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	Sokobug game;
     private BitmapFont font;
 	
-	public MainMenuScreen(Sokobug myGame) {
+	public ChooseLevelScreen(Sokobug myGame) {
 		game = myGame;
 		
 		font = game.assetManager.get("Papyrus.fnt", BitmapFont.class);
@@ -29,8 +29,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
-		font.setColor(Color.CYAN);
-		String text = "MAIN MENU";
+		font.setColor(Color.GREEN);
+		String text = "Choose level";
 		
 		game.batch.begin();
 		font.draw(game.batch, text, (game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2, (game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
@@ -74,16 +74,11 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.C) {
-			game.setScreen(game.creditsScreen);
+		if (keycode == Input.Keys.ESCAPE) {
+			game.setScreen(game.mainMenuScreen);
+			return true;
 		}
-		else if (keycode == Input.Keys.O) {
-			game.setScreen(game.optionsScreen);
-		}
-		else if (keycode == Input.Keys.P) {
-			game.setScreen(game.chooseLevelScreen);
-		}
-		return true;
+		return false;
 	}
 
 	@Override
