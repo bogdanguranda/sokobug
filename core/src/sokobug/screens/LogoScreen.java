@@ -23,9 +23,11 @@ public class LogoScreen implements Screen, InputProcessor {
 	private float titleImageDuration;
 	
 	private AnimationWrapper logo1;
-	private AnimationWrapper logo2;
 	
-	private boolean displayTitle, displayTitlelogo1, displayTitlelogo2;
+	private Sprite logo2;
+	private float logo2Duration;
+	
+	private boolean displayTitle, displayLogo1, displayLogo2;
 	private float pasedTimeCounter;
 	
 	
@@ -45,11 +47,12 @@ public class LogoScreen implements Screen, InputProcessor {
 		titleImageDuration = 7.0f;
 		
 		logo1 = new AnimationWrapper(game.assetManager.get("LogoAndrei.png", Texture.class), 9, 12);
-		logo2 = new AnimationWrapper(game.assetManager.get("LogoPotatoes.png", Texture.class), 10, 10);
+		logo2 = new Sprite(game.assetManager.get("LogoPotatoes.png", Texture.class));
+		logo2Duration = 5.f;
 		
 		displayTitle = true;
-		displayTitlelogo1 = false;
-		displayTitlelogo2 = false;
+		displayLogo1 = false;
+		displayLogo2 = false;
 		pasedTimeCounter = 0.0f;
 	}
 
@@ -65,7 +68,7 @@ public class LogoScreen implements Screen, InputProcessor {
 		if (displayTitle) {
 	        if(pasedTimeCounter > titleImageDuration) {
 	        	displayTitle = false;
-	        	displayTitlelogo1 = true;
+	        	displayLogo1 = true;
 	        	pasedTimeCounter = 0.0f;
 	        	return;
 	        }   
@@ -74,10 +77,10 @@ public class LogoScreen implements Screen, InputProcessor {
 			titleImage.draw(game.batch);
 			game.batch.end();
 		}
-		else if (displayTitlelogo1) {
+		else if (displayLogo1) {
 	        if(logo1.mAnimation.isAnimationFinished(pasedTimeCounter)) {
-	        	displayTitlelogo1 = false;
-	        	displayTitlelogo2 = true;
+	        	displayLogo1 = false;
+	        	displayLogo2 = true;
 	        	pasedTimeCounter = 0.0f;
 	        	return;
 	        }  
@@ -87,15 +90,15 @@ public class LogoScreen implements Screen, InputProcessor {
 			game.batch.draw(currentFrame, (game.VIRTUAL_WIDTH / 2) - currentFrame.getRegionWidth() / 2, (game.VIRTUAL_HEIGHT / 2) - currentFrame.getRegionHeight() / 2);
 			game.batch.end();
 		}
-		else if (displayTitlelogo2) {
-	        if(logo2.mAnimation.isAnimationFinished(pasedTimeCounter)) {
+		else if (displayLogo2) {
+	        if(pasedTimeCounter > logo2Duration) {
+	        	pasedTimeCounter = 0.f;
 	        	game.setScreen(game.mainMenuScreen);
 	        	return;
 	        }  
 			
-			TextureRegion currentFrame = logo2.mAnimation.getKeyFrame(pasedTimeCounter);
 			game.batch.begin();
-			game.batch.draw(currentFrame, (game.VIRTUAL_WIDTH / 2) - currentFrame.getRegionWidth() / 2, (game.VIRTUAL_HEIGHT / 2) - currentFrame.getRegionHeight() / 2);
+			logo2.draw(game.batch);
 			game.batch.end();
 		}
 	}
@@ -141,15 +144,15 @@ public class LogoScreen implements Screen, InputProcessor {
         if (keycode == Input.Keys.ESCAPE) {
         	if (displayTitle) {
 	        	displayTitle = false;
-		    	displayTitlelogo1 = true;
+		    	displayLogo1 = true;
 		    	pasedTimeCounter = 0.0f;
         	}
-        	else if (displayTitlelogo1) {
-	        	displayTitlelogo1 = false;
-	        	displayTitlelogo2 = true;
+        	else if (displayLogo1) {
+	        	displayLogo1 = false;
+	        	displayLogo2 = true;
 	        	pasedTimeCounter = 0.0f;
         	}
-        	else if (displayTitlelogo2) {
+        	else if (displayLogo2) {
 	        	game.setScreen(game.mainMenuScreen);
         	}
         	return true; // ca sa arat ca am rezolvat evenimentul
