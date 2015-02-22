@@ -174,8 +174,20 @@ public class LogoScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+    	if (displayTitle) {
+        	displayTitle = false;
+	    	displayLogo1 = true;
+	    	pasedTimeCounter = 0.0f;
+    	}
+    	else if (displayLogo1) {
+        	displayLogo1 = false;
+        	displayLogo2 = true;
+        	pasedTimeCounter = 0.0f;
+    	}
+    	else if (displayLogo2) {
+        	game.setScreen(game.mainMenuScreen);
+    	}
+    	return true; // ca sa arat ca am rezolvat evenimentul
 	}
 
 	@Override
