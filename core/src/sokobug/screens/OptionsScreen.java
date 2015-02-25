@@ -18,7 +18,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 	public OptionsScreen(Sokobug myGame) {
 		game = myGame;
 		
-		font = game.assetManager.get("Papyrus.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
 	}
 	
 	@Override
