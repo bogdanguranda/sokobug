@@ -40,7 +40,7 @@ public class Sokobug extends Game {
 		
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
-		assetManager.load("Papyrus.fnt", BitmapFont.class);
+		assetManager.load("fonts/Papyrus.fnt", BitmapFont.class);
 		
 		logoScreen = new LogoScreen(this);
 		mainMenuScreen = new MainMenuScreen(this); // sau i-am putea da new doar in logoScreen, asa am face mai putin load dintr-odata...

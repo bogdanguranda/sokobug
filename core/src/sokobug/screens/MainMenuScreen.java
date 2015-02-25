@@ -1,130 +1,114 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.menuButtons.CreditsButton;
+import sokobug.domain.menuButtons.ExitButton;
+import sokobug.domain.menuButtons.OptionsButton;
+import sokobug.domain.menuButtons.PlayButton;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-public class MainMenuScreen implements Screen, InputProcessor {
+public class MainMenuScreen implements Screen {
+	private Sokobug game;
+	private Table table;
+	private Stage stage;
+	private Sprite background;
+	private PlayButton play;
+	private OptionsButton options;
+	private CreditsButton credits;
+	private ExitButton exit;
 
-	Sokobug game;
-    private BitmapFont font;
-	
-	public MainMenuScreen(Sokobug myGame) {
-		game = myGame;
-		
-		font = game.assetManager.get("Papyrus.fnt", BitmapFont.class);
+	public MainMenuScreen(Sokobug game) {
+		this.game = game;
+		table = new Table();
+		stage = new Stage(game.viewport);
+
+		game.assetManager.load("MainMenuScreen.png", Texture.class);
+		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
+		game.assetManager.load("skins/uiskin.json", Skin.class,
+				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.finishLoading();
+
+		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
+				Texture.class));
+		play = new PlayButton("Play", game.assetManager.get(
+				"skins/uiskin.json", Skin.class));
+		options = new OptionsButton("Options", game.assetManager.get(
+				"skins/uiskin.json", Skin.class));
+		credits = new CreditsButton("Credits", game.assetManager.get(
+				"skins/uiskin.json", Skin.class));
+		exit = new ExitButton("Exit", game.assetManager.get(
+				"skins/uiskin.json", Skin.class));
 	}
-	
+
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.DARK_GRAY.r, Color.DARK_GRAY.g, Color.DARK_GRAY.b, Color.DARK_GRAY.a);
+		Gdx.gl.glClearColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b,
+				Color.WHITE.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
-		
-		font.setColor(Color.CYAN);
-		String text = "MAIN MENU";
-		
+
 		game.batch.begin();
-		font.draw(game.batch, text, (game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2, (game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
+		background.draw(game.batch);
 		game.batch.end();
-	}
-	
-	@Override
-	public void dispose() {
-		
+
+		stage.act();
+		stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
+				game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(this);
+		table.add(play).row();
+		table.add(options).row();
+		table.add(credits).row();
+		table.add(exit).row();
+		table.setFillParent(true);
+		// table.setDebug(true);
+
+		stage.addActor(table);
+
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		dispose();
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.C) {
-			game.setScreen(game.creditsScreen);
-		}
-		else if (keycode == Input.Keys.O) {
-			game.setScreen(game.optionsScreen);
-		}
-		else if (keycode == Input.Keys.P) {
-			game.setScreen(game.chooseLevelScreen);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
+	public void dispose() {
+		stage.dispose();
+		game.assetManager.unload("MainMenuScreen.png");
+		game.assetManager.unload("skins/uiskin.atlas");
+		game.assetManager.unload("skins/uiskin.json");
 	}
 }
