@@ -28,8 +28,10 @@ public class CreditsScreen implements Screen, InputProcessor {
 		game = myGame;
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
+		game.assetManager.load("fonts/Papyrus58.fnt", BitmapFont.class);
+		game.assetManager.finishLoading();
 		
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Papyrus58.fnt", BitmapFont.class);
 		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
 		game.assetManager.load("skins/uiskin.json", Skin.class,
 				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
@@ -49,11 +51,16 @@ public class CreditsScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
-		font.setColor(Color.BLUE);
-		String text = "Credits";
+		font.setColor(Color.WHITE);
+		String title = "Credits";
+		String text = "Developers: Potatoes(Bogdan Guranda, Ciprian-Corvin Tiperciuc)\n"
+				+ "Artist: Aarts(Andrei Guranda)";
 		
 		game.batch.begin();
-		font.draw(game.batch, text, (game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2, (game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
+		font.setScale(1.f);
+		font.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font.getBounds(title).width / 2, game.VIRTUAL_HEIGHT- font.getBounds(title).height / 2);
+		font.setScale(0.5f);
+		font.drawMultiLine(game.batch, text, 0, game.VIRTUAL_HEIGHT - font.getBounds(title).width * 2 );
 		game.batch.end();
 		
 		stage.act();
