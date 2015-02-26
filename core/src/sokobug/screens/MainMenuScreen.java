@@ -1,10 +1,7 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
-import sokobug.domain.menuButtons.CreditsButton;
-import sokobug.domain.menuButtons.ExitButton;
-import sokobug.domain.menuButtons.OptionsButton;
-import sokobug.domain.menuButtons.PlayButton;
+import sokobug.domain.MenuButton;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -23,10 +20,10 @@ public class MainMenuScreen implements Screen {
 	private Table table;
 	private Stage stage;
 	private Sprite background;
-	private PlayButton play;
-	private OptionsButton options;
-	private CreditsButton credits;
-	private ExitButton exit;
+	private MenuButton play;
+	private MenuButton options;
+	private MenuButton credits;
+	private MenuButton exit;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -41,13 +38,13 @@ public class MainMenuScreen implements Screen {
 
 		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
 				Texture.class));
-		play = new PlayButton("Play", game.assetManager.get(
+		play = new MenuButton(game, "Play", game.assetManager.get(
 				"skins/uiskin.json", Skin.class));
-		options = new OptionsButton("Options", game.assetManager.get(
+		options = new MenuButton(game, "Options", game.assetManager.get(
 				"skins/uiskin.json", Skin.class));
-		credits = new CreditsButton("Credits", game.assetManager.get(
+		credits = new MenuButton(game, "Credits", game.assetManager.get(
 				"skins/uiskin.json", Skin.class));
-		exit = new ExitButton("Exit", game.assetManager.get(
+		exit = new MenuButton(game, "Exit", game.assetManager.get(
 				"skins/uiskin.json", Skin.class));
 	}
 
@@ -91,7 +88,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void hide() {
-		dispose();
+		
 	}
 
 	@Override
