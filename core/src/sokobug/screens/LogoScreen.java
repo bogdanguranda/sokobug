@@ -1,8 +1,6 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
-import sokobug.domain.AnimationWrapper;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class LogoScreen implements Screen, InputProcessor {
 
@@ -22,8 +19,9 @@ public class LogoScreen implements Screen, InputProcessor {
 	private Sprite titleImage;
 	private float titleImageDuration;
 	
-	private AnimationWrapper logo1;
-	
+	private Sprite logo1;
+	private float logo1Duration;
+
 	private Sprite logo2;
 	private float logo2Duration;
 	
@@ -44,11 +42,12 @@ public class LogoScreen implements Screen, InputProcessor {
 		
 		titleImage = new Sprite(game.assetManager.get("Title.png", Texture.class));
 		titleImage.setPosition(0.f, 0.f);
-		titleImageDuration = 7.0f;
+		titleImageDuration = 5.0f;
 		
-		logo1 = new AnimationWrapper(game.assetManager.get("LogoAndrei.png", Texture.class), 9, 12);
+		logo1 = new Sprite(game.assetManager.get("LogoAndrei.png", Texture.class));
+		logo1Duration = 4.f;
 		logo2 = new Sprite(game.assetManager.get("LogoPotatoes.png", Texture.class));
-		logo2Duration = 5.f;
+		logo2Duration = 4.f;
 		
 		displayTitle = true;
 		displayLogo1 = false;
@@ -78,21 +77,19 @@ public class LogoScreen implements Screen, InputProcessor {
 			game.batch.end();
 		}
 		else if (displayLogo1) {
-	        if(logo1.mAnimation.isAnimationFinished(pasedTimeCounter)) {
+	        if(pasedTimeCounter > logo1Duration) {
 	        	displayLogo1 = false;
 	        	displayLogo2 = true;
 	        	pasedTimeCounter = 0.0f;
 	        	return;
 	        }  
 			
-			TextureRegion currentFrame = logo1.mAnimation.getKeyFrame(pasedTimeCounter);
 			game.batch.begin();
-			game.batch.draw(currentFrame, (game.VIRTUAL_WIDTH / 2) - currentFrame.getRegionWidth() / 2, (game.VIRTUAL_HEIGHT / 2) - currentFrame.getRegionHeight() / 2);
+			logo1.draw(game.batch);
 			game.batch.end();
 		}
 		else if (displayLogo2) {
 	        if(pasedTimeCounter > logo2Duration) {
-	        	pasedTimeCounter = 0.f;
 	        	game.setScreen(game.mainMenuScreen);
 	        	return;
 	        }  
