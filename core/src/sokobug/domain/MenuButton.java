@@ -54,6 +54,13 @@ public class MenuButton extends TextButton {
 					Gdx.app.exit();
 				}
 			});
+		else if (buttonType.compareTo("BackToMenu") == 0)
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.mainMenuScreen);
+				}
+			});
 		else
 			throw new Exception("Error: Wrong button type...");
 	}
