@@ -1,8 +1,9 @@
 package sokobug.domain;
 
-import sokobug.Sokobug;
+import sokobug.screens.MainMenuScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -10,12 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MenuButton extends TextButton {
 	private String buttonType;
-	private Sokobug game;
+	private MainMenuScreen menu;
 
-	public MenuButton(Sokobug game, String buttonType, Skin skin) {
+	public MenuButton(MainMenuScreen menu, String buttonType, Skin skin) {
 		super(buttonType, skin);
 		this.buttonType = buttonType;
-		this.game = game;
+		this.menu = menu;
 
 		try {
 			manageEvents();
@@ -26,25 +27,43 @@ public class MenuButton extends TextButton {
 	}
 
 	private void manageEvents() throws Exception {
-		if (buttonType.compareTo("Play") == 0)
+		if (buttonType.compareTo("Play") == 0) 
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.setScreen(game.chooseLevelScreen);
+					menu.game.setScreen(menu.game.chooseLevelScreen);
+				}
+				
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
+					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();		
 				}
 			});
 		else if (buttonType.compareTo("Options") == 0)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.setScreen(game.optionsScreen);
+					menu.game.setScreen(menu.game.optionsScreen);
+				}
+				
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();				
 				}
 			});
 		else if (buttonType.compareTo("Credits") == 0)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.setScreen(game.creditsScreen);
+					menu.game.setScreen(menu.game.creditsScreen);
+				}
+				
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();
 				}
 			});
 		else if (buttonType.compareTo("Exit") == 0)
@@ -52,6 +71,12 @@ public class MenuButton extends TextButton {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					Gdx.app.exit();
+				}
+				
+				@Override
+				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();
 				}
 			});
 		else if (buttonType.compareTo("BackToMenu") == 0)
