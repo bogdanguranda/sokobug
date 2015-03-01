@@ -37,7 +37,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
 		game.assetManager.finishLoading();
 		
-		backToMenu = new MenuButton(game, "BackToMenu", game.assetManager.get(
+		backToMenu = new MenuButton(game.mainMenuScreen, "BackToMenu", game.assetManager.get(
 				"skins/uiskin.json", Skin.class));
 		
 		backToMenu.setPosition(0, 0);
