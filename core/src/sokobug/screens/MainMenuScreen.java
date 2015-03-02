@@ -53,20 +53,20 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
 				Texture.class));
-		play = new MenuButton(this, "Play", game.assetManager.get(
-				"skins/uiskin.json", Skin.class));
-		options = new MenuButton(this, "Options", game.assetManager.get(
-				"skins/uiskin.json", Skin.class));
-		credits = new MenuButton(this, "Credits", game.assetManager.get(
-				"skins/uiskin.json", Skin.class));
-		exit = new MenuButton(this, "Exit", game.assetManager.get(
-				"skins/uiskin.json", Skin.class));
+		play = new MenuButton(this, "Play", MenuButton.PLAY,
+				game.assetManager.get("skins/uiskin.json", Skin.class));
+		options = new MenuButton(this, "Options", MenuButton.OPTIONS,
+				game.assetManager.get("skins/uiskin.json", Skin.class));
+		credits = new MenuButton(this, "Credits", MenuButton.CREDITS,
+				game.assetManager.get("skins/uiskin.json", Skin.class));
+		exit = new MenuButton(this, "Exit", MenuButton.EXIT,
+				game.assetManager.get("skins/uiskin.json", Skin.class));
 
 		focusedButtonSkin = game.assetManager.get("skins/focusedButton.json",
 				Skin.class);
 		normalButtonSkin = game.assetManager.get("skins/uiskin.json",
 				Skin.class);
-		
+
 		table.add(play).row();
 		table.add(options).row();
 		table.add(credits).row();
@@ -87,7 +87,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		else
 			return play;
 	}
-	
+
 	public void defocusButtons() {
 		isPlayFocused = false;
 		isOptionFocused = false;
@@ -97,7 +97,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
+		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
+				Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.camera.update();
@@ -120,8 +121,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		//Each time MainMenuScreen is set again, the focused button
-		//is set to none.
+		// Each time MainMenuScreen is set again, the focused button
+		// is set to none.
 		defocusButtons();
 
 		play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
@@ -160,7 +161,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		//Reacting only if mouse is not over a menu widget
+		// Reacting only if mouse is not over a menu widget
 		if (!play.isOver() && !options.isOver() && !credits.isOver()
 				&& !exit.isOver()) {
 			if (keycode == Input.Keys.DOWN) {
