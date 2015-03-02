@@ -10,11 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MenuButton extends TextButton {
-	private String buttonType;
+	private int buttonType;
 	private MainMenuScreen menu;
 
-	public MenuButton(MainMenuScreen menu, String buttonType, Skin skin) {
-		super(buttonType, skin);
+	public static final int PLAY = 0;
+	public static final int OPTIONS = 1;
+	public static final int CREDITS = 2;
+	public static final int EXIT = 3;
+	public static final int BACK = 4;
+
+	public MenuButton(MainMenuScreen menu, String buttonText, int buttonType,
+			Skin skin) {
+		super(buttonText, skin);
 		this.buttonType = buttonType;
 		this.menu = menu;
 
@@ -27,59 +34,67 @@ public class MenuButton extends TextButton {
 	}
 
 	private void manageEvents() throws Exception {
-		if (buttonType.compareTo("Play") == 0) 
+		if (buttonType == PLAY)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					menu.game.setScreen(menu.game.chooseLevelScreen);
 				}
-				
+
 				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
-					menu.defocusButtons();		
+				public void enter(InputEvent event, float x, float y,
+						int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(
+							menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();
 				}
 			});
-		else if (buttonType.compareTo("Options") == 0)
+		else if (buttonType == OPTIONS)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					menu.game.setScreen(menu.game.optionsScreen);
 				}
-				
+
 				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
-					menu.defocusButtons();				
+				public void enter(InputEvent event, float x, float y,
+						int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(
+							menu.normalButtonSkin.get(TextButtonStyle.class));
+					menu.defocusButtons();
 				}
 			});
-		else if (buttonType.compareTo("Credits") == 0)
+		else if (buttonType == CREDITS)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					menu.game.setScreen(menu.game.creditsScreen);
 				}
-				
+
 				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+				public void enter(InputEvent event, float x, float y,
+						int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(
+							menu.normalButtonSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});
-		else if (buttonType.compareTo("Exit") == 0)
+		else if (buttonType == EXIT)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					Gdx.app.exit();
 				}
-				
+
 				@Override
-				public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-					menu.getFocusedButton().setStyle(menu.normalButtonSkin.get(TextButtonStyle.class));
+				public void enter(InputEvent event, float x, float y,
+						int pointer, Actor fromActor) {
+					menu.getFocusedButton().setStyle(
+							menu.normalButtonSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});
-		else if (buttonType.compareTo("BackToMenu") == 0)
+		else if (buttonType == BACK)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
