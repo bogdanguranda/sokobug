@@ -98,7 +98,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					menu.game.setScreen(menu);
+					menu.game.setScreen(menu.game.mainMenuScreen);
 				}
 			});
 		else
