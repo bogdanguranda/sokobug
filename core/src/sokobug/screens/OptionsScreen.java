@@ -35,7 +35,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
 		game.assetManager.finishLoading();
 
-		backToMenu = new MenuButton(game.mainMenuScreen, "Back",
+		backToMenu = new MenuButton(game, "Back",
 				MenuButton.BACK, game.assetManager.get("skins/uiskin.json",
 						Skin.class));
 
