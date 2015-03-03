@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -74,6 +75,8 @@ public class Level implements InputProcessor{
 	}
 	
 	public void render(float deltaTime) {
+		update(deltaTime);
+		
 		game.batch.begin();
 		
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {
@@ -94,8 +97,68 @@ public class Level implements InputProcessor{
 		game.batch.end();
 	}
 	
-	public void updateBug(int MOVE_DIRECTION, float deltaTime) { // collision detection should be here
-		
+	public boolean isColliding(LevelObject lvlObj, int MOVE_DIRECTION) {
+		int i = lvlObj.getPositionLine();
+		int j = lvlObj.getPositionColumn();
+		if (MOVE_DIRECTION == LevelObject.MOVE_LEFT) {
+			int iDest = i;
+			int jDest = j - 1;
+			
+			if (labyrinth[iDest][jDest].compareTo("W") == 0)
+				return true;
+			
+			for (Vase v: vases) {
+				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
+					return true;
+				}
+			}
+		}
+		else if (MOVE_DIRECTION == LevelObject.MOVE_RIGHT) {
+			int iDest = i;
+			int jDest = j + 1;
+			
+			if (labyrinth[iDest][jDest].compareTo("W") == 0)
+				return true;
+			
+			for (Vase v: vases) {
+				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
+					return true;
+				}
+			}
+		}
+		else if (MOVE_DIRECTION == LevelObject.MOVE_UP) {
+			int iDest = i + 1;
+			int jDest = j;
+			
+			if (labyrinth[iDest][jDest].compareTo("W") == 0)
+				return true;
+			
+			for (Vase v: vases) {
+				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
+					return true;
+				}
+			}
+		}
+		else if (MOVE_DIRECTION == LevelObject.MOVE_DOWN) {
+			int iDest = i - 1;
+			int jDest = j;
+			
+			if (labyrinth[iDest][jDest].compareTo("W") == 0)
+				return true;
+			
+			for (Vase v: vases) {
+				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public void update(float deltaTime) {
+		if (bug.isMoving()) {
+			bug.update(deltaTime);
+		}
 	}
 	
 	public boolean isVictory() {
@@ -108,7 +171,44 @@ public class Level implements InputProcessor{
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		if (!bug.isMoving()) {
+			if (keycode == Input.Keys.LEFT) {
+				if (!isColliding(bug, LevelObject.MOVE_LEFT)) {
+					bug.setMove(LevelObject.MOVE_LEFT);
+				}
+				else {
+					
+				}
+				return true;
+			}
+			else if (keycode == Input.Keys.RIGHT) {
+				if (!isColliding(bug, LevelObject.MOVE_RIGHT)) {
+					bug.setMove(LevelObject.MOVE_RIGHT);
+				}
+				else {
+					
+				}
+				return true;
+			}
+			else if (keycode == Input.Keys.UP) {
+				if (!isColliding(bug, LevelObject.MOVE_UP)) {
+					bug.setMove(LevelObject.MOVE_UP);
+				}
+				else {
+					
+				}
+				return true;
+			}
+			else if (keycode == Input.Keys.DOWN) {
+				if (!isColliding(bug, LevelObject.MOVE_DOWN)) {
+					bug.setMove(LevelObject.MOVE_DOWN);
+				}
+				else {
+					
+				}
+				return true;
+			}
+		}
 		return false;
 	}
 
