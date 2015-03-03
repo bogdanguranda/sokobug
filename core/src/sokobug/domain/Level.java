@@ -91,6 +91,12 @@ public class Level implements InputProcessor{
 				labyrinthSprites.get(labyrinth[i][j]).draw(game.batch);
 			}
 		}
+		
+		float x = bugPosColumn * labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth();
+		float y = game.VIRTUAL_HEIGHT - game.ingameScreen.topBar.getHeight() - labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth()
+				- bugPosLine * labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth();
+		labyrinthSprites.get("B").setPosition(x, y);
+		labyrinthSprites.get("B").draw(game.batch);
 		game.batch.end();
 	}
 	
