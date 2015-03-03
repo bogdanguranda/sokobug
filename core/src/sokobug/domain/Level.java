@@ -1,6 +1,6 @@
 package sokobug.domain;
 
-import java.io.BufferedReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,20 +22,11 @@ public class Level implements InputProcessor{
 	private static final int LABYRINTH_COLUMNS = 16;
 	
 	private String[][] labyrinth = new String[LABYRINTH_ROWS][LABYRINTH_COLUMNS];
-	private int bugPosLine;
-	private int bugPosColumn;
+	
 	private Map<String, Sprite> labyrinthSprites = new HashMap<String, Sprite>();
-	
-	private int vaseNumber; // equal with spots
-	private int vaseOnSpot = 0;
-	
-	public static int MOVE_NONE = 0;
-	public static int MOVE_UP = 1;
-	public static int MOVE_RIGHT = 2;
-	public static int MOVE_DOWN = 3;
-	public static int MOVE_LEFT = 4;
-	
-	private int movingDirection = MOVE_NONE;
+
+	private Bug bug;
+	private ArrayList<Vase> vases = new ArrayList<Vase>();
 	
 	public Level(Sokobug game) {
 		this.game = game;
@@ -45,20 +36,17 @@ public class Level implements InputProcessor{
 		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
 		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
 		labyrinthSprites.put("B", new Sprite(game.assetManager.get("ingame/bug.png", Texture.class)));
+		
+		bug  = new Bug(game.assetManager.get("ingame/bug.png", Texture.class));
 	}
 
-	public boolean isMoving() {
-		if (movingDirection != MOVE_NONE)
-			return true;
-		return false;
-	}
-	
 	public Vector2 getSize() {
 		return new Vector2(LABYRINTH_COLUMNS * labyrinthSprites.get("F").getWidth(), LABYRINTH_ROWS * labyrinthSprites.get("F").getHeight());
 	}
 	
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
+		this.vases.clear();
 		
 		FileHandle file = Gdx.files.internal("ingame/level" + String.valueOf(levelNumber) + ".txt");
 		String text = file.readString();
@@ -67,36 +55,44 @@ public class Level implements InputProcessor{
 			String[] lineElements = lines[i].split("\\s");
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				if (lineElements[j].compareTo("B") == 0) {
-					bugPosLine = i;
-					bugPosColumn = j;
-					labyrinth[i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
+					bug.positionLine = i;
+					bug.positionColumn = j;
+					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
 				}
-				else {
-					labyrinth[i][j] = lineElements[j];
+				else if (lineElements[j].compareTo("V") == 0) {
+					Vase v = new Vase(game.assetManager.get("ingame/vase.png", Texture.class));
+					v.positionLine = i;
+					v.positionColumn = j;
+					vases.add(v);
+					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
 				}
+				else
+					labyrinth[(LABYRINTH_ROWS-1) - i][j] = lineElements[j];
 			}
 		}
 		
 	}
 	
 	public void render(float deltaTime) {
-		
 		game.batch.begin();
+		
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				float x = j * labyrinthSprites.get(labyrinth[i][j]).getWidth();
-				float y = game.VIRTUAL_HEIGHT - game.ingameScreen.topBar.getHeight() - labyrinthSprites.get(labyrinth[i][j]).getWidth()
-						- i * labyrinthSprites.get(labyrinth[i][j]).getWidth();
+				float y = i * labyrinthSprites.get(labyrinth[i][j]).getHeight();
 				labyrinthSprites.get(labyrinth[i][j]).setPosition(x, y);
 				labyrinthSprites.get(labyrinth[i][j]).draw(game.batch);
 			}
 		}
 		
-		float x = bugPosColumn * labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth();
-		float y = game.VIRTUAL_HEIGHT - game.ingameScreen.topBar.getHeight() - labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth()
-				- bugPosLine * labyrinthSprites.get(labyrinth[bugPosLine][bugPosColumn]).getWidth();
-		labyrinthSprites.get("B").setPosition(x, y);
-		labyrinthSprites.get("B").draw(game.batch);
+		for (Vase v: vases) {
+			v.sprite.setPosition(v.positionColumn * v.sprite.getWidth(), v.positionLine * v.sprite.getHeight());
+			v.sprite.draw(game.batch);
+		}
+		
+		bug.sprite.setPosition(bug.positionColumn * bug.sprite.getWidth(), bug.positionLine * bug.sprite.getHeight());
+		bug.sprite.draw(game.batch);
+		
 		game.batch.end();
 	}
 	
@@ -105,8 +101,6 @@ public class Level implements InputProcessor{
 	}
 	
 	public boolean isVictory() {
-		if (vaseNumber == vaseOnSpot)
-			return true;
 		return false;
 	}
 	
