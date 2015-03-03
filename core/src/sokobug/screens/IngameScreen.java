@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -26,6 +27,7 @@ public class IngameScreen implements Screen, InputProcessor {
 	private MenuButton backToMenu;
 	private InputMultiplexer multiplexer;
 	
+	public Sprite topBar;
 	public Level level; // by default 1(should be loaded before changing to ingameScreen, using level.load(int levelNumber) method)
 	
 	public IngameScreen(Sokobug myGame) {
@@ -42,13 +44,17 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.assetManager.load("ingame/wall.png", Texture.class);
 		game.assetManager.load("ingame/spot.png", Texture.class);
 		game.assetManager.load("ingame/vase.png", Texture.class);
+		game.assetManager.load("ingame/topBar.png", Texture.class);
 		
 		game.assetManager.finishLoading();
 
-		backToMenu = new MenuButton(game.mainMenuScreen, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
-		backToMenu.setPosition(0, game.VIRTUAL_HEIGHT - backToMenu.getHeight());// backToMenu.setPosition(0, level.getSize().y - (topBar.height() * 2/3)); // sa fie centrat la mijlocul lui top bar cam asa(cand o sa fie butonul mai mic)
-	
 		level = new Level(game); // we pass game to give acces to assetManager for drawings and maybe other needs
+		
+		topBar = new Sprite(game.assetManager.get("ingame/topBar.png", Texture.class));
+		topBar.setPosition(0, level.getSize().y);
+		
+		backToMenu = new MenuButton(game.mainMenuScreen, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
+		backToMenu.setPosition(0, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	}
 
 	@Override
@@ -64,6 +70,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
+		topBar.draw(game.batch);
 		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height);
 		game.batch.end();
 		

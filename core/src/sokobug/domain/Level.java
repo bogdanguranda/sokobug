@@ -53,7 +53,7 @@ public class Level implements InputProcessor{
 		return false;
 	}
 	
-	public Vector2 labyrinthSize() {
+	public Vector2 getSize() {
 		return new Vector2(LABYRINTH_COLUMNS * labyrinthSprites.get("F").getWidth(), LABYRINTH_ROWS * labyrinthSprites.get("F").getHeight());
 	}
 	
@@ -81,6 +81,17 @@ public class Level implements InputProcessor{
 	
 	public void render(float deltaTime) {
 		
+		game.batch.begin();
+		for (int i = 0; i < LABYRINTH_ROWS; i++) {
+			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
+				float x = j * labyrinthSprites.get(labyrinth[i][j]).getWidth();
+				float y = game.VIRTUAL_HEIGHT - game.ingameScreen.topBar.getHeight() - labyrinthSprites.get(labyrinth[i][j]).getWidth()
+						- i * labyrinthSprites.get(labyrinth[i][j]).getWidth();
+				labyrinthSprites.get(labyrinth[i][j]).setPosition(x, y);
+				labyrinthSprites.get(labyrinth[i][j]).draw(game.batch);
+			}
+		}
+		game.batch.end();
 	}
 	
 	public void updateBug(int MOVE_DIRECTION, float deltaTime) { // collision detection should be here
