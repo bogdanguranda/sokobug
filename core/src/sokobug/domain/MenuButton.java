@@ -45,7 +45,7 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 					menu.getFocusedButton().setStyle(
-							menu.normalButtonSkin.get(TextButtonStyle.class));
+							menu.uiSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});
@@ -60,7 +60,7 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 					menu.getFocusedButton().setStyle(
-							menu.normalButtonSkin.get(TextButtonStyle.class));
+							menu.uiSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});
@@ -75,7 +75,7 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 					menu.getFocusedButton().setStyle(
-							menu.normalButtonSkin.get(TextButtonStyle.class));
+							menu.uiSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});
@@ -90,7 +90,7 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 					menu.getFocusedButton().setStyle(
-							menu.normalButtonSkin.get(TextButtonStyle.class));
+							menu.uiSkin.get(TextButtonStyle.class));
 					menu.defocusButtons();
 				}
 			});

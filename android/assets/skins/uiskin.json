@@ -2,7 +2,10 @@
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
 		"papyrus": { "file": "fonts/Papyrus.fnt"}
 	},
+
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-		"default": { "up": "menuButtonUp", "down": "menuButtonDown","over": "menuButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12}
+		"default": { "up": "menuButtonUp", "down": "menuButtonDown","over": "menuButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"btn_focused": { "up": "menuButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"btn_down": { "up": "menuButtonDown", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12}
 	}
 }

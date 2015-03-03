@@ -34,8 +34,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	public Boolean isOptionFocused;
 	public Boolean isCreditsFocused;
 	public Boolean isExitFocused;
-	public Skin focusedButtonSkin;
-	public Skin normalButtonSkin;
+	public Skin uiSkin;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -47,8 +46,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
 		game.assetManager.load("skins/uiskin.json", Skin.class,
 				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
-		game.assetManager.load("skins/focusedButton.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/focusedButton.atlas"));
 		game.assetManager.finishLoading();
 
 		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
@@ -62,9 +59,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		exit = new MenuButton(this, "Exit", MenuButton.EXIT,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
 
-		focusedButtonSkin = game.assetManager.get("skins/focusedButton.json",
-				Skin.class);
-		normalButtonSkin = game.assetManager.get("skins/uiskin.json",
+		uiSkin = game.assetManager.get("skins/uiskin.json",
 				Skin.class);
 
 		table.add(play).row();
@@ -125,10 +120,10 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		// is set to none.
 		defocusButtons();
 
-		play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		options.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		credits.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
+		play.setStyle(uiSkin.get("default", TextButtonStyle.class));
+		options.setStyle(uiSkin.get("default", TextButtonStyle.class));
+		credits.setStyle(uiSkin.get("default", TextButtonStyle.class));
+		exit.setStyle(uiSkin.get("default", TextButtonStyle.class));
 
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -156,7 +151,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		game.assetManager.unload("MainMenuScreen.png");
 		game.assetManager.unload("skins/uiskin.atlas");
 		game.assetManager.unload("skins/uiskin.json");
-		game.assetManager.unload("skins/focusedButton.json");
 	}
 
 	@Override
@@ -168,30 +162,35 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				if (isPlayFocused) {
 					isPlayFocused = false;
 					isOptionFocused = true;
-					play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					options.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
+					play.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					options.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isOptionFocused) {
 					isOptionFocused = false;
 					isCreditsFocused = true;
-					options.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					credits.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
+					options.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					credits.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isCreditsFocused) {
 					isCreditsFocused = false;
 					isExitFocused = true;
-					credits.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					credits.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isExitFocused) {
 					isExitFocused = false;
 					isPlayFocused = true;
-					exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					play.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else {
 					isPlayFocused = true;
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					play.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				}
 				return true;
 
@@ -199,30 +198,35 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				if (isPlayFocused) {
 					isPlayFocused = false;
 					isExitFocused = true;
-					play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					play.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isExitFocused) {
 					isExitFocused = false;
 					isCreditsFocused = true;
-					exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					credits.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					credits.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isCreditsFocused) {
 					isCreditsFocused = false;
 					isOptionFocused = true;
-					credits.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					options.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
+					credits.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					options.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else if (isOptionFocused) {
 					isOptionFocused = false;
 					isPlayFocused = true;
-					options.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					options.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					play.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				} else {
 					isExitFocused = true;
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
 				}
 				return true;
 
