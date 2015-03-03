@@ -6,12 +6,6 @@ W F F F F F F F B F F F F F F W
 W F F F F F F F F F F F F F F W
 W F F F F F F S F F V F F F F W
 W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
-W F F F F F F F F F F F F F F W
 W W W W W W W W W W W W W W W W
 # W = wall, F = free, V = vase, S = spot, B = bug
 # Conditions: nr. of V = nr. of S.

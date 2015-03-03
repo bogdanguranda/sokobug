@@ -1,9 +1,12 @@
 package sokobug.domain;
 
+import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -56,14 +59,31 @@ public class Level implements InputProcessor{
 	
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
-		// load the level
-	}
-	
-	public void draw(int deltaTime) {
+		
+		FileHandle file = Gdx.files.internal("ingame/level" + String.valueOf(levelNumber) + ".txt");
+		String text = file.readString();
+		String[] lines = text.split("\\r?\\n");
+		for (int i = 0; i < LABYRINTH_ROWS; i++) {
+			String[] lineElements = lines[i].split("\\s");
+			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
+				if (lineElements[j].compareTo("B") == 0) {
+					bugPosLine = i;
+					bugPosColumn = j;
+					labyrinth[i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
+				}
+				else {
+					labyrinth[i][j] = lineElements[j];
+				}
+			}
+		}
 		
 	}
 	
-	public void moveBug(int MOVE_DIRECTION, int deltaTime) { // collision detection should be here
+	public void render(float deltaTime) {
+		
+	}
+	
+	public void updateBug(int MOVE_DIRECTION, float deltaTime) { // collision detection should be here
 		
 	}
 	

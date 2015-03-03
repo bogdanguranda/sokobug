@@ -66,9 +66,11 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.batch.begin();
 		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height);
 		game.batch.end();
-
+		
 		stage.act();
 		stage.draw();
+		
+		level.render(delta); // foloseste singur game.batch
 	}
 
 	@Override
