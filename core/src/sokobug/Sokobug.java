@@ -2,6 +2,7 @@ package sokobug;
 
 import sokobug.screens.ChooseLevelScreen;
 import sokobug.screens.CreditsScreen;
+import sokobug.screens.IngameScreen;
 import sokobug.screens.LogoScreen;
 import sokobug.screens.MainMenuScreen;
 import sokobug.screens.OptionsScreen;
@@ -19,6 +20,7 @@ public class Sokobug extends Game {
 	public CreditsScreen creditsScreen;
 	public OptionsScreen optionsScreen;
 	public ChooseLevelScreen chooseLevelScreen;
+	public IngameScreen ingameScreen;
 	//si asa mai departe, alte screens(game states... ex. OptionsScreen, InGameScreen, InGamePauseScreen etc. )
 	// bla bla
 	
@@ -47,6 +49,7 @@ public class Sokobug extends Game {
 		creditsScreen = new CreditsScreen(this);
 		optionsScreen = new OptionsScreen(this);
 		chooseLevelScreen = new ChooseLevelScreen(this);
+		ingameScreen = new IngameScreen(this);
 		this.setScreen(logoScreen);
 	}
 	

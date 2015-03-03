@@ -17,7 +17,8 @@ public class MenuButton extends TextButton {
 	public static final int OPTIONS = 1;
 	public static final int CREDITS = 2;
 	public static final int EXIT = 3;
-	public static final int BACK = 4;
+	public static final int BACKTOMENU = 4;
+	public static final int BACKTOCHOOSELEVEL = 5;
 
 	public MenuButton(MainMenuScreen menu, String buttonText, int buttonType,
 			Skin skin) {
@@ -94,11 +95,18 @@ public class MenuButton extends TextButton {
 					menu.defocusButtons();
 				}
 			});
-		else if (buttonType == BACK)
+		else if (buttonType == BACKTOMENU)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					menu.game.setScreen(menu.game.mainMenuScreen);
+				}
+			});
+		else if (buttonType == BACKTOCHOOSELEVEL)
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					menu.game.setScreen(menu.game.chooseLevelScreen);
 				}
 			});
 		else
