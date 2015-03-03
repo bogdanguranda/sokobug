@@ -55,14 +55,14 @@ public class Level implements InputProcessor{
 			String[] lineElements = lines[i].split("\\s");
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				if (lineElements[j].compareTo("B") == 0) {
-					bug.positionLine = i;
-					bug.positionColumn = j;
+					bug.setPositionLine(i);
+					bug.setPositionColumn(j);
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
 				}
 				else if (lineElements[j].compareTo("V") == 0) {
 					Vase v = new Vase(game.assetManager.get("ingame/vase.png", Texture.class));
-					v.positionLine = i;
-					v.positionColumn = j;
+					v.setPositionLine(i);
+					v.setPositionColumn(j);
 					vases.add(v);
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
 				}
@@ -86,12 +86,10 @@ public class Level implements InputProcessor{
 		}
 		
 		for (Vase v: vases) {
-			v.sprite.setPosition(v.positionColumn * v.sprite.getWidth(), v.positionLine * v.sprite.getHeight());
-			v.sprite.draw(game.batch);
+			v.getSprite().draw(game.batch);
 		}
 		
-		bug.sprite.setPosition(bug.positionColumn * bug.sprite.getWidth(), bug.positionLine * bug.sprite.getHeight());
-		bug.sprite.draw(game.batch);
+		bug.getSprite().draw(game.batch);
 		
 		game.batch.end();
 	}
