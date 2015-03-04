@@ -36,7 +36,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		game.assetManager.finishLoading();
 
 		backToMenu = new MenuButton(game.mainMenuScreen, "Back",
-				MenuButton.BACK, game.assetManager.get("skins/uiskin.json",
+				MenuButton.BACKTOMENU, game.assetManager.get("skins/uiskin.json",
 						Skin.class));
 		
 		backToMenu.setPosition(0, 0);
@@ -110,6 +110,14 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		if (keycode == Input.Keys.ESCAPE) {
 			game.setScreen(game.mainMenuScreen);
 			return true;
+		}
+		if (keycode == Input.Keys.NUM_1) {
+			game.ingameScreen.level.levelNumber = 1;
+			game.setScreen(game.ingameScreen);
+		}
+		if (keycode == Input.Keys.NUM_2) {
+			game.ingameScreen.level.levelNumber = 2;
+			game.setScreen(game.ingameScreen);
 		}
 		return false;
 	}

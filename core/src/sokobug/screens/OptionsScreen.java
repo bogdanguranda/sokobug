@@ -36,7 +36,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 		game.assetManager.finishLoading();
 
 		backToMenu = new MenuButton(game.mainMenuScreen, "Back",
-				MenuButton.BACK, game.assetManager.get("skins/uiskin.json",
+				MenuButton.BACKTOMENU, game.assetManager.get("skins/uiskin.json",
 						Skin.class));
 
 		backToMenu.setPosition(0, 0);
