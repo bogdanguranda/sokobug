@@ -1,6 +1,7 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.Level;
 import sokobug.domain.MenuButton;
 
 import com.badlogic.gdx.Gdx;
@@ -11,36 +12,49 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class CreditsScreen implements Screen, InputProcessor {
+public class IngameScreen implements Screen, InputProcessor {
 
-	Sokobug game;
+	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backToMenu;
 	private InputMultiplexer multiplexer;
-
-	public CreditsScreen(Sokobug myGame) {
+	
+	public Sprite topBar;
+	public Level level; // by default 1(should be loaded before changing to ingameScreen, using level.load(int levelNumber) method)
+	
+	public IngameScreen(Sokobug myGame) {
 		game = myGame;
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
-		game.assetManager.load("fonts/Papyrus58.fnt", BitmapFont.class);
-		game.assetManager.finishLoading();
 
-		font = game.assetManager.get("fonts/Papyrus58.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
 		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
-		game.assetManager.load("skins/uiskin.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.load("skins/uiskin.json", Skin.class, new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		
+		game.assetManager.load("ingame/bug/bug0001.png", Texture.class);
+		game.assetManager.load("ingame/free.png", Texture.class);
+		game.assetManager.load("ingame/wall.png", Texture.class);
+		game.assetManager.load("ingame/spot.png", Texture.class);
+		game.assetManager.load("ingame/vase.png", Texture.class);
+		game.assetManager.load("ingame/topBar.png", Texture.class);
+		
 		game.assetManager.finishLoading();
 
-		backToMenu = new MenuButton(game, "Back",
-				MenuButton.BACKTOMENU, game.assetManager.get("skins/uiskin.json", Skin.class));
-
-		backToMenu.setPosition(0, 0);
+		level = new Level(game); // we pass game to give acces to assetManager for drawings and maybe other needs
+		
+		topBar = new Sprite(game.assetManager.get("ingame/topBar.png", Texture.class));
+		topBar.setPosition(0, level.getSize().y);
+		
+		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
+		backToMenu.setPosition(0, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	}
 
 	@Override
@@ -52,23 +66,18 @@ public class CreditsScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 
-		font.setColor(Color.WHITE);
-		String title = "Credits";
-		String text = "Developers: Potatoes(Bogdan Guranda, Ciprian-Corvin Tiperciuc)\n"
-				+ "Artist: Aarts(Andrei Guranda)";
+		font.setColor(Color.YELLOW);
+		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
-		font.setScale(1.f);
-		font.draw(game.batch, title,
-				(game.VIRTUAL_WIDTH / 2) - font.getBounds(title).width / 2,
-				game.VIRTUAL_HEIGHT - font.getBounds(title).height / 2);
-		font.setScale(0.5f);
-		font.drawMultiLine(game.batch, text, 0,
-				game.VIRTUAL_HEIGHT - font.getBounds(title).width * 2);
+		topBar.draw(game.batch);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height);
 		game.batch.end();
-
+		
 		stage.act();
 		stage.draw();
+		
+		level.render(delta); // foloseste singur game.batch
 	}
 
 	@Override
@@ -76,6 +85,12 @@ public class CreditsScreen implements Screen, InputProcessor {
 		stage.dispose();
 		game.assetManager.unload("skins/uiskin.atlas");
 		game.assetManager.unload("skins/uiskin.json");
+		
+		game.assetManager.unload("ingame/bug/bug0001.png");
+		game.assetManager.unload("ingame/free.png");
+		game.assetManager.unload("ingame/wall.png");
+		game.assetManager.unload("ingame/spot.png");
+		game.assetManager.unload("ingame/vase.png");
 	}
 
 	@Override
@@ -88,7 +103,10 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		level.load(level.levelNumber);
 		stage.addActor(backToMenu);
+		
+		multiplexer.addProcessor(level);
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
@@ -96,23 +114,26 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void pause() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void resume() {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Input.Keys.ESCAPE) {
-			game.setScreen(game.mainMenuScreen);
+			game.setScreen(game.chooseLevelScreen);
 			return true;
 		}
 		return false;
@@ -120,36 +141,43 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 }

@@ -23,7 +23,8 @@ public class MenuButton extends TextButton {
 	public static final int OPTIONS = 1;
 	public static final int CREDITS = 2;
 	public static final int EXIT = 3;
-	public static final int BACK = 4;
+	public static final int BACKTOMENU = 4;
+	public static final int BACKTOCHOOSELEVEL = 5;
 	public static final int LEVEL = 6;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
@@ -193,7 +194,7 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == BACK)
+		else if (buttonType == BACKTOMENU)
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -206,9 +207,8 @@ public class MenuButton extends TextButton {
 				public void clicked(InputEvent event, float x, float y) {
 					int level = Integer.parseInt(((MenuButton)event.getListenerActor()).getText().toString());
 					
-//					Uncomment after merge
-//					game.ingameScreen.level.levelNumber = level;
-//					game.setScreen(game.ingameScreen);
+					game.ingameScreen.level.levelNumber = level;
+					game.setScreen(game.ingameScreen);
 				}
 				
 				@Override
@@ -225,6 +225,13 @@ public class MenuButton extends TextButton {
 				}
 			});
 		}
+		else if (buttonType == BACKTOCHOOSELEVEL)
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.chooseLevelScreen);
+				}
+			});
 		else
 			throw new Exception("Error: Wrong button type...");
 	}

@@ -53,7 +53,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 		background = new Sprite(game.assetManager.get("ChooseLevelScreen.png",
 				Texture.class));
-		backToMenu = new MenuButton(game, "Back", MenuButton.BACK,
+		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
 
 		uiSkin = game.assetManager.get("skins/uiskin.json", Skin.class);
@@ -102,7 +102,6 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
 		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
 				game.VIRTUAL_HEIGHT / 2.f, 0.f);
@@ -122,19 +121,16 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -229,55 +225,56 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 			if (focusedButton != null) {
 				int level = Integer.parseInt(focusedButton.getText().toString());
 
-//				Uncomment after merge
-//				game.ingameScreen.level.levelNumber = level;
-//				game.setScreen(game.ingameScreen);
+				game.ingameScreen.level.levelNumber = level;
+				game.setScreen(game.ingameScreen);
 				return true;
 			}
 		}
 		
+
+//		if (keycode == Input.Keys.NUM_1) {
+//			game.ingameScreen.level.levelNumber = 1;
+//			game.setScreen(game.ingameScreen);
+//		}
+//		if (keycode == Input.Keys.NUM_2) {
+//			game.ingameScreen.level.levelNumber = 2;
+//			game.setScreen(game.ingameScreen);
+//		}
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
