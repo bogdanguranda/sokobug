@@ -37,9 +37,9 @@ public class Level implements InputProcessor{
 		labyrinthSprites.put("W", new Sprite(game.assetManager.get("ingame/wall.png", Texture.class)));
 		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
 		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
-		labyrinthSprites.put("B", new Sprite(game.assetManager.get("ingame/bug.png", Texture.class)));
+		labyrinthSprites.put("B", new Sprite(game.assetManager.get("ingame/bug/bug0001.png", Texture.class)));
 		
-		bug  = new MovingObject(game.assetManager.get("ingame/bug.png", Texture.class), LevelObject.TYPE_BUG);
+		bug  = new MovingObject(game.assetManager.get("ingame/bug/bug0001.png", Texture.class), LevelObject.TYPE_BUG);
 	}
 
 	public Vector2 getSize() {

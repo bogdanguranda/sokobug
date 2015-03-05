@@ -39,7 +39,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
 		game.assetManager.load("skins/uiskin.json", Skin.class, new SkinLoader.SkinParameter("skins/uiskin.atlas"));
 		
-		game.assetManager.load("ingame/bug.png", Texture.class);
+		game.assetManager.load("ingame/bug/bug0001.png", Texture.class);
 		game.assetManager.load("ingame/free.png", Texture.class);
 		game.assetManager.load("ingame/wall.png", Texture.class);
 		game.assetManager.load("ingame/spot.png", Texture.class);
@@ -86,7 +86,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.assetManager.unload("skins/uiskin.atlas");
 		game.assetManager.unload("skins/uiskin.json");
 		
-		game.assetManager.unload("ingame/bug.png");
+		game.assetManager.unload("ingame/bug/bug0001.png");
 		game.assetManager.unload("ingame/free.png");
 		game.assetManager.unload("ingame/wall.png");
 		game.assetManager.unload("ingame/spot.png");
