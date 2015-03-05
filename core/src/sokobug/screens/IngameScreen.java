@@ -53,7 +53,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		topBar = new Sprite(game.assetManager.get("ingame/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 		
-		backToMenu = new MenuButton(game.mainMenuScreen, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
+		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
 		backToMenu.setPosition(0, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	}
 

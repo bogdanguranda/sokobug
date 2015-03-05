@@ -24,18 +24,16 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private Stage stage;
 	private Sprite background;
 	private InputMultiplexer multiplexer;
+
+	public Skin uiSkin;
+	public Sokobug game;
+
 	private MenuButton play;
 	private MenuButton options;
 	private MenuButton credits;
 	private MenuButton exit;
-
-	public Sokobug game;
-	public Boolean isPlayFocused;
-	public Boolean isOptionFocused;
-	public Boolean isCreditsFocused;
-	public Boolean isExitFocused;
-	public Skin focusedButtonSkin;
-	public Skin normalButtonSkin;
+	private MenuButton focusedButton;
+	public MenuButton[] menuButtons;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -47,25 +45,36 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
 		game.assetManager.load("skins/uiskin.json", Skin.class,
 				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
-		game.assetManager.load("skins/focusedButton.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/focusedButton.atlas"));
 		game.assetManager.finishLoading();
 
 		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
 				Texture.class));
-		play = new MenuButton(this, "Play", MenuButton.PLAY,
+
+		play = new MenuButton(game, "Play", MenuButton.PLAY,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
-		options = new MenuButton(this, "Options", MenuButton.OPTIONS,
+		options = new MenuButton(game, "Options", MenuButton.OPTIONS,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
-		credits = new MenuButton(this, "Credits", MenuButton.CREDITS,
+		credits = new MenuButton(game, "Credits", MenuButton.CREDITS,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
-		exit = new MenuButton(this, "Exit", MenuButton.EXIT,
+		exit = new MenuButton(game, "Exit", MenuButton.EXIT,
 				game.assetManager.get("skins/uiskin.json", Skin.class));
 
-		focusedButtonSkin = game.assetManager.get("skins/focusedButton.json",
-				Skin.class);
-		normalButtonSkin = game.assetManager.get("skins/uiskin.json",
-				Skin.class);
+		play.setUpNeighbour(exit);
+		play.setDownNeighbour(options);
+		options.setUpNeighbour(play);
+		options.setDownNeighbour(credits);
+		credits.setUpNeighbour(options);
+		credits.setDownNeighbour(exit);
+		exit.setUpNeighbour(credits);
+		exit.setDownNeighbour(play);
+
+		menuButtons = new MenuButton[4];
+		menuButtons[0] = play;
+		menuButtons[1] = options;
+		menuButtons[2] = credits;
+		menuButtons[3] = exit;
+
+		uiSkin = game.assetManager.get("skins/uiskin.json", Skin.class);
 
 		table.add(play).row();
 		table.add(options).row();
@@ -75,24 +84,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		// table.setDebug(true);
 
 		stage.addActor(table);
-	}
-
-	public MenuButton getFocusedButton() {
-		if (isOptionFocused)
-			return options;
-		else if (isCreditsFocused)
-			return credits;
-		else if (isExitFocused)
-			return exit;
-		else
-			return play;
-	}
-
-	public void defocusButtons() {
-		isPlayFocused = false;
-		isOptionFocused = false;
-		isCreditsFocused = false;
-		isExitFocused = false;
 	}
 
 	@Override
@@ -123,12 +114,10 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	public void show() {
 		// Each time MainMenuScreen is set again, the focused button
 		// is set to none.
-		defocusButtons();
+		MenuButton.defocusButtons(menuButtons);
 
-		play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		options.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		credits.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-		exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
+		for (MenuButton button : menuButtons)
+			button.setStyle(uiSkin.get("default", TextButtonStyle.class));
 
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -156,7 +145,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		game.assetManager.unload("MainMenuScreen.png");
 		game.assetManager.unload("skins/uiskin.atlas");
 		game.assetManager.unload("skins/uiskin.json");
-		game.assetManager.unload("skins/focusedButton.json");
 	}
 
 	@Override
@@ -165,80 +153,56 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		if (!play.isOver() && !options.isOver() && !credits.isOver()
 				&& !exit.isOver()) {
 			if (keycode == Input.Keys.DOWN) {
-				if (isPlayFocused) {
-					isPlayFocused = false;
-					isOptionFocused = true;
-					play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					options.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
-				} else if (isOptionFocused) {
-					isOptionFocused = false;
-					isCreditsFocused = true;
-					options.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					credits.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
-				} else if (isCreditsFocused) {
-					isCreditsFocused = false;
-					isExitFocused = true;
-					credits.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
-				} else if (isExitFocused) {
-					isExitFocused = false;
-					isPlayFocused = true;
-					exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+				focusedButton = MenuButton.getFocusedButton(menuButtons);
+
+				if (focusedButton != null) {
+					focusedButton.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					focusedButton.getDownNeighbour().setStyle(
+							uiSkin.get("btn_focused", TextButtonStyle.class));
+					focusedButton.getDownNeighbour().setFocused(true);
+					focusedButton.setFocused(false);
 				} else {
-					isPlayFocused = true;
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
+					play.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
+					play.setFocused(true);
 				}
+
 				return true;
 
 			} else if (keycode == Input.Keys.UP) {
-				if (isPlayFocused) {
-					isPlayFocused = false;
-					isExitFocused = true;
-					play.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
-				} else if (isExitFocused) {
-					isExitFocused = false;
-					isCreditsFocused = true;
-					exit.setStyle(normalButtonSkin.get(TextButtonStyle.class));
-					credits.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
-				} else if (isCreditsFocused) {
-					isCreditsFocused = false;
-					isOptionFocused = true;
-					credits.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					options.setStyle(focusedButtonSkin
-							.get(TextButtonStyle.class));
-				} else if (isOptionFocused) {
-					isOptionFocused = false;
-					isPlayFocused = true;
-					options.setStyle(normalButtonSkin
-							.get(TextButtonStyle.class));
-					play.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
-				} else {
-					isExitFocused = true;
-					exit.setStyle(focusedButtonSkin.get(TextButtonStyle.class));
-				}
-				return true;
+				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
+				if (focusedButton != null) {
+					focusedButton.setStyle(uiSkin.get("default",
+							TextButtonStyle.class));
+					focusedButton.getUpNeighbour().setStyle(
+							uiSkin.get("btn_focused", TextButtonStyle.class));
+					focusedButton.getUpNeighbour().setFocused(true);
+					focusedButton.setFocused(false);
+				} else {
+					exit.setStyle(uiSkin.get("btn_focused",
+							TextButtonStyle.class));
+					exit.setFocused(true);
+				}
+
+				return true;
 			}
 		}
 
 		if (keycode == Input.Keys.ENTER) {
-			if (isPlayFocused)
-				game.setScreen(game.chooseLevelScreen);
-			else if (isOptionFocused)
-				game.setScreen(game.optionsScreen);
-			else if (isCreditsFocused)
-				game.setScreen(game.creditsScreen);
-			else if (isExitFocused)
-				Gdx.app.exit();
-			return true;
+			focusedButton = MenuButton.getFocusedButton(menuButtons);
+			if (focusedButton != null) {
+				if (focusedButton.getType() == MenuButton.PLAY)
+					game.setScreen(game.chooseLevelScreen);
+				else if (focusedButton.getType() == MenuButton.OPTIONS)
+					game.setScreen(game.optionsScreen);
+				else if (focusedButton.getType() == MenuButton.CREDITS)
+					game.setScreen(game.creditsScreen);
+				else if (focusedButton.getType() == MenuButton.EXIT)
+					Gdx.app.exit();
+				return true;
+			}
 		}
 		return false;
 	}
