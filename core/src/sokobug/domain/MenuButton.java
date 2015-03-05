@@ -25,9 +25,13 @@ public class MenuButton extends TextButton {
 	public static final int EXIT = 3;
 	public static final int BACK = 4;
 	public static final int LEVEL = 6;
-
+	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
-		super(buttonText, skin);
+		this(game, buttonText, buttonType, skin, "default");
+	}
+	
+	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin, String styleName) {
+		super(buttonText, skin, styleName);
 		this.buttonType = buttonType;
 		this.game = game;
 		focused = false;
@@ -87,6 +91,26 @@ public class MenuButton extends TextButton {
 	public void setLeftNeighbour(MenuButton leftNeighbour) {
 		this.leftNeighbour = leftNeighbour;
 	}
+	
+	public static MenuButton getFocusedButton(MenuButton[] buttons) {
+		for (MenuButton button : buttons)
+			if (button.isFocused())
+				return button;
+
+		return null;
+	}
+	
+	public static void defocusButtons(MenuButton[] buttons) {
+		for (MenuButton button : buttons)
+			button.setFocused(false);
+	}
+	
+	public static boolean isMouseOverButton(MenuButton[] buttons) {
+		for (MenuButton button : buttons)
+			if (button.isOver())
+				return true;
+		return false;
+	}
 
 	private void manageEvents() throws Exception {
 		if (buttonType == PLAY)
@@ -100,14 +124,13 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
-					MenuButton focusedButton = game.mainMenuScreen
-							.getFocusedButton();
+					MenuButton focusedButton = getFocusedButton(game.mainMenuScreen.menuButtons);
 
 					if (focusedButton != null)
 						focusedButton.setStyle(game.mainMenuScreen.uiSkin
 								.get(TextButtonStyle.class));
 
-					game.mainMenuScreen.defocusButtons();
+					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
 		else if (buttonType == OPTIONS)
@@ -121,14 +144,13 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
-					MenuButton focusedButton = game.mainMenuScreen
-							.getFocusedButton();
+					MenuButton focusedButton = getFocusedButton(game.mainMenuScreen.menuButtons);
 
 					if (focusedButton != null)
 						focusedButton.setStyle(game.mainMenuScreen.uiSkin
 								.get(TextButtonStyle.class));
 
-					game.mainMenuScreen.defocusButtons();
+					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
 		else if (buttonType == CREDITS)
@@ -142,14 +164,13 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
-					MenuButton focusedButton = game.mainMenuScreen
-							.getFocusedButton();
+					MenuButton focusedButton = getFocusedButton(game.mainMenuScreen.menuButtons);
 
 					if (focusedButton != null)
 						focusedButton.setStyle(game.mainMenuScreen.uiSkin
 								.get(TextButtonStyle.class));
 
-					game.mainMenuScreen.defocusButtons();
+					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
 		else if (buttonType == EXIT)
@@ -163,14 +184,13 @@ public class MenuButton extends TextButton {
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
-					MenuButton focusedButton = game.mainMenuScreen
-							.getFocusedButton();
+					MenuButton focusedButton = getFocusedButton(game.mainMenuScreen.menuButtons);
 
 					if (focusedButton != null)
 						focusedButton.setStyle(game.mainMenuScreen.uiSkin
 								.get(TextButtonStyle.class));
 
-					game.mainMenuScreen.defocusButtons();
+					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
 		else if (buttonType == BACK)
@@ -180,6 +200,31 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
+		else if (buttonType == LEVEL) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					int level = Integer.parseInt(((MenuButton)event.getListenerActor()).getText().toString());
+					
+//					Uncomment after merge
+//					game.ingameScreen.level.levelNumber = level;
+//					game.setScreen(game.ingameScreen);
+				}
+				
+				@Override
+				public void enter(InputEvent event, float x, float y,
+						int pointer, Actor fromActor) {
+			
+					MenuButton focusedButton = getFocusedButton(game.chooseLevelScreen.levelButtons);
+
+					if (focusedButton != null)
+						focusedButton.setStyle(game.mainMenuScreen.uiSkin
+								.get("default-level-btn", TextButtonStyle.class));
+
+					defocusButtons(game.mainMenuScreen.menuButtons);
+				}
+			});
+		}
 		else
 			throw new Exception("Error: Wrong button type...");
 	}

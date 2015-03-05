@@ -33,7 +33,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private MenuButton credits;
 	private MenuButton exit;
 	private MenuButton focusedButton;
-	private MenuButton[] menuButtons;
+	public MenuButton[] menuButtons;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -86,19 +86,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		stage.addActor(table);
 	}
 
-	public MenuButton getFocusedButton() {
-		for (MenuButton button : menuButtons)
-			if (button.isFocused())
-				return button;
-
-		return null;
-	}
-
-	public void defocusButtons() {
-		for (MenuButton button : menuButtons)
-			button.setFocused(false);
-	}
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
@@ -127,7 +114,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	public void show() {
 		// Each time MainMenuScreen is set again, the focused button
 		// is set to none.
-		defocusButtons();
+		MenuButton.defocusButtons(menuButtons);
 
 		for (MenuButton button : menuButtons)
 			button.setStyle(uiSkin.get("default", TextButtonStyle.class));
@@ -166,7 +153,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		if (!play.isOver() && !options.isOver() && !credits.isOver()
 				&& !exit.isOver()) {
 			if (keycode == Input.Keys.DOWN) {
-				focusedButton = getFocusedButton();
+				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
 					focusedButton.setStyle(uiSkin.get("default",
@@ -184,7 +171,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				return true;
 
 			} else if (keycode == Input.Keys.UP) {
-				focusedButton = getFocusedButton();
+				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
 					focusedButton.setStyle(uiSkin.get("default",
@@ -204,16 +191,18 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		}
 
 		if (keycode == Input.Keys.ENTER) {
-			focusedButton = getFocusedButton();
-			if (focusedButton.getType() == MenuButton.PLAY)
-				game.setScreen(game.chooseLevelScreen);
-			else if (focusedButton.getType() == MenuButton.OPTIONS)
-				game.setScreen(game.optionsScreen);
-			else if (focusedButton.getType() == MenuButton.CREDITS)
-				game.setScreen(game.creditsScreen);
-			else if (focusedButton.getType() == MenuButton.EXIT)
-				Gdx.app.exit();
-			return true;
+			focusedButton = MenuButton.getFocusedButton(menuButtons);
+			if (focusedButton != null) {
+				if (focusedButton.getType() == MenuButton.PLAY)
+					game.setScreen(game.chooseLevelScreen);
+				else if (focusedButton.getType() == MenuButton.OPTIONS)
+					game.setScreen(game.optionsScreen);
+				else if (focusedButton.getType() == MenuButton.CREDITS)
+					game.setScreen(game.creditsScreen);
+				else if (focusedButton.getType() == MenuButton.EXIT)
+					Gdx.app.exit();
+				return true;
+			}
 		}
 		return false;
 	}
