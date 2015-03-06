@@ -11,6 +11,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import sokobug.Sokobug;
 
@@ -288,7 +289,87 @@ public class Level implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (!bug.isMoving()) {
+			Vector3 v = new Vector3(screenX, screenY, 0);
+			game.viewport.unproject(v);
+			int mouseX = (int)v.x, mouseY = (int)v.y; 
+			if (mouseX < bug.getSprite().getX() 
+					&& mouseY < bug.getSprite().getY() + bug.getSprite().getHeight()
+					&& mouseY > bug.getSprite().getY()) {
+				int direction = MovingObject.MOVE_LEFT;
+				LevelObject obj = isCollidingWith(bug, direction);
+				if (obj == null) {
+					bug.setMove(direction);
+				}
+				else {
+					if (obj.getType() == LevelObject.TYPE_VASE) {
+						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+						if (obj2 == null) {
+							bug.setMove(direction);
+							((MovingObject)obj).setMove(direction);
+						}
+					}
+				}
+				return true;
+			}
+			else if (mouseX > bug.getSprite().getX() + bug.getSprite().getWidth() 
+					&& mouseY < bug.getSprite().getY() + bug.getSprite().getHeight()
+					&& mouseY > bug.getSprite().getY()) {
+				int direction = MovingObject.MOVE_RIGHT;
+				LevelObject obj = isCollidingWith(bug, direction);
+				if (obj == null) {
+					bug.setMove(direction);
+				}
+				else {
+					if (obj.getType() == LevelObject.TYPE_VASE) {
+						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+						if (obj2 == null) {
+							bug.setMove(direction);
+							((MovingObject)obj).setMove(direction);
+						}
+					}
+				}
+				return true;
+			}
+			else if (mouseY > bug.getSprite().getY() + bug.getSprite().getHeight() 
+					&& mouseX < bug.getSprite().getX() + bug.getSprite().getWidth()
+					&& mouseX > bug.getSprite().getX()) {
+				int direction = MovingObject.MOVE_UP;
+				LevelObject obj = isCollidingWith(bug, direction);
+				if (obj == null) {
+					bug.setMove(direction);
+				}
+				else {
+					if (obj.getType() == LevelObject.TYPE_VASE) {
+						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+						if (obj2 == null) {
+							bug.setMove(direction);
+							((MovingObject)obj).setMove(direction);
+						}
+					}
+				}
+				return true;
+			}
+			else if (mouseY < bug.getSprite().getY()
+					&& mouseX < bug.getSprite().getX() + bug.getSprite().getWidth()
+					&& mouseX > bug.getSprite().getX()) {
+				int direction = MovingObject.MOVE_DOWN;
+				LevelObject obj = isCollidingWith(bug, direction);
+				if (obj == null) {
+					bug.setMove(direction);
+				}
+				else {
+					if (obj.getType() == LevelObject.TYPE_VASE) {
+						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+						if (obj2 == null) {
+							bug.setMove(direction);
+							((MovingObject)obj).setMove(direction);
+						}
+					}
+				}
+				return true;
+			}
+		}
 		return false;
 	}
 
