@@ -190,6 +190,23 @@ public class Level implements InputProcessor{
 			if (v.isMoving())
 				v.updateMove(deltaTime);
 		}
+		
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			keyDown(Input.Keys.LEFT);
+		}
+		else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			keyDown(Input.Keys.RIGHT);
+		}
+		else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			keyDown(Input.Keys.UP);
+		}
+		else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			keyDown(Input.Keys.DOWN);
+		}
+		
+		if (Gdx.input.isTouched()) {
+			touchDown(Gdx.input.getX(), Gdx.input.getY(),0 , Input.Buttons.LEFT);
+		}
 	}
 	
 	public boolean isVictory() {
@@ -292,7 +309,8 @@ public class Level implements InputProcessor{
 		if (!bug.isMoving()) {
 			Vector3 v = new Vector3(screenX, screenY, 0);
 			game.viewport.unproject(v);
-			int mouseX = (int)v.x, mouseY = (int)v.y; 
+			int mouseX = (int)v.x, mouseY = (int)v.y;
+			
 			if (mouseX < bug.getSprite().getX() 
 					&& mouseY < bug.getSprite().getY() + bug.getSprite().getHeight()
 					&& mouseY > bug.getSprite().getY()) {
