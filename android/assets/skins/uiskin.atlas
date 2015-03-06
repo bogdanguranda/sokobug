@@ -4,6 +4,30 @@ size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+<<<<<<< HEAD
+=======
+levelButtonDown
+  rotate: false
+  xy: 514, 306
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+levelButtonOver
+  rotate: false
+  xy: 514, 154
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+levelButtonUp
+  rotate: false
+  xy: 616, 306
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+>>>>>>> master
 menuButtonDown
   rotate: false
   xy: 2, 306
