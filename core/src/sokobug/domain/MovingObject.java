@@ -69,7 +69,7 @@ public class MovingObject extends LevelObject{
 			if (epsilon < 0) // modul
 				epsilon = -epsilon;
 			
-			if (epsilon < 2.0f) { //if its less than 2 pixels far from or beyond destination then move to destination and finish the move order
+			if (epsilon < 10.0f) { //if its less than 2 pixels far from or beyond destination then move to destination and finish the move order
 				if (moveDirection == MOVE_LEFT) {
 					setPositionColumn(getPositionColumn()-1);
 				}
