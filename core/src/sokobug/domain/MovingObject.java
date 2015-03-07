@@ -46,10 +46,10 @@ public class MovingObject extends LevelObject{
 				moveY = -(deltaTime * moveSpeed);
 				movedDistance -= moveY;
 			}
-			
 			sprite.setPosition(sprite.getX() + moveX, sprite.getY() + moveY);
 			
-			if (movedDistance >= distanceToMove) {
+			float finalDistance = distanceToMove / 20.f;
+			if (movedDistance + finalDistance >= distanceToMove) {
 				if (moveDirection == MOVE_LEFT) {
 					setPositionColumn(getPositionColumn()-1);
 				}
