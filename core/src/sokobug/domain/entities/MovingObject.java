@@ -1,8 +1,6 @@
-package sokobug.domain;
+package sokobug.domain.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-
-public class MovingObject extends LevelObject{
+public abstract class MovingObject extends LabyrinthObject {
 	public static final int MOVE_NONE = -1;
 	public static final int MOVE_LEFT = 0;
 	public static final int MOVE_RIGHT = 1;
@@ -10,20 +8,28 @@ public class MovingObject extends LevelObject{
 	public static final int MOVE_DOWN = 3;
 	
 	private float moveSpeed = 400.f; // 400 de pixeli pe secunda
-	public int moveDirection = MOVE_NONE;
-	public float distanceToMove = sprite.getWidth();
-	public float movedDistance = 0;
+	private int moveDirection = MOVE_NONE;
+	private float distanceToMove = LabyrinthObject.OBJECT_SIZE;
+	private float movedDistance = 0;
 	
-	public MovingObject(Texture texture, int TYPE_OBJECT) {
-		super(texture, TYPE_OBJECT);
+	public MovingObject(int TYPE_OBJECT) {
+		super(TYPE_OBJECT);
+	}
+	
+	public float getMoveSpeed() {
+		return moveSpeed;
+	}
+	
+	public void setMoveSpeed(float moveSpeed) {
+		this.moveSpeed = moveSpeed;
 	}
 	
 	public boolean isMoving() {
 		return moveDirection != MOVE_NONE;
 	}
 	
-	public void setMove(int MOVE_DIRECTION) {
-		moveDirection = MOVE_DIRECTION;
+	public void move(int MOVE_DIRECTION) {
+		this.moveDirection = MOVE_DIRECTION;
 	}
 	
 	public void updateMove(float deltaTime) {
@@ -46,7 +52,8 @@ public class MovingObject extends LevelObject{
 				moveY = -(deltaTime * moveSpeed);
 				movedDistance -= moveY;
 			}
-			sprite.setPosition(sprite.getX() + moveX, sprite.getY() + moveY);
+			positionX = positionX + moveX;
+			positionY = positionY + moveY;
 			
 			float finalDistance = distanceToMove / 20.f;
 			if (movedDistance + finalDistance >= distanceToMove) {

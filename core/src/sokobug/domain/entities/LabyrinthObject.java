@@ -1,20 +1,20 @@
-package sokobug.domain;
+package sokobug.domain.entities;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
-public class LevelObject {
+public abstract class LabyrinthObject {
 	public static final int TYPE_BUG = 0;
 	public static final int TYPE_VASE = 1;
 	public static final int TYPE_WALL = 2;
+	//public static final int TYPE_FREE = 3;
+	//public static final int TYPE_SPOT = 4;
 	
+	public static final int OBJECT_SIZE = 80;
 	private int positionLine;
 	private int positionColumn;
-	protected Sprite sprite;
+	protected float positionX;
+	protected float positionY;
 	private int type;
 	
-	public LevelObject(Texture texture, int TYPE_OBJECT) {
-		this.sprite = new Sprite(texture);
+	public LabyrinthObject(int TYPE_OBJECT) {
 		this.type = TYPE_OBJECT;
 	}
 	
@@ -32,19 +32,23 @@ public class LevelObject {
 	
 	public void setPositionLine(int positionLine) {
 		this.positionLine = positionLine;
-		sprite.setPosition(sprite.getX(), positionLine * sprite.getHeight());
+		positionY = positionLine * OBJECT_SIZE;
 	}
 	
 	public void setPositionColumn(int positionColumn) {
 		this.positionColumn = positionColumn;
-		sprite.setPosition(positionColumn * sprite.getWidth(), sprite.getY());
+		positionX = positionColumn * OBJECT_SIZE;
 	}
 	
-	public Sprite getSprite() {
-		return sprite;
+	public float getPositionX() {
+		return positionX;
+	}
+
+	public float getPositionY() {
+		return positionY;
 	}
 	
-	public void setSprite(Texture texture) {
-		this.sprite.setTexture(texture);
+	public int getSize() {
+		return OBJECT_SIZE;
 	}
 }

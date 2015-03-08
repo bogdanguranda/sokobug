@@ -10,10 +10,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import sokobug.Sokobug;
+import sokobug.domain.entities.AnimationObject;
+import sokobug.domain.entities.LabyrinthObject;
+import sokobug.domain.entities.MovingObject;
+import sokobug.domain.entities.SpriteObject;
 
 public class Level implements InputProcessor{
 	
@@ -27,9 +32,9 @@ public class Level implements InputProcessor{
 	
 	private Map<String, Sprite> labyrinthSprites = new HashMap<String, Sprite>();
 
-	private MovingObject bug;
-	private ArrayList<MovingObject> vases = new ArrayList<MovingObject>();
-	private ArrayList<LevelObject> walls = new ArrayList<LevelObject>();
+	private AnimationObject bug;
+	private ArrayList<SpriteObject> vases = new ArrayList<SpriteObject>();
+	private ArrayList<SpriteObject> walls = new ArrayList<SpriteObject>();
 	
 	public Level(Sokobug game) {
 		this.game = game;
@@ -38,9 +43,8 @@ public class Level implements InputProcessor{
 		labyrinthSprites.put("W", new Sprite(game.assetManager.get("ingame/wall.png", Texture.class)));
 		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
 		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
-		labyrinthSprites.put("B", new Sprite(game.assetManager.get("ingame/bug/bug0001.png", Texture.class)));
 		
-		bug  = new MovingObject(game.assetManager.get("ingame/bug/bug0001.png", Texture.class), LevelObject.TYPE_BUG);
+		bug  = new AnimationObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), LabyrinthObject.TYPE_BUG);
 	}
 
 	public Vector2 getSize() {
@@ -64,14 +68,14 @@ public class Level implements InputProcessor{
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
 				}
 				else if (lineElements[j].compareTo("V") == 0) {
-					MovingObject v = new MovingObject(game.assetManager.get("ingame/vase.png", Texture.class), LevelObject.TYPE_VASE);
+					SpriteObject v = new SpriteObject(game.assetManager.get("ingame/vase.png", Texture.class), LabyrinthObject.TYPE_VASE);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
 					vases.add(v);
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
-					LevelObject w = new LevelObject(game.assetManager.get("ingame/wall.png", Texture.class), LevelObject.TYPE_WALL);
+					SpriteObject w = new SpriteObject(game.assetManager.get("ingame/wall.png", Texture.class), LabyrinthObject.TYPE_WALL);
 					w.setPositionLine((LABYRINTH_ROWS-1) - i);
 					w.setPositionColumn(j);
 					walls.add(w);
@@ -98,35 +102,35 @@ public class Level implements InputProcessor{
 			}
 		}
 		
-		for (LevelObject w: walls) {
-			w.getSprite().draw(game.batch);
+		for (SpriteObject w: walls) {
+			w.draw(game.batch);
 		}
 		
-		for (MovingObject v: vases) {
-			v.getSprite().draw(game.batch);
+		for (SpriteObject v: vases) {
+			v.draw(game.batch);
 		}
 		
-		bug.getSprite().draw(game.batch);
+		bug.draw(game.batch, deltaTime);
 		
 		game.batch.end();
 	}
 	
-	public LevelObject isCollidingWith(MovingObject lvlObj, int MOVE_DIRECTION) {
+	public LabyrinthObject isCollidingWith(MovingObject lvlObj, int MOVE_DIRECTION) {
 		int i = lvlObj.getPositionLine();
 		int j = lvlObj.getPositionColumn();
 		if (MOVE_DIRECTION == MovingObject.MOVE_LEFT) {
 			int iDest = i;
 			int jDest = j - 1;
 			
-			for (LevelObject w: walls) {
+			for (SpriteObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (MovingObject v: vases) {
+			for (SpriteObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return (LevelObject)v;
+					return v;
 				}
 			}
 		}
@@ -134,15 +138,15 @@ public class Level implements InputProcessor{
 			int iDest = i;
 			int jDest = j + 1;
 			
-			for (LevelObject w: walls) {
+			for (SpriteObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (MovingObject v: vases) {
+			for (SpriteObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return (LevelObject)v;
+					return v;
 				}
 			}
 		}
@@ -150,15 +154,15 @@ public class Level implements InputProcessor{
 			int iDest = i + 1;
 			int jDest = j;
 			
-			for (LevelObject w: walls) {
+			for (SpriteObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (MovingObject v: vases) {
+			for (SpriteObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return (LevelObject)v;
+					return v;
 				}
 			}
 		}
@@ -166,15 +170,15 @@ public class Level implements InputProcessor{
 			int iDest = i - 1;
 			int jDest = j;
 			
-			for (LevelObject w: walls) {
+			for (SpriteObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (MovingObject v: vases) {
+			for (SpriteObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return (LevelObject)v;
+					return v;
 				}
 			}
 		}
@@ -186,7 +190,7 @@ public class Level implements InputProcessor{
 			bug.updateMove(deltaTime);
 		}
 		
-		for (MovingObject v: vases) {
+		for (SpriteObject v: vases) {
 			if (v.isMoving())
 				v.updateMove(deltaTime);
 		}
@@ -222,16 +226,16 @@ public class Level implements InputProcessor{
 		if (!bug.isMoving()) {
 			if (keycode == Input.Keys.LEFT) {
 				int direction = MovingObject.MOVE_LEFT;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
@@ -239,16 +243,16 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.RIGHT) {
 				int direction = MovingObject.MOVE_RIGHT;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
@@ -256,16 +260,16 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.UP) {
 				int direction = MovingObject.MOVE_UP;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
@@ -273,16 +277,16 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.DOWN) {
 				int direction = MovingObject.MOVE_DOWN;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
@@ -311,77 +315,77 @@ public class Level implements InputProcessor{
 			game.viewport.unproject(v);
 			int mouseX = (int)v.x, mouseY = (int)v.y;
 			
-			if (mouseX < bug.getSprite().getX() 
-					&& mouseY < bug.getSprite().getY() + bug.getSprite().getHeight()
-					&& mouseY > bug.getSprite().getY()) {
+			if (mouseX < bug.getPositionX()
+					&& mouseY < bug.getPositionY() + bug.getHeight()
+					&& mouseY > bug.getPositionY()) {
 				int direction = MovingObject.MOVE_LEFT;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
 				return true;
 			}
-			else if (mouseX > bug.getSprite().getX() + bug.getSprite().getWidth() 
-					&& mouseY < bug.getSprite().getY() + bug.getSprite().getHeight()
-					&& mouseY > bug.getSprite().getY()) {
+			else if (mouseX > bug.getPositionX() + bug.getWidth() 
+					&& mouseY < bug.getPositionY() + bug.getHeight()
+					&& mouseY > bug.getPositionY()) {
 				int direction = MovingObject.MOVE_RIGHT;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
 				return true;
 			}
-			else if (mouseY > bug.getSprite().getY() + bug.getSprite().getHeight() 
-					&& mouseX < bug.getSprite().getX() + bug.getSprite().getWidth()
-					&& mouseX > bug.getSprite().getX()) {
+			else if (mouseY > bug.getPositionY() + bug.getHeight() 
+					&& mouseX < bug.getPositionX() + bug.getWidth()
+					&& mouseX > bug.getPositionX()) {
 				int direction = MovingObject.MOVE_UP;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
 				return true;
 			}
-			else if (mouseY < bug.getSprite().getY()
-					&& mouseX < bug.getSprite().getX() + bug.getSprite().getWidth()
-					&& mouseX > bug.getSprite().getX()) {
+			else if (mouseY < bug.getPositionY()
+					&& mouseX < bug.getPositionX() + bug.getWidth()
+					&& mouseX > bug.getPositionX()) {
 				int direction = MovingObject.MOVE_DOWN;
-				LevelObject obj = isCollidingWith(bug, direction);
+				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
-					bug.setMove(direction);
+					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LevelObject.TYPE_VASE) {
-						LevelObject obj2 = isCollidingWith((MovingObject)obj, direction);
+					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
-							bug.setMove(direction);
-							((MovingObject)obj).setMove(direction);
+							bug.move(direction);
+							((MovingObject)obj).move(direction);
 						}
 					}
 				}
