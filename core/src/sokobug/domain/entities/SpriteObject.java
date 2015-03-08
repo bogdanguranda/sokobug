@@ -12,9 +12,26 @@ public class SpriteObject extends MovingObject {
 		sprite = new Sprite(texture);
 	}
 	
-	public void draw(SpriteBatch batch) {
+	@Override
+	public void updateMove(float deltaTime) {
+		super.updateMove(deltaTime);
 		sprite.setPosition(positionX, positionY);
+	}
+	
+	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
+	}
+	
+	@Override
+	public void setPositionLine(int positionLine) {
+		super.setPositionLine(positionLine);
+		sprite.setPosition(positionX, positionY);
+	}
+	
+	@Override
+	public void setPositionColumn(int positionColumn) {
+		super.setPositionColumn(positionColumn);
+		sprite.setPosition(positionX, positionY);
 	}
 	
 }
