@@ -1,19 +1,17 @@
 package sokobug.domain.entities;
 
 public abstract class MovingObject extends LabyrinthObject {
-	public static final int MOVE_NONE = -1;
-	public static final int MOVE_LEFT = 0;
-	public static final int MOVE_RIGHT = 1;
-	public static final int MOVE_UP = 2;
-	public static final int MOVE_DOWN = 3;
+	public enum MoveDirection {
+		NONE, LEFT, RIGHT, UP, DOWN
+	}
 	
 	private float moveSpeed = 400.f; // 400 de pixeli pe secunda
-	private int moveDirection = MOVE_NONE;
+	private MoveDirection moveDirection = MoveDirection.NONE;
 	private float distanceToMove = LabyrinthObject.OBJECT_SIZE;
 	private float movedDistance = 0;
 	
-	public MovingObject(int TYPE_OBJECT) {
-		super(TYPE_OBJECT);
+	public MovingObject(Type type) {
+		super(type);
 	}
 	
 	public float getMoveSpeed() {
@@ -25,30 +23,30 @@ public abstract class MovingObject extends LabyrinthObject {
 	}
 	
 	public boolean isMoving() {
-		return moveDirection != MOVE_NONE;
+		return moveDirection != MoveDirection.NONE;
 	}
 	
-	public void move(int MOVE_DIRECTION) {
-		this.moveDirection = MOVE_DIRECTION;
+	public void move(MoveDirection direction) {
+		this.moveDirection = direction;
 	}
 	
 	public void updateMove(float deltaTime) {
 		if (isMoving()) {
 			float moveX = 0, moveY = 0;
 			
-			if (moveDirection == MOVE_RIGHT) {
+			if (moveDirection == MoveDirection.RIGHT) {
 				moveX = (deltaTime * moveSpeed);
 				movedDistance += moveX;
 			}
-			else if (moveDirection == MOVE_UP) {
+			else if (moveDirection == MoveDirection.UP) {
 				moveY = (deltaTime * moveSpeed);
 				movedDistance += moveY;
 			}
-			else if (moveDirection == MOVE_LEFT) {
+			else if (moveDirection == MoveDirection.LEFT) {
 				moveX = -(deltaTime * moveSpeed);
 				movedDistance -= moveX;
 			}
-			else if (moveDirection == MOVE_DOWN) {
+			else if (moveDirection == MoveDirection.DOWN) {
 				moveY = -(deltaTime * moveSpeed);
 				movedDistance -= moveY;
 			}
@@ -57,20 +55,20 @@ public abstract class MovingObject extends LabyrinthObject {
 			
 			float finalDistance = distanceToMove / 20.f;
 			if (movedDistance + finalDistance >= distanceToMove) {
-				if (moveDirection == MOVE_LEFT) {
+				if (moveDirection == MoveDirection.LEFT) {
 					setPositionColumn(getPositionColumn()-1);
 				}
-				else if (moveDirection == MOVE_RIGHT) {
+				else if (moveDirection == MoveDirection.RIGHT) {
 					setPositionColumn(getPositionColumn()+1);
 				}
-				else if (moveDirection == MOVE_UP) {
+				else if (moveDirection == MoveDirection.UP) {
 					setPositionLine(getPositionLine()+1);
 				}
-				else if (moveDirection == MOVE_DOWN) {
+				else if (moveDirection == MoveDirection.DOWN) {
 					setPositionLine(getPositionLine()-1);
 				}
 				movedDistance = 0;
-				moveDirection = MOVE_NONE;
+				moveDirection = MoveDirection.NONE;
 			}
 		}
 		

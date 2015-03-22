@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SpriteObject extends MovingObject {
 	private Sprite sprite;
 	
-	public SpriteObject(Texture texture, int TYPE_OBJECT) {
-		super(TYPE_OBJECT);
+	public SpriteObject(Texture texture, Type type) {
+		super(type);
 		sprite = new Sprite(texture);
 	}
 	

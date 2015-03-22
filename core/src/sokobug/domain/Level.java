@@ -17,6 +17,8 @@ import com.badlogic.gdx.math.Vector3;
 import sokobug.Sokobug;
 import sokobug.domain.entities.AnimationObject;
 import sokobug.domain.entities.LabyrinthObject;
+import sokobug.domain.entities.LabyrinthObject.Type;
+import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
 import sokobug.domain.entities.SpriteObject;
 
@@ -44,7 +46,7 @@ public class Level implements InputProcessor{
 		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
 		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
 		
-		bug  = new AnimationObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), LabyrinthObject.TYPE_BUG);
+		bug  = new AnimationObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
 	}
 
 	public Vector2 getSize() {
@@ -68,14 +70,14 @@ public class Level implements InputProcessor{
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
 				}
 				else if (lineElements[j].compareTo("V") == 0) {
-					SpriteObject v = new SpriteObject(game.assetManager.get("ingame/vase.png", Texture.class), LabyrinthObject.TYPE_VASE);
+					SpriteObject v = new SpriteObject(game.assetManager.get("ingame/vase.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
 					vases.add(v);
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
-					SpriteObject w = new SpriteObject(game.assetManager.get("ingame/wall.png", Texture.class), LabyrinthObject.TYPE_WALL);
+					SpriteObject w = new SpriteObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
 					w.setPositionLine((LABYRINTH_ROWS-1) - i);
 					w.setPositionColumn(j);
 					walls.add(w);
@@ -115,10 +117,10 @@ public class Level implements InputProcessor{
 		game.batch.end();
 	}
 	
-	public LabyrinthObject isCollidingWith(MovingObject lvlObj, int MOVE_DIRECTION) {
+	public LabyrinthObject isCollidingWith(MovingObject lvlObj, MoveDirection direction) {
 		int i = lvlObj.getPositionLine();
 		int j = lvlObj.getPositionColumn();
-		if (MOVE_DIRECTION == MovingObject.MOVE_LEFT) {
+		if (direction == MoveDirection.LEFT) {
 			int iDest = i;
 			int jDest = j - 1;
 			
@@ -134,7 +136,7 @@ public class Level implements InputProcessor{
 				}
 			}
 		}
-		else if (MOVE_DIRECTION == MovingObject.MOVE_RIGHT) {
+		else if (direction == MoveDirection.RIGHT) {
 			int iDest = i;
 			int jDest = j + 1;
 			
@@ -150,7 +152,7 @@ public class Level implements InputProcessor{
 				}
 			}
 		}
-		else if (MOVE_DIRECTION == MovingObject.MOVE_UP) {
+		else if (direction == MoveDirection.UP) {
 			int iDest = i + 1;
 			int jDest = j;
 			
@@ -166,7 +168,7 @@ public class Level implements InputProcessor{
 				}
 			}
 		}
-		else if (MOVE_DIRECTION == MovingObject.MOVE_DOWN) {
+		else if (direction == MoveDirection.DOWN) {
 			int iDest = i - 1;
 			int jDest = j;
 			
@@ -225,13 +227,13 @@ public class Level implements InputProcessor{
 	public boolean keyDown(int keycode) {
 		if (!bug.isMoving()) {
 			if (keycode == Input.Keys.LEFT) {
-				int direction = MovingObject.MOVE_LEFT;
+				MoveDirection direction = MoveDirection.LEFT;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -242,13 +244,13 @@ public class Level implements InputProcessor{
 				return true;
 			}
 			else if (keycode == Input.Keys.RIGHT) {
-				int direction = MovingObject.MOVE_RIGHT;
+				MoveDirection direction = MoveDirection.RIGHT;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -259,13 +261,13 @@ public class Level implements InputProcessor{
 				return true;
 			}
 			else if (keycode == Input.Keys.UP) {
-				int direction = MovingObject.MOVE_UP;
+				MoveDirection direction = MoveDirection.UP;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -276,13 +278,13 @@ public class Level implements InputProcessor{
 				return true;
 			}
 			else if (keycode == Input.Keys.DOWN) {
-				int direction = MovingObject.MOVE_DOWN;
+				MoveDirection direction = MoveDirection.DOWN;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -318,13 +320,13 @@ public class Level implements InputProcessor{
 			if (mouseX < bug.getPositionX()
 					&& mouseY < bug.getPositionY() + bug.getHeight()
 					&& mouseY > bug.getPositionY()) {
-				int direction = MovingObject.MOVE_LEFT;
+				MoveDirection direction = MoveDirection.LEFT;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -337,13 +339,13 @@ public class Level implements InputProcessor{
 			else if (mouseX > bug.getPositionX() + bug.getWidth() 
 					&& mouseY < bug.getPositionY() + bug.getHeight()
 					&& mouseY > bug.getPositionY()) {
-				int direction = MovingObject.MOVE_RIGHT;
+				MoveDirection direction = MoveDirection.RIGHT;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -356,13 +358,13 @@ public class Level implements InputProcessor{
 			else if (mouseY > bug.getPositionY() + bug.getHeight() 
 					&& mouseX < bug.getPositionX() + bug.getWidth()
 					&& mouseX > bug.getPositionX()) {
-				int direction = MovingObject.MOVE_UP;
+				MoveDirection direction = MoveDirection.UP;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
@@ -375,13 +377,13 @@ public class Level implements InputProcessor{
 			else if (mouseY < bug.getPositionY()
 					&& mouseX < bug.getPositionX() + bug.getWidth()
 					&& mouseX > bug.getPositionX()) {
-				int direction = MovingObject.MOVE_DOWN;
+				MoveDirection direction = MoveDirection.DOWN;
 				LabyrinthObject obj = isCollidingWith(bug, direction);
 				if (obj == null) {
 					bug.move(direction);
 				}
 				else {
-					if (obj.getType() == LabyrinthObject.TYPE_VASE) {
+					if (obj.getType() == Type.SARCOPHAGUS) {
 						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
 						if (obj2 == null) {
 							bug.move(direction);
