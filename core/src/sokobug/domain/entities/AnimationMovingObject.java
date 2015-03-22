@@ -21,9 +21,6 @@ public class AnimationMovingObject extends MovingObject {
 		if (isMoving()) {
 			stateTime += deltaTime;
 		}
-		else {
-			stateTime = 0.f;
-		}
 	}
 	
 	public void draw(SpriteBatch batch, float deltaTime) {
