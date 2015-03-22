@@ -15,13 +15,19 @@ public class AnimationMovingObject extends MovingObject {
         animation.setPlayMode(PlayMode.LOOP);
 	}
 	
-	public void draw(SpriteBatch batch, float deltaTime) {
+	@Override
+	public void updateMove(float deltaTime) {
+		super.updateMove(deltaTime);
 		if (isMoving()) {
 			stateTime += deltaTime;
-			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY);
 		}
-		else
-			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY);
+		else {
+			stateTime = 0.f;
+		}
+	}
+	
+	public void draw(SpriteBatch batch, float deltaTime) {
+		batch.draw(animation.getKeyFrame(stateTime), positionX, positionY);
 	}
 	
 	public int getWidth() {

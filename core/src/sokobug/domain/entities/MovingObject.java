@@ -1,9 +1,13 @@
 package sokobug.domain.entities;
 
 public abstract class MovingObject extends LabyrinthObject {
+	
 	public enum MoveDirection {
 		NONE, LEFT, RIGHT, UP, DOWN
 	}
+	
+	protected float positionX;
+	protected float positionY;
 	
 	private float moveSpeed = 400.f; // 400 de pixeli pe secunda
 	private MoveDirection moveDirection = MoveDirection.NONE;
@@ -12,6 +16,24 @@ public abstract class MovingObject extends LabyrinthObject {
 	
 	public MovingObject(Type type) {
 		super(type);
+	}
+	
+	public void setPositionLine(int positionLine) {
+		this.positionLine = positionLine;
+		positionY = positionLine * OBJECT_SIZE;
+	}
+	
+	public void setPositionColumn(int positionColumn) {
+		this.positionColumn = positionColumn;
+		positionX = positionColumn * OBJECT_SIZE;
+	}
+	
+	public float getPositionX() {
+		return positionX;
+	}
+
+	public float getPositionY() {
+		return positionY;
 	}
 	
 	public float getMoveSpeed() {

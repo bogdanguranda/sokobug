@@ -25,13 +25,13 @@ public class SpriteMovingObject extends MovingObject {
 	@Override
 	public void setPositionLine(int positionLine) {
 		super.setPositionLine(positionLine);
-		sprite.setPosition(positionX, positionY);
+		sprite.setY(positionY);
 	}
 	
 	@Override
 	public void setPositionColumn(int positionColumn) {
 		super.setPositionColumn(positionColumn);
-		sprite.setPosition(positionX, positionY);
+		sprite.setX(positionX);
 	}
 	
 }
