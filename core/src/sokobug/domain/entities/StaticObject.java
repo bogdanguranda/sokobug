@@ -1,5 +1,5 @@
 package sokobug.domain.entities;
 
-public class StillObject {
+public abstract class StaticObject {
 
 }

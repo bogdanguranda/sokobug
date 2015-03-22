@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class SpriteObject extends MovingObject {
+public class SpriteMovingObject extends MovingObject {
 	private Sprite sprite;
 	
-	public SpriteObject(Texture texture, Type type) {
+	public SpriteMovingObject(Texture texture, Type type) {
 		super(type);
 		sprite = new Sprite(texture);
 	}

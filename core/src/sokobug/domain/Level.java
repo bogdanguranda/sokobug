@@ -15,12 +15,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import sokobug.Sokobug;
-import sokobug.domain.entities.AnimationObject;
+import sokobug.domain.entities.AnimationMovingObject;
 import sokobug.domain.entities.LabyrinthObject;
 import sokobug.domain.entities.LabyrinthObject.Type;
 import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
-import sokobug.domain.entities.SpriteObject;
+import sokobug.domain.entities.SpriteMovingObject;
 
 public class Level implements InputProcessor{
 	
@@ -34,9 +34,9 @@ public class Level implements InputProcessor{
 	
 	private Map<String, Sprite> labyrinthSprites = new HashMap<String, Sprite>();
 
-	private AnimationObject bug;
-	private ArrayList<SpriteObject> vases = new ArrayList<SpriteObject>();
-	private ArrayList<SpriteObject> walls = new ArrayList<SpriteObject>();
+	private AnimationMovingObject bug;
+	private ArrayList<SpriteMovingObject> vases = new ArrayList<SpriteMovingObject>();
+	private ArrayList<SpriteMovingObject> walls = new ArrayList<SpriteMovingObject>();
 	
 	public Level(Sokobug game) {
 		this.game = game;
@@ -46,7 +46,7 @@ public class Level implements InputProcessor{
 		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
 		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
 		
-		bug  = new AnimationObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
+		bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
 	}
 
 	public Vector2 getSize() {
@@ -70,14 +70,14 @@ public class Level implements InputProcessor{
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
 				}
 				else if (lineElements[j].compareTo("V") == 0) {
-					SpriteObject v = new SpriteObject(game.assetManager.get("ingame/vase.png", Texture.class), Type.SARCOPHAGUS);
+					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("ingame/vase.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
 					vases.add(v);
 					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
-					SpriteObject w = new SpriteObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
+					SpriteMovingObject w = new SpriteMovingObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
 					w.setPositionLine((LABYRINTH_ROWS-1) - i);
 					w.setPositionColumn(j);
 					walls.add(w);
@@ -104,11 +104,11 @@ public class Level implements InputProcessor{
 			}
 		}
 		
-		for (SpriteObject w: walls) {
+		for (SpriteMovingObject w: walls) {
 			w.draw(game.batch);
 		}
 		
-		for (SpriteObject v: vases) {
+		for (SpriteMovingObject v: vases) {
 			v.draw(game.batch);
 		}
 		
@@ -124,13 +124,13 @@ public class Level implements InputProcessor{
 			int iDest = i;
 			int jDest = j - 1;
 			
-			for (SpriteObject w: walls) {
+			for (SpriteMovingObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteObject v: vases) {
+			for (SpriteMovingObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -140,13 +140,13 @@ public class Level implements InputProcessor{
 			int iDest = i;
 			int jDest = j + 1;
 			
-			for (SpriteObject w: walls) {
+			for (SpriteMovingObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteObject v: vases) {
+			for (SpriteMovingObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -156,13 +156,13 @@ public class Level implements InputProcessor{
 			int iDest = i + 1;
 			int jDest = j;
 			
-			for (SpriteObject w: walls) {
+			for (SpriteMovingObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteObject v: vases) {
+			for (SpriteMovingObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -172,13 +172,13 @@ public class Level implements InputProcessor{
 			int iDest = i - 1;
 			int jDest = j;
 			
-			for (SpriteObject w: walls) {
+			for (SpriteMovingObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteObject v: vases) {
+			for (SpriteMovingObject v: vases) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -192,7 +192,7 @@ public class Level implements InputProcessor{
 			bug.updateMove(deltaTime);
 		}
 		
-		for (SpriteObject v: vases) {
+		for (SpriteMovingObject v: vases) {
 			if (v.isMoving())
 				v.updateMove(deltaTime);
 		}
