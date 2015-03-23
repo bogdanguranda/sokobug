@@ -6,7 +6,7 @@ public abstract class LabyrinthObject {
 		BUG, SARCOPHAGUS, WALL, FREE, SPOT
 	}
 	
-	protected static final int OBJECT_SIZE = 80;
+	public static final int OBJECT_SIZE = 80;
 	
 	protected Type type;
 	protected int positionLine;

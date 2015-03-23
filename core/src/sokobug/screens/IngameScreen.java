@@ -42,7 +42,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.assetManager.load("ingame/bug/bugAnimation.pack", TextureAtlas.class);
 		game.assetManager.load("ingame/free.png", Texture.class);
 		game.assetManager.load("ingame/wall.png", Texture.class);
-		game.assetManager.load("ingame/spot.png", Texture.class);
+		game.assetManager.load("ingame/spot/spot.pack", TextureAtlas.class);
 		game.assetManager.load("ingame/vase.png", Texture.class);
 		game.assetManager.load("ingame/topBar.png", Texture.class);
 		
@@ -89,7 +89,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.assetManager.unload("ingame/bug/bugAnimation.pack");
 		game.assetManager.unload("ingame/free.png");
 		game.assetManager.unload("ingame/wall.png");
-		game.assetManager.unload("ingame/spot.png");
+		game.assetManager.unload("ingame/spot/spot.pack");
 		game.assetManager.unload("ingame/vase.png");
 	}
 

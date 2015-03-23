@@ -1,26 +1,26 @@
 package sokobug.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import sokobug.Sokobug;
 import sokobug.domain.entities.AnimationMovingObject;
+import sokobug.domain.entities.AnimationStaticObject;
 import sokobug.domain.entities.LabyrinthObject;
 import sokobug.domain.entities.LabyrinthObject.Type;
 import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
 import sokobug.domain.entities.SpriteMovingObject;
+import sokobug.domain.entities.SpriteStaticObject;
 
 public class Level implements InputProcessor{
 	
@@ -29,34 +29,29 @@ public class Level implements InputProcessor{
 	
 	private static final int LABYRINTH_ROWS = 9;
 	private static final int LABYRINTH_COLUMNS = 16;
-	
-	private String[][] labyrinth = new String[LABYRINTH_ROWS][LABYRINTH_COLUMNS];
-	
-	private Map<String, Sprite> labyrinthSprites = new HashMap<String, Sprite>();
 
 	private AnimationMovingObject bug;
-	private ArrayList<SpriteMovingObject> vases = new ArrayList<SpriteMovingObject>();
-	private ArrayList<SpriteMovingObject> walls = new ArrayList<SpriteMovingObject>();
+	private List<SpriteMovingObject> sarcophaguses = new ArrayList<SpriteMovingObject>();
+	private List<SpriteStaticObject> walls = new ArrayList<SpriteStaticObject>();
+	private List<SpriteStaticObject> freeGrounds = new ArrayList<SpriteStaticObject>();
+	private List<AnimationStaticObject> spots = new ArrayList<AnimationStaticObject>();
 	
 	public Level(Sokobug game) {
 		this.game = game;
-		
-		labyrinthSprites.put("F", new Sprite(game.assetManager.get("ingame/free.png", Texture.class)));
-		labyrinthSprites.put("W", new Sprite(game.assetManager.get("ingame/wall.png", Texture.class)));
-		labyrinthSprites.put("S", new Sprite(game.assetManager.get("ingame/spot.png", Texture.class)));
-		labyrinthSprites.put("V", new Sprite(game.assetManager.get("ingame/vase.png", Texture.class)));
 		
 		bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
 	}
 
 	public Vector2 getSize() {
-		return new Vector2(LABYRINTH_COLUMNS * labyrinthSprites.get("F").getWidth(), LABYRINTH_ROWS * labyrinthSprites.get("F").getHeight());
+		return new Vector2(LABYRINTH_COLUMNS * LabyrinthObject.OBJECT_SIZE, LABYRINTH_ROWS * LabyrinthObject.OBJECT_SIZE);
 	}
 	
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
-		this.vases.clear();
+		this.sarcophaguses.clear();
+		this.spots.clear();
 		this.walls.clear();
+		this.freeGrounds.clear();
 		
 		FileHandle file = Gdx.files.internal("ingame/level" + String.valueOf(levelNumber) + ".txt");
 		String text = file.readString();
@@ -67,24 +62,43 @@ public class Level implements InputProcessor{
 				if (lineElements[j].compareTo("B") == 0) {
 					bug.setPositionLine((LABYRINTH_ROWS-1) - i);
 					bug.setPositionColumn(j);
-					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S) though...)
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+					freeGround.setPositionColumn(j);
+					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
-				else if (lineElements[j].compareTo("V") == 0) {
+				else if (lineElements[j].compareTo("P") == 0) {
 					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("ingame/vase.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
-					vases.add(v);
-					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
+					sarcophaguses.add(v);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+					freeGround.setPositionColumn(j);
+					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+				}
+				else if (lineElements[j].compareTo("S") == 0) {
+					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("ingame/spot/spot.pack"), Type.SPOT);
+					spot.setPositionLine((LABYRINTH_ROWS-1) - i);
+					spot.setPositionColumn(j);
+					spots.add(spot);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+					freeGround.setPositionColumn(j);
+					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
-					SpriteMovingObject w = new SpriteMovingObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
-					w.setPositionLine((LABYRINTH_ROWS-1) - i);
-					w.setPositionColumn(j);
-					walls.add(w);
-					labyrinth[(LABYRINTH_ROWS-1) - i][j] = "F"; // at the start the bug stays on a free spot always(he could stay on a spot(S)
+					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
+					wall.setPositionLine((LABYRINTH_ROWS-1) - i);
+					wall.setPositionColumn(j);
+					walls.add(wall);
 				}
-				else
-					labyrinth[(LABYRINTH_ROWS-1) - i][j] = lineElements[j];
+				else if (lineElements[j].compareTo("F") == 0) {
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+					freeGround.setPositionColumn(j);
+					freeGrounds.add(freeGround);
+				}
 			}
 		}
 		
@@ -95,21 +109,20 @@ public class Level implements InputProcessor{
 		
 		game.batch.begin();
 		
-		for (int i = 0; i < LABYRINTH_ROWS; i++) {
-			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
-				float x = j * labyrinthSprites.get(labyrinth[i][j]).getWidth();
-				float y = i * labyrinthSprites.get(labyrinth[i][j]).getHeight();
-				labyrinthSprites.get(labyrinth[i][j]).setPosition(x, y);
-				labyrinthSprites.get(labyrinth[i][j]).draw(game.batch);
-			}
+		for (SpriteStaticObject freeGround: freeGrounds) {
+			freeGround.draw(game.batch);
 		}
 		
-		for (SpriteMovingObject w: walls) {
-			w.draw(game.batch);
+		for (SpriteStaticObject wall: walls) {
+			wall.draw(game.batch);
 		}
 		
-		for (SpriteMovingObject v: vases) {
-			v.draw(game.batch);
+		for (AnimationStaticObject spot: spots) {
+			spot.draw(game.batch, deltaTime);
+		}
+		
+		for (SpriteMovingObject sarcophagus: sarcophaguses) {
+			sarcophagus.draw(game.batch);
 		}
 		
 		bug.draw(game.batch, deltaTime);
@@ -124,13 +137,13 @@ public class Level implements InputProcessor{
 			int iDest = i;
 			int jDest = j - 1;
 			
-			for (SpriteMovingObject w: walls) {
+			for (SpriteStaticObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteMovingObject v: vases) {
+			for (SpriteMovingObject v: sarcophaguses) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -140,13 +153,13 @@ public class Level implements InputProcessor{
 			int iDest = i;
 			int jDest = j + 1;
 			
-			for (SpriteMovingObject w: walls) {
+			for (SpriteStaticObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteMovingObject v: vases) {
+			for (SpriteMovingObject v: sarcophaguses) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -156,13 +169,13 @@ public class Level implements InputProcessor{
 			int iDest = i + 1;
 			int jDest = j;
 			
-			for (SpriteMovingObject w: walls) {
+			for (SpriteStaticObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteMovingObject v: vases) {
+			for (SpriteMovingObject v: sarcophaguses) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -172,13 +185,13 @@ public class Level implements InputProcessor{
 			int iDest = i - 1;
 			int jDest = j;
 			
-			for (SpriteMovingObject w: walls) {
+			for (SpriteStaticObject w: walls) {
 				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
 					return w;
 				}
 			}
 			
-			for (SpriteMovingObject v: vases) {
+			for (SpriteMovingObject v: sarcophaguses) {
 				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
 					return v;
 				}
@@ -192,7 +205,7 @@ public class Level implements InputProcessor{
 			bug.updateMove(deltaTime);
 		}
 		
-		for (SpriteMovingObject v: vases) {
+		for (SpriteMovingObject v: sarcophaguses) {
 			if (v.isMoving())
 				v.updateMove(deltaTime);
 		}
