@@ -51,7 +51,7 @@ public class Level implements InputProcessor{
 		this.walls.clear();
 		this.freeGrounds.clear();
 		
-		FileHandle file = Gdx.files.internal("level/levels/" + String.valueOf(levelNumber) + ".txt");
+		FileHandle file = Gdx.files.internal("level/levels/level" + String.valueOf(levelNumber) + ".txt");
 		String text = file.readString();
 		String[] lines = text.split("\\r?\\n");
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {

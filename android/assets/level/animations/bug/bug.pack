@@ -1,0 +1,89 @@
+
+bug.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bug0001
+  rotate: false
+  xy: 1, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0002
+  rotate: false
+  xy: 83, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0003
+  rotate: false
+  xy: 165, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0004
+  rotate: false
+  xy: 247, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0005
+  rotate: false
+  xy: 329, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0006
+  rotate: false
+  xy: 411, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0007
+  rotate: false
+  xy: 493, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0008
+  rotate: false
+  xy: 575, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0009
+  rotate: false
+  xy: 657, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0010
+  rotate: false
+  xy: 739, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0011
+  rotate: false
+  xy: 821, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+bug0012
+  rotate: false
+  xy: 903, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
