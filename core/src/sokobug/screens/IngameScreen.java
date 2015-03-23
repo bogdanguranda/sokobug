@@ -53,8 +53,8 @@ public class IngameScreen implements Screen, InputProcessor {
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 		
-		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		backToMenu.setPosition(0, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
+		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	}
 
 	@Override
@@ -66,12 +66,12 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 
-		font.setColor(Color.YELLOW);
+		font.setColor(Color.BLACK);
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
 		topBar.draw(game.batch);
-		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height / 2);
 		game.batch.end();
 		
 		stage.act();
