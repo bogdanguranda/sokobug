@@ -5,6 +5,7 @@ public abstract class MovingObject extends LabyrinthObject {
 	public enum MoveDirection {
 		NONE, LEFT, RIGHT, UP, DOWN
 	}
+	private MoveDirection orientation = MoveDirection.UP;
 	
 	protected float positionX;
 	protected float positionY;
@@ -16,6 +17,14 @@ public abstract class MovingObject extends LabyrinthObject {
 	
 	public MovingObject(Type type) {
 		super(type);
+	}
+	
+	public MoveDirection getOrientation() {
+		return orientation;
+	}
+	
+	public void setOrientation(MoveDirection orientation) {
+		this.orientation = orientation;
 	}
 	
 	public void setPositionLine(int positionLine) {

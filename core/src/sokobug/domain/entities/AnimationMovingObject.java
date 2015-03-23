@@ -16,6 +16,11 @@ public class AnimationMovingObject extends MovingObject {
 	}
 	
 	@Override
+	public void setOrientation(MoveDirection orientation) {
+		super.setOrientation(orientation);
+	}
+	
+	@Override
 	public void updateMove(float deltaTime) {
 		super.updateMove(deltaTime);
 		if (isMoving()) {
@@ -24,7 +29,24 @@ public class AnimationMovingObject extends MovingObject {
 	}
 	
 	public void draw(SpriteBatch batch, float deltaTime) {
-		batch.draw(animation.getKeyFrame(stateTime), positionX, positionY);
+		if (getOrientation() == MoveDirection.LEFT) {
+			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY, animation.getKeyFrame(stateTime).getRegionWidth() / 2.f, 
+					   animation.getKeyFrame(stateTime).getRegionHeight() / 2.f, animation.getKeyFrame(stateTime).getRegionWidth(),
+					   animation.getKeyFrame(stateTime).getRegionHeight(), 1.f, 1.f, 90.f);
+		}
+		else if (getOrientation() == MoveDirection.RIGHT) {
+			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY, animation.getKeyFrame(stateTime).getRegionWidth() / 2.f, 
+					   animation.getKeyFrame(stateTime).getRegionHeight() / 2.f, animation.getKeyFrame(stateTime).getRegionWidth(),
+					   animation.getKeyFrame(stateTime).getRegionHeight(), 1.f, 1.f, -90.f);
+		}
+		else if (getOrientation() == MoveDirection.DOWN) {
+			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY, animation.getKeyFrame(stateTime).getRegionWidth() / 2.f, 
+					   animation.getKeyFrame(stateTime).getRegionHeight() / 2.f, animation.getKeyFrame(stateTime).getRegionWidth(),
+					   animation.getKeyFrame(stateTime).getRegionHeight(), 1.f, 1.f, 180.f);
+		}
+		else if (getOrientation() == MoveDirection.UP) {
+			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY);
+		}
 	}
 	
 	public int getWidth() {
