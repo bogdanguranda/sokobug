@@ -38,8 +38,6 @@ public class Level implements InputProcessor{
 	
 	public Level(Sokobug game) {
 		this.game = game;
-		
-		bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
 	}
 
 	public Vector2 getSize() {
@@ -60,6 +58,7 @@ public class Level implements InputProcessor{
 			String[] lineElements = lines[i].split("\\s");
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				if (lineElements[j].compareTo("B") == 0) {
+					bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
 					bug.setPositionLine((LABYRINTH_ROWS-1) - i);
 					bug.setPositionColumn(j);
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
@@ -81,6 +80,7 @@ public class Level implements InputProcessor{
 					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("ingame/spot/spot.pack"), Type.SPOT);
 					spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 					spot.setPositionColumn(j);
+					spot.setStaticFrame(1);
 					spots.add(spot);
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);

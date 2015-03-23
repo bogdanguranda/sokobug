@@ -9,6 +9,7 @@ public class AnimationStaticObject extends StaticObject {
 	
 	private Animation animation;
 	private float stateTime = 0.f;
+	private int specificFrame = -1;
 	
 	public AnimationStaticObject(TextureAtlas atlas, Type type) {
 		super(type);
@@ -17,8 +18,17 @@ public class AnimationStaticObject extends StaticObject {
 	}
 	
 	public void draw(SpriteBatch batch, float deltaTime) {
-		stateTime += deltaTime;
-		batch.draw(animation.getKeyFrame(stateTime), positionColumn * OBJECT_SIZE, positionLine * OBJECT_SIZE);
+		if (specificFrame == -1) {
+			stateTime += deltaTime;
+			batch.draw(animation.getKeyFrame(stateTime), positionColumn * OBJECT_SIZE, positionLine * OBJECT_SIZE);
+		}
+		else {
+			batch.draw(animation.getKeyFrames()[specificFrame], positionColumn * OBJECT_SIZE, positionLine * OBJECT_SIZE);
+		}
+	}
+	
+	public void setStaticFrame(int index) {
+		specificFrame = index;
 	}
 	
 	public int getWidth() {
