@@ -41,23 +41,23 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		game.assetManager.load("MainMenuScreen.png", Texture.class);
-		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
-		game.assetManager.load("skins/uiskin.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.load("backgrounds/menu.png", Texture.class);
+		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
+				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		game.assetManager.finishLoading();
 
-		background = new Sprite(game.assetManager.get("MainMenuScreen.png",
+		background = new Sprite(game.assetManager.get("backgrounds/menu.png",
 				Texture.class));
 
 		play = new MenuButton(game, "Play", MenuButton.PLAY,
-				game.assetManager.get("skins/uiskin.json", Skin.class));
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		options = new MenuButton(game, "Options", MenuButton.OPTIONS,
-				game.assetManager.get("skins/uiskin.json", Skin.class));
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		credits = new MenuButton(game, "Credits", MenuButton.CREDITS,
-				game.assetManager.get("skins/uiskin.json", Skin.class));
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		exit = new MenuButton(game, "Exit", MenuButton.EXIT,
-				game.assetManager.get("skins/uiskin.json", Skin.class));
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 
 		play.setUpNeighbour(exit);
 		play.setDownNeighbour(options);
@@ -74,7 +74,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		menuButtons[2] = credits;
 		menuButtons[3] = exit;
 
-		uiSkin = game.assetManager.get("skins/uiskin.json", Skin.class);
+		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
 		table.add(play).row();
 		table.add(options).row();
@@ -142,9 +142,9 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("MainMenuScreen.png");
-		game.assetManager.unload("skins/uiskin.atlas");
-		game.assetManager.unload("skins/uiskin.json");
+		game.assetManager.unload("backgrounds/menu.png");
+		game.assetManager.unload("ui/buttons/buttons.pack");
+		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override
@@ -159,11 +159,11 @@ public class MainMenuScreen implements Screen, InputProcessor {
 					focusedButton.setStyle(uiSkin.get("default",
 							TextButtonStyle.class));
 					focusedButton.getDownNeighbour().setStyle(
-							uiSkin.get("btn_focused", TextButtonStyle.class));
+							uiSkin.get("menu-button-focused", TextButtonStyle.class));
 					focusedButton.getDownNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					play.setStyle(uiSkin.get("btn_focused",
+					play.setStyle(uiSkin.get("menu-button-focused",
 							TextButtonStyle.class));
 					play.setFocused(true);
 				}
@@ -177,11 +177,11 @@ public class MainMenuScreen implements Screen, InputProcessor {
 					focusedButton.setStyle(uiSkin.get("default",
 							TextButtonStyle.class));
 					focusedButton.getUpNeighbour().setStyle(
-							uiSkin.get("btn_focused", TextButtonStyle.class));
+							uiSkin.get("menu-button-focused", TextButtonStyle.class));
 					focusedButton.getUpNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					exit.setStyle(uiSkin.get("btn_focused",
+					exit.setStyle(uiSkin.get("menu-button-focused",
 							TextButtonStyle.class));
 					exit.setFocused(true);
 				}

@@ -34,19 +34,19 @@ public class LogoScreen implements Screen, InputProcessor {
 		
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
-		game.assetManager.load("Title.png", Texture.class, param);
-		game.assetManager.load("LogoAndrei.png", Texture.class, param);
-		game.assetManager.load("LogoPotatoes.png", Texture.class, param);
+		game.assetManager.load("backgrounds/title.png", Texture.class, param);
+		game.assetManager.load("logos/aart.png", Texture.class, param);
+		game.assetManager.load("logos/potatoes.png", Texture.class, param);
 		
 		game.assetManager.finishLoading();
 		
-		titleImage = new Sprite(game.assetManager.get("Title.png", Texture.class));
+		titleImage = new Sprite(game.assetManager.get("backgrounds/title.png", Texture.class));
 		titleImage.setPosition(0.f, 0.f);
 		titleImageDuration = 5.0f;
 		
-		logo1 = new Sprite(game.assetManager.get("LogoAndrei.png", Texture.class));
+		logo1 = new Sprite(game.assetManager.get("logos/aart.png", Texture.class));
 		logo1Duration = 4.f;
-		logo2 = new Sprite(game.assetManager.get("LogoPotatoes.png", Texture.class));
+		logo2 = new Sprite(game.assetManager.get("logos/potatoes.png", Texture.class));
 		logo2Duration = 4.f;
 		
 		displayTitle = true;
@@ -112,9 +112,9 @@ public class LogoScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void dispose() {
-		game.assetManager.unload("Title.png");
-		game.assetManager.unload("LogoAndrei.png");
-		game.assetManager.unload("LogoPotatoes.png");
+		game.assetManager.unload("backgrounds/title.png");
+		game.assetManager.unload("logos/aart.png");
+		game.assetManager.unload("logos/potatoes.png");
 	}
 	
 	@Override

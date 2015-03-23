@@ -51,50 +51,50 @@ public class Level implements InputProcessor{
 		this.walls.clear();
 		this.freeGrounds.clear();
 		
-		FileHandle file = Gdx.files.internal("ingame/level" + String.valueOf(levelNumber) + ".txt");
+		FileHandle file = Gdx.files.internal("level/levels/" + String.valueOf(levelNumber) + ".txt");
 		String text = file.readString();
 		String[] lines = text.split("\\r?\\n");
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {
 			String[] lineElements = lines[i].split("\\s");
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				if (lineElements[j].compareTo("B") == 0) {
-					bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("ingame/bug/bugAnimation.pack"), Type.BUG);
+					bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("level/animations/bug/bug.pack"), Type.BUG);
 					bug.setPositionLine((LABYRINTH_ROWS-1) - i);
 					bug.setPositionColumn(j);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
 					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("P") == 0) {
-					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("ingame/vase.png", Texture.class), Type.SARCOPHAGUS);
+					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("level/tiles/sarcophagus.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
 					sarcophaguses.add(v);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
 					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("S") == 0) {
-					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("ingame/spot/spot.pack"), Type.SPOT);
+					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
 					spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 					spot.setPositionColumn(j);
 					spot.setStaticFrame(1);
 					spots.add(spot);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
 					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
-					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("ingame/wall.png", Texture.class), Type.WALL);
+					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("level/tiles/wall.png", Texture.class), Type.WALL);
 					wall.setPositionLine((LABYRINTH_ROWS-1) - i);
 					wall.setPositionColumn(j);
 					walls.add(wall);
 				}
 				else if (lineElements[j].compareTo("F") == 0) {
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("ingame/free.png", Texture.class), Type.FREE);
+					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
 					freeGrounds.add(freeGround);
