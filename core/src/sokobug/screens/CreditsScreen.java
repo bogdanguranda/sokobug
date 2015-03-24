@@ -32,13 +32,13 @@ public class CreditsScreen implements Screen, InputProcessor {
 		game.assetManager.finishLoading();
 
 		font = game.assetManager.get("fonts/Papyrus58.fnt", BitmapFont.class);
-		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
-		game.assetManager.load("skins/uiskin.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
+				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		game.assetManager.finishLoading();
 
 		backToMenu = new MenuButton(game, "Back",
-				MenuButton.BACKTOMENU, game.assetManager.get("skins/uiskin.json", Skin.class));
+				MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 
 		backToMenu.setPosition(0, 0);
 	}
@@ -74,8 +74,8 @@ public class CreditsScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("skins/uiskin.atlas");
-		game.assetManager.unload("skins/uiskin.json");
+		game.assetManager.unload("ui/buttons/buttons.pack");
+		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override

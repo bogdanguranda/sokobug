@@ -45,18 +45,18 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 		levelButtons = new MenuButton[NUM_LEVELS];
 
-		game.assetManager.load("ChooseLevelScreen.png", Texture.class);
-		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
-		game.assetManager.load("skins/uiskin.json", Skin.class,
-				new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.load("backgrounds/menu.png", Texture.class);
+		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
+				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		game.assetManager.finishLoading();
 
-		background = new Sprite(game.assetManager.get("ChooseLevelScreen.png",
+		background = new Sprite(game.assetManager.get("backgrounds/menu.png",
 				Texture.class));
-		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU,
-				game.assetManager.get("skins/uiskin.json", Skin.class));
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
 
-		uiSkin = game.assetManager.get("skins/uiskin.json", Skin.class);
+		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
 		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW,
 				BUTTONS_PER_COLLUMN, NUM_LEVELS);
@@ -95,9 +95,9 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("ChooseLevelScreen.png");
-		game.assetManager.unload("skins/uiskin.atlas");
-		game.assetManager.unload("skins/uiskin.json");
+		game.assetManager.unload("backgrounds/menu.png");
+		game.assetManager.unload("ui/buttons/buttons.pack");
+		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override

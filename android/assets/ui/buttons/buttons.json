@@ -1,0 +1,16 @@
+{
+	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+		"papyrus": { "file": "fonts/Papyrus.fnt"}
+	},
+
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"default": { "up": "menu/buttonUp", "down": "menu/buttonDown", "over": "menu/buttonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"menu-button-focused": { "up": "menu/buttonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"menu-button-down": { "up": "menu/buttonDown", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"default-level-btn": { "up": "level/lvlButtonUp", "down": "level/lvlButtonDown", "over": "level/lvlButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"level-button-focused": { "up": "level/lvlButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"level-button-down": { "up": "level/lvlButtonDown", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"level-button-locked": { "up": "level/lvlButtonLocked", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-back-btn": { "up": "back/backButtonUp", "down": "back/backButtonDown", "over": "back/backButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+	}
+}

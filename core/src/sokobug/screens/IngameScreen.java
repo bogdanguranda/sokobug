@@ -36,25 +36,25 @@ public class IngameScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
-		game.assetManager.load("skins/uiskin.atlas", TextureAtlas.class);
-		game.assetManager.load("skins/uiskin.json", Skin.class, new SkinLoader.SkinParameter("skins/uiskin.atlas"));
+		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		
-		game.assetManager.load("ingame/bug/bug0001.png", Texture.class);
-		game.assetManager.load("ingame/free.png", Texture.class);
-		game.assetManager.load("ingame/wall.png", Texture.class);
-		game.assetManager.load("ingame/spot.png", Texture.class);
-		game.assetManager.load("ingame/vase.png", Texture.class);
-		game.assetManager.load("ingame/topBar.png", Texture.class);
+		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
+		game.assetManager.load("level/tiles/free.png", Texture.class);
+		game.assetManager.load("level/tiles/wall.png", Texture.class);
+		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
+		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class);
+		game.assetManager.load("level/topBar.png", Texture.class);
 		
 		game.assetManager.finishLoading();
 
 		level = new Level(game); // we pass game to give acces to assetManager for drawings and maybe other needs
 		
-		topBar = new Sprite(game.assetManager.get("ingame/topBar.png", Texture.class));
+		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 		
-		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("skins/uiskin.json", Skin.class));
-		backToMenu.setPosition(0, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
+		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	}
 
 	@Override
@@ -66,12 +66,12 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 
-		font.setColor(Color.YELLOW);
+		font.setColor(Color.BLACK);
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
 		topBar.draw(game.batch);
-		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height / 2);
 		game.batch.end();
 		
 		stage.act();
@@ -83,14 +83,15 @@ public class IngameScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("skins/uiskin.atlas");
-		game.assetManager.unload("skins/uiskin.json");
+		game.assetManager.unload("ui/buttons/buttons.pack");
+		game.assetManager.unload("ui/buttons/buttons.json");
 		
-		game.assetManager.unload("ingame/bug/bug0001.png");
-		game.assetManager.unload("ingame/free.png");
-		game.assetManager.unload("ingame/wall.png");
-		game.assetManager.unload("ingame/spot.png");
-		game.assetManager.unload("ingame/vase.png");
+		game.assetManager.unload("level/animations/bug/bug.pack");
+		game.assetManager.unload("level/tiles/free.png");
+		game.assetManager.unload("level/tiles/wall.png");
+		game.assetManager.unload("level/animations/spot/spot.pack");
+		game.assetManager.unload("level/tiles/sarcophagus.png");
+		game.assetManager.unload("level/topBar.png");
 	}
 
 	@Override
