@@ -241,16 +241,21 @@ public class Level implements InputProcessor{
 		if (!bug.isMoving()) {
 			if (keycode == Input.Keys.LEFT) {
 				MoveDirection direction = MoveDirection.LEFT;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -258,16 +263,21 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.RIGHT) {
 				MoveDirection direction = MoveDirection.RIGHT;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -275,16 +285,21 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.UP) {
 				MoveDirection direction = MoveDirection.UP;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -292,16 +307,21 @@ public class Level implements InputProcessor{
 			}
 			else if (keycode == Input.Keys.DOWN) {
 				MoveDirection direction = MoveDirection.DOWN;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -334,16 +354,21 @@ public class Level implements InputProcessor{
 					&& mouseY < bug.getPositionY() + bug.getHeight()
 					&& mouseY > bug.getPositionY()) {
 				MoveDirection direction = MoveDirection.LEFT;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -353,16 +378,21 @@ public class Level implements InputProcessor{
 					&& mouseY < bug.getPositionY() + bug.getHeight()
 					&& mouseY > bug.getPositionY()) {
 				MoveDirection direction = MoveDirection.RIGHT;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -372,16 +402,21 @@ public class Level implements InputProcessor{
 					&& mouseX < bug.getPositionX() + bug.getWidth()
 					&& mouseX > bug.getPositionX()) {
 				MoveDirection direction = MoveDirection.UP;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
@@ -391,16 +426,21 @@ public class Level implements InputProcessor{
 					&& mouseX < bug.getPositionX() + bug.getWidth()
 					&& mouseX > bug.getPositionX()) {
 				MoveDirection direction = MoveDirection.DOWN;
-				LabyrinthObject obj = isCollidingWith(bug, direction);
-				if (obj == null) {
-					bug.move(direction);
+				if (bug.getOrientation() != direction) {
+					bug.setOrientation(direction);
 				}
 				else {
-					if (obj.getType() == Type.SARCOPHAGUS) {
-						LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-						if (obj2 == null) {
-							bug.move(direction);
-							((MovingObject)obj).move(direction);
+					LabyrinthObject obj = isCollidingWith(bug, direction);
+					if (obj == null) {
+						bug.move(direction);
+					}
+					else {
+						if (obj.getType() == Type.SARCOPHAGUS) {
+							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
+							if (obj2 == null) {
+								bug.move(direction);
+								((MovingObject)obj).move(direction);
+							}
 						}
 					}
 				}
