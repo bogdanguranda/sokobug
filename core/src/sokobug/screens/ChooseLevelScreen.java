@@ -62,14 +62,14 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 				BUTTONS_PER_COLLUMN, NUM_LEVELS);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
-			table.add(levelButtons[i]);
+			table.add(levelButtons[i]).pad(25);
 			if ((i + 1) % BUTTONS_PER_ROW == 0)
 				table.row();
 		}
 		stage.addActor(backToMenu);
 
 		table.setFillParent(true);
-		// table.setDebug(true);
+		//table.setDebug(true);
 		stage.addActor(table);
 
 		backToMenu.setPosition(0, 0);
