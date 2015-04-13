@@ -33,7 +33,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Japonesa32.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
 
 		level = new Level(game);
 		
@@ -59,7 +59,7 @@ public class IngameScreen implements Screen, InputProcessor {
 
 		game.batch.begin();
 		topBar.draw(game.batch);
-		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height / 2);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - 12.f);
 		game.batch.end();
 		
 		stage.act();
