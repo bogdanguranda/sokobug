@@ -52,7 +52,7 @@ public class IngameScreen implements Screen, InputProcessor {
 
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
-
+		
 		font.setColor(Color.BLACK);
 		font.setScale(1);
 		String levelText = "Level " + String.valueOf(level.levelNumber);

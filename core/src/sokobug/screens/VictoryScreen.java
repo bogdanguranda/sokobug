@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class VictoryScreen implements Screen, InputProcessor {
-	Sokobug game;
+	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backButton;
@@ -31,11 +31,8 @@ public class VictoryScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
-		game.assetManager.finishLoading();
 
-		font.setScale(3);
+		font.setScale(3.0f);
 		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.PINK));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
 		
@@ -49,6 +46,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		game.camera.update();
+		game.batch.setProjectionMatrix(game.camera.combined);
 
 		stage.act();
 		stage.draw();
@@ -57,8 +55,6 @@ public class VictoryScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("ui/buttons/buttons.pack");
-		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override
@@ -69,7 +65,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		font.setScale(3);
+		font.setScale(3.0f);
 		stage.addActor(backButton);
 		stage.addActor(forwardButton);
 		stage.addActor(victoryMessage);

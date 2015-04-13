@@ -131,6 +131,8 @@ public class Level implements InputProcessor{
 		}
 		
 		update(deltaTime);
+		game.camera.update();
+		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		game.batch.begin();
 		for (LabyrinthObject labyrinthObject: labyrinthObjects) {

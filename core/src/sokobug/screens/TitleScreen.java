@@ -97,6 +97,8 @@ public class TitleScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		game.assetManager.unload("backgrounds/title.png");
+		game.titleScreen = null; /* we are not going to use the TitleScreen so we can set this to null
+									for the garbage collector if it happens that it needs to clear memory */
 	}
 	
 	@Override

@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Sokobug extends Game {
-	public TitleScreen logoScreen;
+	public TitleScreen titleScreen;
 	public MainMenuScreen mainMenuScreen;
 	public CreditsScreen creditsScreen;
 	public OptionsScreen optionsScreen;
@@ -41,8 +41,8 @@ public class Sokobug extends Game {
 		assetManager = new AssetManager();
 		batch = new SpriteBatch();
 		
-		logoScreen = new TitleScreen(this);
-		this.setScreen(logoScreen);
+		titleScreen = new TitleScreen(this);
+		this.setScreen(titleScreen);
 	}
 	
 	@Override

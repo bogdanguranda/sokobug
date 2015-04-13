@@ -24,7 +24,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private InputMultiplexer multiplexer;
 
 	public Skin uiSkin;
-	public Sokobug game;
+	private Sokobug game;
 
 	private MenuButton play;
 	private MenuButton options;

@@ -10,16 +10,19 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class CreditsScreen implements Screen, InputProcessor {
 
-	Sokobug game;
+	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backToMenu;
+	private Sprite background;
 	private InputMultiplexer multiplexer;
 
 	public CreditsScreen(Sokobug myGame) {
@@ -28,6 +31,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Papyrus58.fnt", BitmapFont.class);
+		background = new Sprite(game.assetManager.get("logos/potatoes.png",Texture.class));
 
 		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		backToMenu.setPosition(0, 0);
@@ -47,6 +51,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 				+ "Artist: Aarts(Andrei Guranda)";
 
 		game.batch.begin();
+		background.draw(game.batch);
 		font.setScale(1.f);
 		font.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font.getBounds(title).width / 2, 
 				game.VIRTUAL_HEIGHT - font.getBounds(title).height / 2);

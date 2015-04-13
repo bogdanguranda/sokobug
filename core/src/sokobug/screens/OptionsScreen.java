@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class OptionsScreen implements Screen, InputProcessor {
 
-	Sokobug game;
+	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backToMenu;
