@@ -8,12 +8,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -41,23 +39,11 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		game.assetManager.load("backgrounds/menu.png", Texture.class);
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
-				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
-		game.assetManager.finishLoading();
-
-		background = new Sprite(game.assetManager.get("backgrounds/menu.png",
-				Texture.class));
-
-		play = new MenuButton(game, "Play", MenuButton.PLAY,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		options = new MenuButton(game, "Options", MenuButton.OPTIONS,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		credits = new MenuButton(game, "Credits", MenuButton.CREDITS,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		exit = new MenuButton(game, "Exit", MenuButton.EXIT,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		background = new Sprite(game.assetManager.get("backgrounds/menu.png",Texture.class));
+		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		options = new MenuButton(game, "Options", MenuButton.OPTIONS, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 
 		play.setUpNeighbour(exit);
 		play.setDownNeighbour(options);
@@ -88,8 +74,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
-				Color.BLACK.a);
+		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.camera.update();
@@ -106,8 +91,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	@Override
 	public void resize(int width, int height) {
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
-				game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override
@@ -142,9 +126,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("backgrounds/menu.png");
-		game.assetManager.unload("ui/buttons/buttons.pack");
-		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override

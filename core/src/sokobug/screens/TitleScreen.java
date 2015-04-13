@@ -1,58 +1,59 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class LogoScreen implements Screen, InputProcessor {
+public class TitleScreen implements Screen, InputProcessor {
 
 	private Sokobug game;
 	
 	private Sprite titleImage;
-	private float titleImageDuration;
-	
-	private Sprite logo1;
-	private float logo1Duration;
-
-	private Sprite logo2;
-	private float logo2Duration;
-	
-	private boolean displayTitle, displayLogo1, displayLogo2;
+	private float titleImageMinimumDuration;
 	private float pasedTimeCounter;
+	private boolean readyToSkip;
 	
-	
-	public LogoScreen(Sokobug myGame) {
+	public TitleScreen(Sokobug myGame) {
 		game = myGame;
+		readyToSkip = false;
 		
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
 		game.assetManager.load("backgrounds/title.png", Texture.class, param);
-		game.assetManager.load("logos/aart.png", Texture.class, param);
-		game.assetManager.load("logos/potatoes.png", Texture.class, param);
-		
 		game.assetManager.finishLoading();
 		
 		titleImage = new Sprite(game.assetManager.get("backgrounds/title.png", Texture.class));
 		titleImage.setPosition(0.f, 0.f);
-		titleImageDuration = 5.0f;
-		
-		logo1 = new Sprite(game.assetManager.get("logos/aart.png", Texture.class));
-		logo1Duration = 4.f;
-		logo2 = new Sprite(game.assetManager.get("logos/potatoes.png", Texture.class));
-		logo2Duration = 4.f;
-		
-		displayTitle = true;
-		displayLogo1 = false;
-		displayLogo2 = false;
+		titleImageMinimumDuration = 2.0f;
 		pasedTimeCounter = 0.0f;
+		
+		game.assetManager.load("fonts/Papyrus.fnt", BitmapFont.class);
+		game.assetManager.load("fonts/Papyrus58.fnt", BitmapFont.class);
+		
+		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
+		
+		game.assetManager.load("backgrounds/menu.png", Texture.class);
+		game.assetManager.load("logos/potatoes.png", Texture.class, param);
+		
+		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
+		game.assetManager.load("level/tiles/free.png", Texture.class);
+		game.assetManager.load("level/tiles/wall.png", Texture.class);
+		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
+		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class);
+		game.assetManager.load("level/topBar.png", Texture.class);
 	}
 
 	@Override
@@ -64,40 +65,17 @@ public class LogoScreen implements Screen, InputProcessor {
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		pasedTimeCounter += delta;
-		if (displayTitle) {
-	        if(pasedTimeCounter > titleImageDuration) {
-	        	displayTitle = false;
-	        	displayLogo1 = true;
-	        	pasedTimeCounter = 0.0f;
-	        	return;
-	        }   
-	        
-			game.batch.begin();
-			titleImage.draw(game.batch);
-			game.batch.end();
+		if (game.assetManager.update()) {
+	        if(pasedTimeCounter > titleImageMinimumDuration) {
+	        	if (!readyToSkip) {
+	        		readyToSkip = true;
+	        	}
+	        }
 		}
-		else if (displayLogo1) {
-	        if(pasedTimeCounter > logo1Duration) {
-	        	displayLogo1 = false;
-	        	displayLogo2 = true;
-	        	pasedTimeCounter = 0.0f;
-	        	return;
-	        }  
-			
-			game.batch.begin();
-			logo1.draw(game.batch);
-			game.batch.end();
-		}
-		else if (displayLogo2) {
-	        if(pasedTimeCounter > logo2Duration) {
-	        	game.setScreen(game.mainMenuScreen);
-	        	return;
-	        }  
-			
-			game.batch.begin();
-			logo2.draw(game.batch);
-			game.batch.end();
-		}
+
+		game.batch.begin();
+		titleImage.draw(game.batch);
+		game.batch.end();
 	}
 
 	@Override
@@ -107,19 +85,22 @@ public class LogoScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
+		game.mainMenuScreen = new MainMenuScreen(game);
+		game.creditsScreen = new CreditsScreen(game);
+		game.optionsScreen = new OptionsScreen(game);
+		game.chooseLevelScreen = new ChooseLevelScreen(game);
+		game.ingameScreen = new IngameScreen(game);
+		game.victoryScreen = new VictoryScreen(game);
 		dispose();
 	}
 	
 	@Override
 	public void dispose() {
 		game.assetManager.unload("backgrounds/title.png");
-		game.assetManager.unload("logos/aart.png");
-		game.assetManager.unload("logos/potatoes.png");
 	}
 	
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
 		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
@@ -138,23 +119,10 @@ public class LogoScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.ESCAPE) {
-        	if (displayTitle) {
-	        	displayTitle = false;
-		    	displayLogo1 = true;
-		    	pasedTimeCounter = 0.0f;
-        	}
-        	else if (displayLogo1) {
-	        	displayLogo1 = false;
-	        	displayLogo2 = true;
-	        	pasedTimeCounter = 0.0f;
-        	}
-        	else if (displayLogo2) {
-	        	game.setScreen(game.mainMenuScreen);
-        	}
-        	return true; // ca sa arat ca am rezolvat evenimentul
-        } 
-		return false;
+    	if (readyToSkip) {
+	    	game.setScreen(game.mainMenuScreen);
+    	}
+    	return true;
 	}
 
 	@Override
@@ -171,20 +139,10 @@ public class LogoScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    	if (displayTitle) {
-        	displayTitle = false;
-	    	displayLogo1 = true;
-	    	pasedTimeCounter = 0.0f;
+    	if (readyToSkip) {
+	    	game.setScreen(game.mainMenuScreen);
     	}
-    	else if (displayLogo1) {
-        	displayLogo1 = false;
-        	displayLogo2 = true;
-        	pasedTimeCounter = 0.0f;
-    	}
-    	else if (displayLogo2) {
-        	game.setScreen(game.mainMenuScreen);
-    	}
-    	return true; // ca sa arat ca am rezolvat evenimentul
+    	return true;
 	}
 
 	@Override

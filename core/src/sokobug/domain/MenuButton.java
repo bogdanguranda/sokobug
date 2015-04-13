@@ -116,7 +116,7 @@ public class MenuButton extends TextButton {
 	}
 
 	private void manageEvents() throws Exception {
-		if (buttonType == PLAY)
+		if (buttonType == PLAY) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -136,7 +136,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == OPTIONS)
+		}
+		else if (buttonType == OPTIONS) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -156,7 +157,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == CREDITS)
+		}
+		else if (buttonType == CREDITS) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -176,7 +178,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == EXIT)
+		}
+		else if (buttonType == EXIT) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -196,13 +199,15 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == BACKTOMENU)
+		}
+		else if (buttonType == BACKTOMENU) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
+		}
 		else if (buttonType == LEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
@@ -227,13 +232,14 @@ public class MenuButton extends TextButton {
 				}
 			});
 		}
-		else if (buttonType == BACKTOCHOOSELEVEL)
+		else if (buttonType == BACKTOCHOOSELEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
+		}
 		else if (buttonType == FORWARD) {
 			this.addListener(new ClickListener() {
 				@Override
