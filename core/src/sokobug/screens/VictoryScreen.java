@@ -9,56 +9,49 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class OptionsScreen implements Screen, InputProcessor {
-
+public class VictoryScreen implements Screen, InputProcessor {
 	Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
-	private MenuButton backToMenu;
+	private MenuButton backButton;
+	private MenuButton forwardButton;
 	private InputMultiplexer multiplexer;
+	private Label victoryMessage;
 
-	public OptionsScreen(Sokobug myGame) {
+	public VictoryScreen(Sokobug myGame) {
 		game = myGame;
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
 		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
-				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
+		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		game.assetManager.finishLoading();
 
-		backToMenu = new MenuButton(game, "Back",
-				MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-
-		backToMenu.setPosition(0, 0);
+		font.setScale(3);
+		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.BLUE));
+		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
+		
+		backButton = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
+		backButton.setPosition(victoryMessage.getX(), victoryMessage.getY() - backButton.getHeight());
+		
+		forwardButton = new MenuButton(game, "", MenuButton.FORWARD, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-forward-btn");
+		forwardButton.setPosition(victoryMessage.getX() + victoryMessage.getWidth() - forwardButton.getWidth(), backButton.getY());
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
-				Color.BLACK.a);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		game.camera.update();
-		game.batch.setProjectionMatrix(game.camera.combined);
-
-		font.setColor(Color.RED);
-		font.setScale(1);
-		String text = "Options";
-
-		game.batch.begin();
-		font.draw(game.batch, text,
-				(game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2,
-				(game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
-		game.batch.end();
 
 		stage.act();
 		stage.draw();
@@ -73,15 +66,17 @@ public class OptionsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
-				game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override
 	public void show() {
-		stage.addActor(backToMenu);
+		font.setScale(3);
+		stage.addActor(backButton);
+		stage.addActor(forwardButton);
+		stage.addActor(victoryMessage);
+		
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
@@ -104,10 +99,6 @@ public class OptionsScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.ESCAPE) {
-			game.setScreen(game.mainMenuScreen);
-			return true;
-		}
 		return false;
 	}
 

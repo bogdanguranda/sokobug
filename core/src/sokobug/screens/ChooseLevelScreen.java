@@ -31,7 +31,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
-	private static final int NUM_LEVELS = 30;
+	public static final int NUM_LEVELS = 30;
 	private static final int BUTTONS_PER_ROW = 10;
 	private static final int BUTTONS_PER_COLLUMN = 3;
 

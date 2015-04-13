@@ -6,6 +6,7 @@ import sokobug.screens.IngameScreen;
 import sokobug.screens.LogoScreen;
 import sokobug.screens.MainMenuScreen;
 import sokobug.screens.OptionsScreen;
+import sokobug.screens.VictoryScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
@@ -21,6 +22,7 @@ public class Sokobug extends Game {
 	public OptionsScreen optionsScreen;
 	public ChooseLevelScreen chooseLevelScreen;
 	public IngameScreen ingameScreen;
+	public VictoryScreen victoryScreen;
 	//si asa mai departe, alte screens(game states... ex. OptionsScreen, InGameScreen, InGamePauseScreen etc. )
 	// bla bla
 	
@@ -50,6 +52,7 @@ public class Sokobug extends Game {
 		optionsScreen = new OptionsScreen(this);
 		chooseLevelScreen = new ChooseLevelScreen(this);
 		ingameScreen = new IngameScreen(this);
+		victoryScreen = new VictoryScreen(this);
 		this.setScreen(logoScreen);
 	}
 	

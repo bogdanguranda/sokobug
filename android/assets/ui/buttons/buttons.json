@@ -12,5 +12,6 @@
 		"level-button-down": { "up": "level/lvlButtonDown", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"level-button-locked": { "up": "level/lvlButtonLocked", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"default-back-btn": { "up": "back/backButtonUp", "down": "back/backButtonDown", "over": "back/backButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-forward-btn": { "up": "forward/fwButtonUp", "down": "forward/fwButtonDown", "over": "forward/fwButtonOver", "font": papyrus, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 	}
 }

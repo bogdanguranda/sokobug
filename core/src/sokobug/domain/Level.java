@@ -126,6 +126,10 @@ public class Level implements InputProcessor{
 	}
 	
 	public void render(float deltaTime) {
+		if (isVictory()) {
+			game.setScreen(game.victoryScreen);
+		}
+		
 		update(deltaTime);
 		
 		game.batch.begin();
@@ -152,11 +156,22 @@ public class Level implements InputProcessor{
 	}
 	
 	public boolean isVictory() {
-		return false;
-	}
-	
-	public boolean isGameOver() {
-		return false;
+		int numberOfSpots = 0;
+		int sarcophagusesOnSpot = 0;
+		
+		for (LabyrinthObject backgroundObject: labyrinthObjects[LayerType.BACKGROUND.ordinal()].getLayerObjects()) {
+			if (backgroundObject.getType() == Type.SPOT) {
+				numberOfSpots++;
+				for (LabyrinthObject foregroundObject: labyrinthObjects[LayerType.FOREGROUND.ordinal()].getLayerObjects()) {
+					if (foregroundObject.getType() == Type.SARCOPHAGUS) {
+						if (backgroundObject.getPositionLine() == foregroundObject.getPositionLine() && backgroundObject.getPositionColumn() == foregroundObject.getPositionColumn()) {
+							sarcophagusesOnSpot++;
+						}
+					}
+				}	
+			}
+		}
+		return sarcophagusesOnSpot == numberOfSpots;
 	}
 	
 	@Override

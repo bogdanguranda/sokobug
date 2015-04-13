@@ -1,6 +1,7 @@
 package sokobug.domain;
 
 import sokobug.Sokobug;
+import sokobug.screens.ChooseLevelScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,7 @@ public class MenuButton extends TextButton {
 	public static final int BACKTOMENU = 4;
 	public static final int BACKTOCHOOSELEVEL = 5;
 	public static final int LEVEL = 6;
+	public static final int FORWARD = 7;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default");
@@ -232,6 +234,21 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
+		else if (buttonType == FORWARD) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					int nextLevel = game.ingameScreen.level.levelNumber + 1;
+					if (nextLevel <= ChooseLevelScreen.NUM_LEVELS) {
+						game.ingameScreen.level.levelNumber = nextLevel;
+						game.setScreen(game.ingameScreen);
+					}
+					else {
+						game.setScreen(game.chooseLevelScreen);
+					}
+				}
+			});
+		}
 		else
 			throw new Exception("Error: Wrong button type...");
 	}
