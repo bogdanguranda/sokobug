@@ -33,7 +33,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Japonesa32.fnt", BitmapFont.class);
 
 		level = new Level(game);
 		

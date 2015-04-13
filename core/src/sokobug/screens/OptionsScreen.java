@@ -27,7 +27,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
 
 		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		backToMenu.setPosition(0, 0);

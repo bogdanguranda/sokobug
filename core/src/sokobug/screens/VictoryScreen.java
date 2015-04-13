@@ -30,9 +30,9 @@ public class VictoryScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
+		font = game.assetManager.get("fonts/Japonesa120.fnt", BitmapFont.class);
 
-		font.setScale(3.0f);
+		font.setScale(1.0f);
 		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.PINK));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
 		
@@ -65,7 +65,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		font.setScale(3.0f);
+		font.setScale(1.0f);
 		stage.addActor(backButton);
 		stage.addActor(forwardButton);
 		stage.addActor(victoryMessage);

@@ -31,6 +31,9 @@ public class TitleScreen implements Screen, InputProcessor {
 		
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
+		param.magFilter = TextureFilter.Linear;
+		//param.genMipMaps = true;
+		
 		game.assetManager.load("backgrounds/title.png", Texture.class, param);
 		game.assetManager.finishLoading();
 		
@@ -38,22 +41,23 @@ public class TitleScreen implements Screen, InputProcessor {
 		titleImage.setPosition(0.f, 0.f);
 		titleImageMinimumDuration = 2.0f;
 		pasedTimeCounter = 0.0f;
-		
-		game.assetManager.load("fonts/Papyrus.fnt", BitmapFont.class);
-		game.assetManager.load("fonts/Papyrus58.fnt", BitmapFont.class);
+				
+		game.assetManager.load("fonts/Japonesa32.fnt", BitmapFont.class);
+		game.assetManager.load("fonts/Japonesa60.fnt", BitmapFont.class);
+		game.assetManager.load("fonts/Japonesa120.fnt", BitmapFont.class);
 		
 		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
 		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		
-		game.assetManager.load("backgrounds/menu.png", Texture.class);
+		game.assetManager.load("backgrounds/menu.png", Texture.class, param);
 		game.assetManager.load("logos/potatoes.png", Texture.class, param);
 		
 		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/free.png", Texture.class);
-		game.assetManager.load("level/tiles/wall.png", Texture.class);
+		game.assetManager.load("level/tiles/free.png", Texture.class, param);
+		game.assetManager.load("level/tiles/wall.png", Texture.class, param);
 		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class);
-		game.assetManager.load("level/topBar.png", Texture.class);
+		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class, param);
+		game.assetManager.load("level/topBar.png", Texture.class, param);
 	}
 
 	@Override

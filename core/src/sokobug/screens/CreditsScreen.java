@@ -19,7 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class CreditsScreen implements Screen, InputProcessor {
 
 	private Sokobug game;
-	private BitmapFont font;
+	private BitmapFont font32;
+	private BitmapFont font60;
 	private Stage stage;
 	private MenuButton backToMenu;
 	private Sprite background;
@@ -30,8 +31,10 @@ public class CreditsScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus58.fnt", BitmapFont.class);
+		font32 = game.assetManager.get("fonts/Japonesa32.fnt", BitmapFont.class);
+		font60 = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
 		background = new Sprite(game.assetManager.get("logos/potatoes.png",Texture.class));
+		background.setPosition(0, 0);
 
 		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		backToMenu.setPosition(0, 0);
@@ -45,18 +48,19 @@ public class CreditsScreen implements Screen, InputProcessor {
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 
-		font.setColor(Color.WHITE);
+		font32.setColor(Color.BLACK);
+		font60.setColor(Color.BLACK);
 		String title = "Credits";
-		String text = "Developers: Potatoes(Bogdan Guranda, Ciprian-Corvin Tiperciuc)\n"
-				+ "Artist: Aarts(Andrei Guranda)";
+		String text = "Developers: Bogdan Guranda, Ciprian Corvin Tiperciuc\n"
+				+ "Artist: Andrei Guranda";
 
 		game.batch.begin();
 		background.draw(game.batch);
-		font.setScale(1.f);
-		font.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font.getBounds(title).width / 2, 
-				game.VIRTUAL_HEIGHT - font.getBounds(title).height / 2);
-		font.setScale(0.5f);
-		font.drawMultiLine(game.batch, text, 0, game.VIRTUAL_HEIGHT - font.getBounds(title).width * 2);
+		font60.setScale(1.f);
+		font60.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font60.getBounds(title).width / 2, 
+				game.VIRTUAL_HEIGHT + 7.f);
+		font32.setScale(1.f);
+		font32.drawMultiLine(game.batch, text, backToMenu.getX() + backToMenu.getWidth() * 1.2f, font32.getBounds(title).width);
 		game.batch.end();
 
 		stage.act();
