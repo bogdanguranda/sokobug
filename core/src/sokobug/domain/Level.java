@@ -1,8 +1,5 @@
 package sokobug.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -17,6 +14,7 @@ import sokobug.domain.entities.AnimationMovingObject;
 import sokobug.domain.entities.AnimationStaticObject;
 import sokobug.domain.entities.LabyrinthObject;
 import sokobug.domain.entities.LabyrinthObject.Type;
+import sokobug.domain.entities.Layer;
 import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
 import sokobug.domain.entities.SpriteMovingObject;
@@ -31,10 +29,11 @@ public class Level implements InputProcessor{
 	private static final int LABYRINTH_COLUMNS = 16;
 
 	private AnimationMovingObject bug;
-	private List<SpriteMovingObject> sarcophaguses = new ArrayList<SpriteMovingObject>();
-	private List<SpriteStaticObject> walls = new ArrayList<SpriteStaticObject>();
-	private List<SpriteStaticObject> freeGrounds = new ArrayList<SpriteStaticObject>();
-	private List<AnimationStaticObject> spots = new ArrayList<AnimationStaticObject>();
+	private Layer[] labyrinthObjects = new Layer[2];
+	
+	public enum LayerType {
+		BACKGROUND, FOREGROUND
+	}
 	
 	public Level(Sokobug game) {
 		this.game = game;
@@ -46,10 +45,9 @@ public class Level implements InputProcessor{
 	
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
-		this.sarcophaguses.clear();
-		this.spots.clear();
-		this.walls.clear();
-		this.freeGrounds.clear();
+		
+		Layer backgroundLayer = new Layer();
+		Layer foregroundLayer = new Layer();
 		
 		FileHandle file = Gdx.files.internal("level/levels/level" + String.valueOf(levelNumber) + ".txt");
 		String text = file.readString();
@@ -64,150 +62,49 @@ public class Level implements InputProcessor{
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
-					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+					backgroundLayer.addLabyrinthObject(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("P") == 0) {
 					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("level/tiles/sarcophagus.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
-					sarcophaguses.add(v);
+					foregroundLayer.addLabyrinthObject(v);
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
-					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+					backgroundLayer.addLabyrinthObject(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
 				}
 				else if (lineElements[j].compareTo("S") == 0) {
 					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
 					spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 					spot.setPositionColumn(j);
 					spot.setStaticFrame(1);
-					spots.add(spot);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
-					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
-					freeGround.setPositionColumn(j);
-					freeGrounds.add(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+					backgroundLayer.addLabyrinthObject(spot);
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
 					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("level/tiles/wall.png", Texture.class), Type.WALL);
 					wall.setPositionLine((LABYRINTH_ROWS-1) - i);
 					wall.setPositionColumn(j);
-					walls.add(wall);
+					foregroundLayer.addLabyrinthObject(wall);
 				}
 				else if (lineElements[j].compareTo("F") == 0) {
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
 					freeGround.setPositionColumn(j);
-					freeGrounds.add(freeGround);
+					backgroundLayer.addLabyrinthObject(freeGround);
 				}
 			}
 		}
 		
-	}
-	
-	public void render(float deltaTime) {
-		update(deltaTime);
-		
-		game.batch.begin();
-		
-		for (SpriteStaticObject freeGround: freeGrounds) {
-			freeGround.draw(game.batch);
-		}
-		
-		for (SpriteStaticObject wall: walls) {
-			wall.draw(game.batch);
-		}
-		
-		for (AnimationStaticObject spot: spots) {
-			spot.draw(game.batch, deltaTime);
-		}
-		
-		for (SpriteMovingObject sarcophagus: sarcophaguses) {
-			sarcophagus.draw(game.batch);
-		}
-		
-		bug.draw(game.batch, deltaTime);
-		
-		game.batch.end();
-	}
-	
-	public LabyrinthObject isCollidingWith(MovingObject lvlObj, MoveDirection direction) {
-		int i = lvlObj.getPositionLine();
-		int j = lvlObj.getPositionColumn();
-		if (direction == MoveDirection.LEFT) {
-			int iDest = i;
-			int jDest = j - 1;
-			
-			for (SpriteStaticObject w: walls) {
-				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
-					return w;
-				}
-			}
-			
-			for (SpriteMovingObject v: sarcophaguses) {
-				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return v;
-				}
-			}
-		}
-		else if (direction == MoveDirection.RIGHT) {
-			int iDest = i;
-			int jDest = j + 1;
-			
-			for (SpriteStaticObject w: walls) {
-				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
-					return w;
-				}
-			}
-			
-			for (SpriteMovingObject v: sarcophaguses) {
-				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return v;
-				}
-			}
-		}
-		else if (direction == MoveDirection.UP) {
-			int iDest = i + 1;
-			int jDest = j;
-			
-			for (SpriteStaticObject w: walls) {
-				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
-					return w;
-				}
-			}
-			
-			for (SpriteMovingObject v: sarcophaguses) {
-				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return v;
-				}
-			}
-		}
-		else if (direction == MoveDirection.DOWN) {
-			int iDest = i - 1;
-			int jDest = j;
-			
-			for (SpriteStaticObject w: walls) {
-				if (w.getPositionLine() == iDest && w.getPositionColumn() == jDest) {
-					return w;
-				}
-			}
-			
-			for (SpriteMovingObject v: sarcophaguses) {
-				if (v.getPositionLine() == iDest && v.getPositionColumn() == jDest) {
-					return v;
-				}
-			}
-		}
-		return null;
+		this.labyrinthObjects[0] = backgroundLayer;
+		this.labyrinthObjects[1] = foregroundLayer;
 	}
 	
 	public void update(float deltaTime) {
-		if (bug.isMoving()) {
-			bug.updateMove(deltaTime);
-		}
+		bug.update(deltaTime);
 		
-		for (SpriteMovingObject v: sarcophaguses) {
-			if (v.isMoving())
-				v.updateMove(deltaTime);
+		for (LabyrinthObject labyrinthObject: labyrinthObjects) {
+			labyrinthObject.update(deltaTime);
 		}
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -226,6 +123,32 @@ public class Level implements InputProcessor{
 		if (Gdx.input.isTouched()) {
 			touchDown(Gdx.input.getX(), Gdx.input.getY(),0 , Input.Buttons.LEFT);
 		}
+	}
+	
+	public void render(float deltaTime) {
+		update(deltaTime);
+		
+		game.batch.begin();
+		for (LabyrinthObject labyrinthObject: labyrinthObjects) {
+			labyrinthObject.draw(game.batch);
+		}
+		bug.draw(game.batch);
+		game.batch.end();
+	}
+	
+	public LabyrinthObject isCollidingWith(MovingObject lvlObj, MoveDirection direction) {
+		int iCurrent = lvlObj.getPositionLine();
+		int jCurrent = lvlObj.getPositionColumn();
+		
+		lvlObj.setPositionColumn(jCurrent + direction.jAddition);
+		lvlObj.setPositionLine(iCurrent + direction.iAddition);
+		
+		LabyrinthObject collider = labyrinthObjects[LayerType.FOREGROUND.ordinal()].isCollidingWith(lvlObj);
+		
+		lvlObj.setPositionColumn(jCurrent);
+		lvlObj.setPositionLine(iCurrent);
+		
+		return collider;
 	}
 	
 	public boolean isVictory() {
