@@ -150,8 +150,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		// Reacting only if mouse is not over a menu widget
-		if (!play.isOver() && !options.isOver() && !credits.isOver()
-				&& !exit.isOver()) {
+		if (!MenuButton.isMouseOverButton(menuButtons)) {
 			if (keycode == Input.Keys.DOWN) {
 				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
