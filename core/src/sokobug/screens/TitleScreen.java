@@ -32,7 +32,6 @@ public class TitleScreen implements Screen, InputProcessor {
 		TextureParameter param = new TextureParameter();
 		param.minFilter = TextureFilter.Linear;
 		param.magFilter = TextureFilter.Linear;
-		//param.genMipMaps = true;
 		
 		game.assetManager.load("backgrounds/title.png", Texture.class, param);
 		game.assetManager.finishLoading();
@@ -51,14 +50,18 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
 		
 		game.assetManager.load("backgrounds/menu.png", Texture.class, param);
-		game.assetManager.load("logos/potatoes.png", Texture.class, param);
+		game.assetManager.load("backgrounds/potatoes.png", Texture.class, param);
 		
 		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
 		game.assetManager.load("level/tiles/free.png", Texture.class, param);
 		game.assetManager.load("level/tiles/wall.png", Texture.class, param);
 		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
 		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class, param);
+		
 		game.assetManager.load("level/topBar.png", Texture.class, param);
+		game.assetManager.load("level/victoryWing.png", Texture.class, param);
+		
+		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
 	}
 
 	@Override

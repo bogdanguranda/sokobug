@@ -8,7 +8,12 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -18,10 +23,15 @@ public class VictoryScreen implements Screen, InputProcessor {
 	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
+	
 	private MenuButton backButton;
 	private MenuButton forwardButton;
-	private InputMultiplexer multiplexer;
 	private Label victoryMessage;
+	private Sprite victoryWing;
+	private Animation victoryGlow;
+	private float animationTime;
+	
+	private InputMultiplexer multiplexer;
 
 	public VictoryScreen(Sokobug myGame) {
 		game = myGame;
@@ -34,17 +44,39 @@ public class VictoryScreen implements Screen, InputProcessor {
 		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.PINK));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
 		
+		victoryWing = new Sprite(game.assetManager.get("level/victoryWing.png", Texture.class));
+		victoryWing.setPosition(victoryMessage.getX() + (victoryMessage.getWidth() - victoryWing.getWidth()) / 2.f, victoryMessage.getY() - victoryWing.getHeight());
+		
 		backButton = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
-		backButton.setPosition(victoryMessage.getX(), victoryMessage.getY() - backButton.getHeight());
+		backButton.setPosition(victoryWing.getX(), victoryWing.getY() - backButton.getHeight());
 		
 		forwardButton = new MenuButton(game, "", MenuButton.FORWARD, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-forward-btn");
-		forwardButton.setPosition(victoryMessage.getX() + victoryMessage.getWidth() - forwardButton.getWidth(), backButton.getY());
+		forwardButton.setPosition(victoryWing.getX() + victoryWing.getWidth() - forwardButton.getWidth(), backButton.getY());
+		
+		victoryGlow = new Animation(1/24.f, game.assetManager.get("level/animations/victory/victoryGlow.pack", TextureAtlas.class).getRegions());
+        victoryGlow.setPlayMode(PlayMode.LOOP);
+        animationTime = 0.f;
+        
+		stage.addActor(backButton);
+		stage.addActor(forwardButton);
+		stage.addActor(victoryMessage);
 	}
 
 	@Override
 	public void render(float delta) {
+		game.ingameScreen.render(delta);
+		
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
+		
+		animationTime += delta;
+
+		game.batch.begin();
+		victoryWing.draw(game.batch);
+		game.batch.draw(victoryGlow.getKeyFrame(animationTime), 
+				victoryWing.getX() + (victoryWing.getWidth() - victoryGlow.getKeyFrames()[0].getRegionWidth()) / 2.f, 
+				(victoryWing.getY() + victoryWing.getHeight() / 2) - (victoryGlow.getKeyFrames()[0].getRegionHeight() / 2) + 5.f);
+		game.batch.end();
 
 		stage.act();
 		stage.draw();
@@ -63,11 +95,6 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		font.setScale(1.0f);
-		stage.addActor(backButton);
-		stage.addActor(forwardButton);
-		stage.addActor(victoryMessage);
-		
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);

@@ -43,6 +43,8 @@ public class IngameScreen implements Screen, InputProcessor {
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, 
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
 		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
+	
+		stage.addActor(backToMenu);
 	}
 
 	@Override
@@ -82,7 +84,6 @@ public class IngameScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		level.load(level.levelNumber);
-		stage.addActor(backToMenu);
 		
 		multiplexer.addProcessor(level);
 		multiplexer.addProcessor(stage);

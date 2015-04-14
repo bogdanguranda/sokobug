@@ -31,6 +31,8 @@ public class Level implements InputProcessor{
 	private AnimationMovingObject bug;
 	private Layer[] labyrinthObjects = new Layer[2];
 	
+	private boolean finishedLevel = false;
+	
 	public enum LayerType {
 		BACKGROUND, FOREGROUND
 	}
@@ -45,6 +47,7 @@ public class Level implements InputProcessor{
 	
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
+		this.finishedLevel = false;
 		
 		Layer backgroundLayer = new Layer();
 		Layer foregroundLayer = new Layer();
@@ -106,7 +109,7 @@ public class Level implements InputProcessor{
 		for (LabyrinthObject labyrinthObject: labyrinthObjects) {
 			labyrinthObject.update(deltaTime);
 		}
-		
+			
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			keyDown(Input.Keys.LEFT);
 		}
@@ -125,12 +128,16 @@ public class Level implements InputProcessor{
 		}
 	}
 	
-	public void render(float deltaTime) {
-		if (isVictory()) {
-			game.setScreen(game.victoryScreen);
+	public void render(float deltaTime) {		
+		if (!finishedLevel) {
+			update(deltaTime);
+			
+			if (isVictory()) {
+				finishedLevel = true;
+				game.setScreen(game.victoryScreen);
+			}
 		}
 		
-		update(deltaTime);
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 		

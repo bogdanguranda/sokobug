@@ -33,7 +33,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 		font32 = game.assetManager.get("fonts/Japonesa32.fnt", BitmapFont.class);
 		font60 = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
-		background = new Sprite(game.assetManager.get("logos/potatoes.png",Texture.class));
+		background = new Sprite(game.assetManager.get("backgrounds/potatoes.png",Texture.class));
 		background.setPosition(0, 0);
 
 		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
