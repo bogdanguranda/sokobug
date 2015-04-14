@@ -17,9 +17,16 @@ public class AnimationStaticObject extends StaticObject {
         animation.setPlayMode(PlayMode.LOOP);
 	}
 	
-	public void draw(SpriteBatch batch, float deltaTime) {
+	@Override
+	public void update(float deltaTime) {
 		if (specificFrame == -1) {
 			stateTime += deltaTime;
+		}
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch) {
+		if (specificFrame == -1) {
 			batch.draw(animation.getKeyFrame(stateTime), positionColumn * OBJECT_SIZE, positionLine * OBJECT_SIZE);
 		}
 		else {

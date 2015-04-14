@@ -3,7 +3,33 @@ package sokobug.domain.entities;
 public abstract class MovingObject extends LabyrinthObject {
 	
 	public enum MoveDirection {
-		NONE, LEFT, RIGHT, UP, DOWN
+		NONE, LEFT, RIGHT, UP, DOWN;
+		
+		public int iAddition = 0;
+		public int jAddition = 0;
+		
+		private MoveDirection() {
+			if (this.name().compareTo("NONE") == 0) {
+				iAddition = 0;
+				jAddition = 0;
+			}
+			else if (this.name().compareTo("LEFT") == 0) {
+				iAddition = 0;
+				jAddition = -1;
+			}
+			else if (this.name().compareTo("RIGHT") == 0) {
+				iAddition = 0;
+				jAddition = +1;
+			}
+			else if (this.name().compareTo("UP") == 0) {
+				iAddition = +1;
+				jAddition = 0;
+			}
+			else if (this.name().compareTo("DOWN") == 0) {
+				iAddition = -1;
+				jAddition = 0;
+			}
+		}
 	}
 	private MoveDirection orientation = MoveDirection.UP;
 	
@@ -27,11 +53,13 @@ public abstract class MovingObject extends LabyrinthObject {
 		this.orientation = orientation;
 	}
 	
+	@Override
 	public void setPositionLine(int positionLine) {
 		this.positionLine = positionLine;
 		positionY = positionLine * OBJECT_SIZE;
 	}
 	
+	@Override
 	public void setPositionColumn(int positionColumn) {
 		this.positionColumn = positionColumn;
 		positionX = positionColumn * OBJECT_SIZE;
@@ -61,7 +89,8 @@ public abstract class MovingObject extends LabyrinthObject {
 		this.moveDirection = direction;
 	}
 	
-	public void updateMove(float deltaTime) {
+	@Override
+	public void update(float deltaTime) {
 		if (isMoving()) {
 			float moveX = 0, moveY = 0;
 			
@@ -86,18 +115,8 @@ public abstract class MovingObject extends LabyrinthObject {
 			
 			float finalDistance = distanceToMove / 20.f;
 			if (movedDistance + finalDistance >= distanceToMove) {
-				if (moveDirection == MoveDirection.LEFT) {
-					setPositionColumn(getPositionColumn()-1);
-				}
-				else if (moveDirection == MoveDirection.RIGHT) {
-					setPositionColumn(getPositionColumn()+1);
-				}
-				else if (moveDirection == MoveDirection.UP) {
-					setPositionLine(getPositionLine()+1);
-				}
-				else if (moveDirection == MoveDirection.DOWN) {
-					setPositionLine(getPositionLine()-1);
-				}
+				setPositionColumn(getPositionColumn() + moveDirection.jAddition);
+				setPositionLine(getPositionLine() + moveDirection.iAddition);
 				movedDistance = 0;
 				moveDirection = MoveDirection.NONE;
 			}

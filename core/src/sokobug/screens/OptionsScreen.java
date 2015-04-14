@@ -8,17 +8,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class OptionsScreen implements Screen, InputProcessor {
 
-	Sokobug game;
+	private Sokobug game;
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backToMenu;
@@ -29,33 +27,26 @@ public class OptionsScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
-				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
-		game.assetManager.finishLoading();
-
+		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
-
 		backToMenu.setPosition(0, 0);
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
-				Color.BLACK.a);
+		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
 
 		font.setColor(Color.RED);
+		font.setScale(1);
 		String text = "Options";
 
 		game.batch.begin();
-		font.draw(game.batch, text,
-				(game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2,
+		font.draw(game.batch, text, (game.VIRTUAL_WIDTH / 2) - font.getBounds(text).width / 2, 
 				(game.VIRTUAL_HEIGHT / 2) - font.getBounds(text).height / 2);
 		game.batch.end();
 
@@ -66,16 +57,12 @@ public class OptionsScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("ui/buttons/buttons.pack");
-		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
-				game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override

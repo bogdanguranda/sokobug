@@ -12,6 +12,12 @@ public class SpriteStaticObject extends StaticObject {
 		sprite = new Sprite(texture);
 	}
 	
+	@Override
+	public void update(float deltaTime) {
+		
+	}
+	
+	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
 	}
