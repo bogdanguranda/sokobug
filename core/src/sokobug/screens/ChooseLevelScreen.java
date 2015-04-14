@@ -54,7 +54,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png",
 				Texture.class));
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
