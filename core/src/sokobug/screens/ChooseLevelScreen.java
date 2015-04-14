@@ -215,7 +215,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 			}
 		}
 
-		if (keycode == Input.Keys.ESCAPE) {
+		if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
 			game.setScreen(game.mainMenuScreen);
 			return true;
 		}

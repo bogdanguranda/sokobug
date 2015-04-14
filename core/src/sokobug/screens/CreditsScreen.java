@@ -111,7 +111,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.ESCAPE) {
+		if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
 			game.setScreen(game.mainMenuScreen);
 			return true;
 		}
