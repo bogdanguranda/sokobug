@@ -58,24 +58,42 @@ public class Level implements InputProcessor{
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {
 			String[] lineElements = lines[i].split("\\s");
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
-				if (lineElements[j].compareTo("B") == 0) {
+				if ((lineElements[j].compareTo("B") == 0) || (lineElements[j].compareTo("b") == 0)) {
 					bug  = new AnimationMovingObject((TextureAtlas) game.assetManager.get("level/animations/bug/bug.pack"), Type.BUG);
 					bug.setPositionLine((LABYRINTH_ROWS-1) - i);
 					bug.setPositionColumn(j);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
-					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
-					freeGround.setPositionColumn(j);
-					backgroundLayer.addLabyrinthObject(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+					if (lineElements[j].compareTo("B") == 0) {
+						SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
+						freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+						freeGround.setPositionColumn(j);
+						backgroundLayer.addLabyrinthObject(freeGround);
+					}
+					else {
+						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
+						spot.setPositionLine((LABYRINTH_ROWS-1) - i);
+						spot.setPositionColumn(j);
+						spot.setStaticFrame(1);
+						backgroundLayer.addLabyrinthObject(spot);
+					}
 				}
-				else if (lineElements[j].compareTo("P") == 0) {
+				else if ((lineElements[j].compareTo("P") == 0) || (lineElements[j].compareTo("p") == 0)) {
 					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("level/tiles/sarcophagus.png", Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS-1) - i);
 					v.setPositionColumn(j);
 					foregroundLayer.addLabyrinthObject(v);
-					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
-					freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
-					freeGround.setPositionColumn(j);
-					backgroundLayer.addLabyrinthObject(freeGround); // the bug stays on a free spot by default at the begining the same as any moving object
+					if (lineElements[j].compareTo("P") == 0) {
+						SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get("level/tiles/free.png", Texture.class), Type.FREE);
+						freeGround.setPositionLine((LABYRINTH_ROWS-1) - i);
+						freeGround.setPositionColumn(j);
+						backgroundLayer.addLabyrinthObject(freeGround);
+					}
+					else {
+						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
+						spot.setPositionLine((LABYRINTH_ROWS-1) - i);
+						spot.setPositionColumn(j);
+						spot.setStaticFrame(1);
+						backgroundLayer.addLabyrinthObject(spot);
+					}
 				}
 				else if (lineElements[j].compareTo("S") == 0) {
 					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
