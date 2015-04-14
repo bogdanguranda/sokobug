@@ -1,6 +1,7 @@
 package sokobug.domain;
 
 import sokobug.Sokobug;
+import sokobug.screens.ChooseLevelScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,7 @@ public class MenuButton extends TextButton {
 	public static final int BACKTOMENU = 4;
 	public static final int BACKTOCHOOSELEVEL = 5;
 	public static final int LEVEL = 6;
+	public static final int FORWARD = 7;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default");
@@ -114,7 +116,7 @@ public class MenuButton extends TextButton {
 	}
 
 	private void manageEvents() throws Exception {
-		if (buttonType == PLAY)
+		if (buttonType == PLAY) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -135,7 +137,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == OPTIONS)
+		}
+		else if (buttonType == OPTIONS) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -156,7 +159,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == CREDITS)
+		}
+		else if (buttonType == CREDITS) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -177,7 +181,8 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == EXIT)
+		}
+		else if (buttonType == EXIT) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -198,13 +203,15 @@ public class MenuButton extends TextButton {
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}
 			});
-		else if (buttonType == BACKTOMENU)
+		}
+		else if (buttonType == BACKTOMENU) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
+		}
 		else if (buttonType == LEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
@@ -230,13 +237,29 @@ public class MenuButton extends TextButton {
 				}
 			});
 		}
-		else if (buttonType == BACKTOCHOOSELEVEL)
+		else if (buttonType == BACKTOCHOOSELEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
+		}
+		else if (buttonType == FORWARD) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					int nextLevel = game.ingameScreen.level.levelNumber + 1;
+					if (nextLevel <= ChooseLevelScreen.NUM_LEVELS) {
+						game.ingameScreen.level.levelNumber = nextLevel;
+						game.setScreen(game.ingameScreen);
+					}
+					else {
+						game.setScreen(game.chooseLevelScreen);
+					}
+				}
+			});
+		}
 		else
 			throw new Exception("Error: Wrong button type...");
 	}

@@ -3,29 +3,27 @@ package sokobug;
 import sokobug.screens.ChooseLevelScreen;
 import sokobug.screens.CreditsScreen;
 import sokobug.screens.IngameScreen;
-import sokobug.screens.LogoScreen;
+import sokobug.screens.TitleScreen;
 import sokobug.screens.MainMenuScreen;
 import sokobug.screens.OptionsScreen;
+import sokobug.screens.VictoryScreen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Sokobug extends Game {
-	public LogoScreen logoScreen;
+	public TitleScreen titleScreen;
 	public MainMenuScreen mainMenuScreen;
 	public CreditsScreen creditsScreen;
 	public OptionsScreen optionsScreen;
 	public ChooseLevelScreen chooseLevelScreen;
 	public IngameScreen ingameScreen;
-	//si asa mai departe, alte screens(game states... ex. OptionsScreen, InGameScreen, InGamePauseScreen etc. )
-	// bla bla
+	public VictoryScreen victoryScreen;
 	
 	public AssetManager assetManager;
-	
 	public SpriteBatch batch;
 	
 	public final float VIRTUAL_WIDTH = 1280;
@@ -40,22 +38,15 @@ public class Sokobug extends Game {
 		viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
 		viewport.apply();
 		
-		batch = new SpriteBatch();
 		assetManager = new AssetManager();
-		assetManager.load("fonts/Papyrus.fnt", BitmapFont.class);
+		batch = new SpriteBatch();
 		
-		logoScreen = new LogoScreen(this);
-		mainMenuScreen = new MainMenuScreen(this); // sau i-am putea da new doar in logoScreen, asa am face mai putin load dintr-odata...
-		creditsScreen = new CreditsScreen(this);
-		optionsScreen = new OptionsScreen(this);
-		chooseLevelScreen = new ChooseLevelScreen(this);
-		ingameScreen = new IngameScreen(this);
-		this.setScreen(logoScreen);
+		titleScreen = new TitleScreen(this);
+		this.setScreen(titleScreen);
 	}
 	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		super.dispose();
 		batch.dispose();
 		assetManager.dispose();

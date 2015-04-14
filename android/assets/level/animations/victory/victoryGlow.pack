@@ -1,0 +1,215 @@
+
+victoryGlow.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Glow0001
+  rotate: false
+  xy: 1, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0002
+  rotate: false
+  xy: 1, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0003
+  rotate: false
+  xy: 83, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0004
+  rotate: false
+  xy: 1, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0005
+  rotate: false
+  xy: 83, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0006
+  rotate: false
+  xy: 165, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0007
+  rotate: false
+  xy: 83, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0008
+  rotate: false
+  xy: 165, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0009
+  rotate: false
+  xy: 247, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0010
+  rotate: false
+  xy: 165, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0011
+  rotate: false
+  xy: 247, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0012
+  rotate: false
+  xy: 329, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0013
+  rotate: false
+  xy: 247, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0014
+  rotate: false
+  xy: 329, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0015
+  rotate: false
+  xy: 411, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0016
+  rotate: false
+  xy: 329, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0017
+  rotate: false
+  xy: 411, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0018
+  rotate: false
+  xy: 493, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0019
+  rotate: false
+  xy: 411, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0020
+  rotate: false
+  xy: 493, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0021
+  rotate: false
+  xy: 575, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0022
+  rotate: false
+  xy: 493, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0023
+  rotate: false
+  xy: 575, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0024
+  rotate: false
+  xy: 657, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0025
+  rotate: false
+  xy: 575, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0026
+  rotate: false
+  xy: 657, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0027
+  rotate: false
+  xy: 739, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0028
+  rotate: false
+  xy: 657, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0029
+  rotate: false
+  xy: 739, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Glow0030
+  rotate: false
+  xy: 821, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1

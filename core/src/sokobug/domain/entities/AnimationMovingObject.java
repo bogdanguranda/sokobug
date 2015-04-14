@@ -16,19 +16,15 @@ public class AnimationMovingObject extends MovingObject {
 	}
 	
 	@Override
-	public void setOrientation(MoveDirection orientation) {
-		super.setOrientation(orientation);
-	}
-	
-	@Override
-	public void updateMove(float deltaTime) {
-		super.updateMove(deltaTime);
+	public void update(float deltaTime) {
+		super.update(deltaTime);
 		if (isMoving()) {
 			stateTime += deltaTime;
 		}
 	}
 	
-	public void draw(SpriteBatch batch, float deltaTime) {
+	@Override
+	public void draw(SpriteBatch batch) {
 		if (getOrientation() == MoveDirection.LEFT) {
 			batch.draw(animation.getKeyFrame(stateTime), positionX, positionY, animation.getKeyFrame(stateTime).getRegionWidth() / 2.f, 
 					   animation.getKeyFrame(stateTime).getRegionHeight() / 2.f, animation.getKeyFrame(stateTime).getRegionWidth(),

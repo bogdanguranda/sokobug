@@ -9,12 +9,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -31,7 +29,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
-	private static final int NUM_LEVELS = 30;
+	public static final int NUM_LEVELS = 30;
 	private static final int BUTTONS_PER_ROW = 10;
 	private static final int BUTTONS_PER_COLLUMN = 3;
 
@@ -45,21 +43,12 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 		levelButtons = new MenuButton[NUM_LEVELS];
 
-		game.assetManager.load("backgrounds/menu.png", Texture.class);
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class,
-				new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
-		game.assetManager.finishLoading();
-
-		background = new Sprite(game.assetManager.get("backgrounds/menu.png",
-				Texture.class));
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
+		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, 
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
-
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
-		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW,
-				BUTTONS_PER_COLLUMN, NUM_LEVELS);
+		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
 			table.add(levelButtons[i]).pad(25);
@@ -77,8 +66,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
-				Color.BLACK.a);
+		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.camera.update();
@@ -95,16 +83,12 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("backgrounds/menu.png");
-		game.assetManager.unload("ui/buttons/buttons.pack");
-		game.assetManager.unload("ui/buttons/buttons.json");
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
-				game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override

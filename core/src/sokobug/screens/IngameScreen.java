@@ -9,13 +9,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -35,43 +33,35 @@ public class IngameScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Papyrus.fnt", BitmapFont.class);
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter("ui/buttons/buttons.pack"));
-		
-		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/free.png", Texture.class);
-		game.assetManager.load("level/tiles/wall.png", Texture.class);
-		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class);
-		game.assetManager.load("level/topBar.png", Texture.class);
-		
-		game.assetManager.finishLoading();
+		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
 
-		level = new Level(game); // we pass game to give acces to assetManager for drawings and maybe other needs
+		level = new Level(game);
 		
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 		
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
-		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, 
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-back-btn");
+		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
+	
+		stage.addActor(backToMenu);
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b,
-				Color.BLACK.a);
+		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
-
+		
 		font.setColor(Color.BLACK);
+		font.setScale(1);
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
 		topBar.draw(game.batch);
-		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - font.getBounds(levelText).height / 2);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - 12.f);
 		game.batch.end();
 		
 		stage.act();
@@ -83,29 +73,17 @@ public class IngameScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		game.assetManager.unload("ui/buttons/buttons.pack");
-		game.assetManager.unload("ui/buttons/buttons.json");
-		
-		game.assetManager.unload("level/animations/bug/bug.pack");
-		game.assetManager.unload("level/tiles/free.png");
-		game.assetManager.unload("level/tiles/wall.png");
-		game.assetManager.unload("level/animations/spot/spot.pack");
-		game.assetManager.unload("level/tiles/sarcophagus.png");
-		game.assetManager.unload("level/topBar.png");
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 		game.viewport.update(width, height);
-		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f,
-				game.VIRTUAL_HEIGHT / 2.f, 0.f);
+		game.camera.position.set(game.VIRTUAL_WIDTH / 2.f, game.VIRTUAL_HEIGHT / 2.f, 0.f);
 	}
 
 	@Override
 	public void show() {
 		level.load(level.levelNumber);
-		stage.addActor(backToMenu);
 		
 		multiplexer.addProcessor(level);
 		multiplexer.addProcessor(stage);

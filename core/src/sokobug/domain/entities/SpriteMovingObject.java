@@ -13,11 +13,12 @@ public class SpriteMovingObject extends MovingObject {
 	}
 	
 	@Override
-	public void updateMove(float deltaTime) {
-		super.updateMove(deltaTime);
+	public void update(float deltaTime) {
+		super.update(deltaTime);
 		sprite.setPosition(positionX, positionY);
 	}
 	
+	@Override
 	public void draw(SpriteBatch batch) {
 		sprite.draw(batch);
 	}
