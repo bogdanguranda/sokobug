@@ -122,6 +122,7 @@ public class MenuButton extends TextButton {
 				}
 
 				@Override
+				//this is called when mouse if over or touch is over a widget (button)
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
@@ -142,6 +143,7 @@ public class MenuButton extends TextButton {
 				}
 
 				@Override
+				//this is called when mouse if over or touch is over a widget (button)
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
@@ -162,6 +164,7 @@ public class MenuButton extends TextButton {
 				}
 
 				@Override
+				//this is called when mouse if over or touch is over a widget (button)
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
@@ -182,6 +185,7 @@ public class MenuButton extends TextButton {
 				}
 
 				@Override
+				//this is called when mouse if over or touch is over a widget (button)
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 
@@ -212,6 +216,7 @@ public class MenuButton extends TextButton {
 				}
 				
 				@Override
+				//this is called when mouse if over or touch is over a widget (button)
 				public void enter(InputEvent event, float x, float y,
 						int pointer, Actor fromActor) {
 			
