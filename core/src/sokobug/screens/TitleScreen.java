@@ -41,7 +41,8 @@ public class TitleScreen implements Screen, InputProcessor {
 		titleImage.setPosition(0.f, 0.f);
 		titleImageMinimumDuration = 2.0f;
 		pasedTimeCounter = 0.0f;
-				
+		
+		game.assetManager.load("fonts/Japonesa24.fnt", BitmapFont.class);
 		game.assetManager.load("fonts/Japonesa32.fnt", BitmapFont.class);
 		game.assetManager.load("fonts/Japonesa60.fnt", BitmapFont.class);
 		game.assetManager.load("fonts/Japonesa120.fnt", BitmapFont.class);

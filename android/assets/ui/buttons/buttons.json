@@ -1,13 +1,14 @@
 {
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
-		"japonesa32": { "file": "fonts/Japonesa32.fnt"}
+		"japonesa32": { "file": "fonts/Japonesa32.fnt"},
+		"japonesa24": { "file": "fonts/Japonesa24.fnt"},
 	},
 
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 		"default": { "up": "menu/buttonUp", "down": "menu/buttonDown", "over": "menu/buttonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
 		"menu-button-focused": { "up": "menu/buttonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"menu-button-down": { "up": "menu/buttonDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
-		"default-level-btn": { "up": "level/lvlButtonUp", "down": "level/lvlButtonDown", "over": "level/lvlButtonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-level-btn": { "up": "level/lvlButtonUp", "down": "level/lvlButtonDown", "over": "level/lvlButtonOver", "font": japonesa24, "pressedOffsetY": 5, "unpressedOffsetY": 10, "pressedOffsetX": 0, "unpressedOffsetX": -5},
 		"level-button-focused": { "up": "level/lvlButtonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"level-button-down": { "up": "level/lvlButtonDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"level-button-locked": { "up": "level/lvlButtonLocked", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
