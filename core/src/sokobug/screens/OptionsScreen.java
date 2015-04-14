@@ -28,8 +28,8 @@ public class OptionsScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
-
-		backToMenu = new MenuButton(game, "Back", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
 		backToMenu.setPosition(0, 0);
 	}
 
@@ -90,7 +90,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.ESCAPE) {
+		if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
 			game.setScreen(game.mainMenuScreen);
 			return true;
 		}
