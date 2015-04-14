@@ -31,6 +31,11 @@ public class OptionsScreen implements Screen, InputProcessor {
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
 		backToMenu.setPosition(0, 0);
+		
+		stage.addActor(backToMenu);
+		
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
 	}
 
 	@Override
@@ -67,9 +72,6 @@ public class OptionsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		stage.addActor(backToMenu);
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

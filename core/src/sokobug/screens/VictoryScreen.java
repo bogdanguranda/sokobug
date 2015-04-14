@@ -60,6 +60,9 @@ public class VictoryScreen implements Screen, InputProcessor {
 		stage.addActor(backButton);
 		stage.addActor(forwardButton);
 		stage.addActor(victoryMessage);
+		
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
 	}
 
 	@Override
@@ -95,8 +98,6 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

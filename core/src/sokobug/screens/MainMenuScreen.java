@@ -70,6 +70,9 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		// table.setDebug(true);
 
 		stage.addActor(table);
+		
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
 	}
 
 	@Override
@@ -103,8 +106,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		for (MenuButton button : menuButtons)
 			button.setStyle(uiSkin.get("default", TextButtonStyle.class));
 
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

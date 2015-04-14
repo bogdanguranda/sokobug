@@ -76,6 +76,12 @@ public class TitleScreen implements Screen, InputProcessor {
 		if (game.assetManager.update()) {
 	        if(pasedTimeCounter > titleImageMinimumDuration) {
 	        	if (!readyToSkip) {
+	        		game.mainMenuScreen = new MainMenuScreen(game);
+	        		game.creditsScreen = new CreditsScreen(game);
+	        		game.optionsScreen = new OptionsScreen(game);
+	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
+	        		game.ingameScreen = new IngameScreen(game);
+	        		game.victoryScreen = new VictoryScreen(game);
 	        		readyToSkip = true;
 	        	}
 	        }
@@ -93,12 +99,6 @@ public class TitleScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		game.mainMenuScreen = new MainMenuScreen(game);
-		game.creditsScreen = new CreditsScreen(game);
-		game.optionsScreen = new OptionsScreen(game);
-		game.chooseLevelScreen = new ChooseLevelScreen(game);
-		game.ingameScreen = new IngameScreen(game);
-		game.victoryScreen = new VictoryScreen(game);
 		dispose();
 	}
 	

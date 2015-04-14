@@ -46,6 +46,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, 
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
+		backToMenu.setPosition(0, 0);
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
@@ -56,13 +57,14 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 			if ((i + 1) % BUTTONS_PER_ROW == 0)
 				table.row();
 		}
+		
 		stage.addActor(backToMenu);
-
 		table.setFillParent(true);
 		//table.setDebug(true);
 		stage.addActor(table);
-
-		backToMenu.setPosition(0, 0);
+		
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
 	}
 
 	@Override
@@ -99,8 +101,6 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		for (MenuButton button : levelButtons)
 			button.setStyle(uiSkin.get("default-level-btn", TextButtonStyle.class));
 		
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

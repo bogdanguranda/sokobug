@@ -44,6 +44,10 @@ public class IngameScreen implements Screen, InputProcessor {
 		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
 	
 		stage.addActor(backToMenu);
+		
+		multiplexer.addProcessor(level);
+		multiplexer.addProcessor(stage);
+		multiplexer.addProcessor(this);
 	}
 
 	@Override
@@ -84,9 +88,6 @@ public class IngameScreen implements Screen, InputProcessor {
 	public void show() {
 		level.load(level.levelNumber);
 		
-		multiplexer.addProcessor(level);
-		multiplexer.addProcessor(stage);
-		multiplexer.addProcessor(this);
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
