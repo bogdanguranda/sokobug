@@ -23,6 +23,7 @@ public class IngameScreen implements Screen, InputProcessor {
 	private BitmapFont font;
 	private Stage stage;
 	private MenuButton backToMenu;
+	private MenuButton restart;
 	private InputMultiplexer multiplexer;
 	
 	public Sprite topBar;
@@ -41,9 +42,13 @@ public class IngameScreen implements Screen, InputProcessor {
 		topBar.setPosition(0, level.getSize().y);
 		
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back-btn");
-		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); // sa fie centrat la mijlocul lui top bar 
+		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); 
 	
+		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-restart-btn");
+		restart.setPosition(game.VIRTUAL_WIDTH - restart.getWidth() * 3.f/2.f, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
+		
 		stage.addActor(backToMenu);
+		stage.addActor(restart);
 		
 		multiplexer.addProcessor(level);
 		multiplexer.addProcessor(stage);

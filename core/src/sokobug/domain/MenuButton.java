@@ -28,6 +28,7 @@ public class MenuButton extends TextButton {
 	public static final int BACKTOCHOOSELEVEL = 5;
 	public static final int LEVEL = 6;
 	public static final int FORWARD = 7;
+	public static final int RESTART = 8;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default");
@@ -257,6 +258,14 @@ public class MenuButton extends TextButton {
 					else {
 						game.setScreen(game.chooseLevelScreen);
 					}
+				}
+			});
+		}
+		else if (buttonType == RESTART) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.ingameScreen);
 				}
 			});
 		}
