@@ -27,7 +27,7 @@ public class IngameScreen implements Screen, InputProcessor {
 	private InputMultiplexer multiplexer;
 	
 	public Sprite topBar;
-	public Level level; // by default 1(should be loaded before changing to ingameScreen, using level.load(int levelNumber) method)
+	public Level level;
 	
 	public IngameScreen(Sokobug myGame) {
 		game = myGame;
@@ -35,7 +35,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
-
+		
 		level = new Level(game);
 		
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
@@ -75,7 +75,7 @@ public class IngameScreen implements Screen, InputProcessor {
 		stage.act();
 		stage.draw();
 		
-		level.render(delta); // foloseste singur game.batch
+		level.render(delta);
 	}
 
 	@Override

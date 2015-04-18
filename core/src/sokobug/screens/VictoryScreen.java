@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.PlayerProgressManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -98,6 +99,11 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		int currentMaxLevelUnlocked = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
+		int levelFinished = game.ingameScreen.level.levelNumber;
+		if (levelFinished == currentMaxLevelUnlocked) {
+			PlayerProgressManager.getPlayerProgressManager().setCurrentLevel(currentMaxLevelUnlocked + 1);
+		}
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
