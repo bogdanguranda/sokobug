@@ -29,6 +29,7 @@ public class MenuButton extends TextButton {
 	public static final int LEVEL = 6;
 	public static final int FORWARD = 7;
 	public static final int RESTART = 8;
+	public static final int LEVEL_LOCKED = 9;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default");
@@ -43,7 +44,7 @@ public class MenuButton extends TextButton {
 		downNeighbour = null;
 		rightNeighbour = null;
 		leftNeighbour = null;
-
+		
 		try {
 			manageEvents();
 		} catch (Exception ex) {
@@ -268,6 +269,9 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.ingameScreen);
 				}
 			});
+		}
+		else if (buttonType == LEVEL_LOCKED) {
+			// nothing
 		}
 		else
 			throw new Exception("Error: Wrong button type...");

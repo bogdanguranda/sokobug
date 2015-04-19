@@ -3,12 +3,20 @@ package sokobug.domain;
 import sokobug.screens.ChooseLevelScreen;
 
 public class LvlBtnOrganizer {
-	public static MenuButton[] linkButtons(ChooseLevelScreen screen, int buttonsPerRow, int buttonsPerCollum, int numberOfButtons) {
+	public static MenuButton[] linkButtons(ChooseLevelScreen screen, int buttonsPerRow, int buttonsPerCollum, int numberOfButtons, 
+			String styles[]) {
 		MenuButton[] button = new MenuButton[numberOfButtons];
 		
-		for (int i = 0; i < numberOfButtons; i++)
-			button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
-					MenuButton.LEVEL, screen.uiSkin, "default-level-btn");
+		for (int i = 0; i < numberOfButtons; i++) {
+			if (styles[i].compareTo("default-level-btn") == 0) {
+				button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
+						MenuButton.LEVEL, screen.uiSkin, styles[i]);
+			}
+			else {
+				button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
+						MenuButton.LEVEL_LOCKED, screen.uiSkin, styles[i]);
+			}
+		}
 		
 		for (int i = 0; i < numberOfButtons; i++) {
 			int btnLevel = i + 1; 											//The actual level of the button
