@@ -3,6 +3,7 @@ package sokobug.screens;
 import sokobug.Sokobug;
 import sokobug.domain.LvlBtnOrganizer;
 import sokobug.domain.MenuButton;
+import sokobug.domain.PlayerProgressManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -35,13 +36,16 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	private MenuButton focusedButton;
 	public MenuButton[] levelButtons;
+	
+	private int currentMaxUnlockedLevel;
 
 	public ChooseLevelScreen(Sokobug myGame) {
 		game = myGame;
 		table = new Table();
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
-		levelButtons = new MenuButton[NUM_LEVELS];
+		//levelButtons = new MenuButton[NUM_LEVELS];
+		currentMaxUnlockedLevel = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, 
@@ -49,8 +53,18 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		backToMenu.setPosition(0, 0);
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
+		
+		String styles[] = new String[NUM_LEVELS];
+		for (int i = 0; i < NUM_LEVELS; i++) {
+			if (i < currentMaxUnlockedLevel) {
+				styles[i] = "default-level-btn";
+			}
+			else {
+				styles[i] = "level-button-locked";
+			}
+		}
 
-		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS);
+		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS, styles);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
 			table.add(levelButtons[i]).pad(25);
@@ -96,17 +110,38 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		MenuButton.defocusButtons(levelButtons);
+		currentMaxUnlockedLevel = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
+		
+		table.clear();
+		String styles[] = new String[NUM_LEVELS];
+		for (int i = 0; i < NUM_LEVELS; i++) {
+			if (i < currentMaxUnlockedLevel) {
+				styles[i] = "default-level-btn";
+			}
+			else {
+				styles[i] = "level-button-locked";
+			}
+		}
 
-		for (MenuButton button : levelButtons)
-			button.setStyle(uiSkin.get("default-level-btn", TextButtonStyle.class));
+		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS, styles);
+
+		for (int i = 0; i < NUM_LEVELS; i++) {
+			table.add(levelButtons[i]).pad(25);
+			if ((i + 1) % BUTTONS_PER_ROW == 0)
+				table.row();
+		}
+
+//		for (MenuButton button : levelButtons) {
+//				button.setStyle(uiSkin.get("default-level-btn", TextButtonStyle.class));
+//		}
+			
 		
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void hide() {
-
+		
 	}
 
 	@Override
@@ -122,81 +157,74 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (!MenuButton.isMouseOverButton(levelButtons)) {
-			if (keycode == Input.Keys.DOWN) {
-				focusedButton = MenuButton.getFocusedButton(levelButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-level-btn",
-							TextButtonStyle.class));
-					focusedButton.getDownNeighbour().setStyle(
-							uiSkin.get("level-button-focused",
-									TextButtonStyle.class));
-					focusedButton.getDownNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					levelButtons[0].setStyle(uiSkin.get("level-button-focused",
-							TextButtonStyle.class));
-					levelButtons[0].setFocused(true);
+			focusedButton = MenuButton.getFocusedButton(levelButtons);
+			if (focusedButton != null) {
+				if (keycode == Input.Keys.DOWN) {
+					if (focusedButton.getDownNeighbour().getType() != MenuButton.LEVEL_LOCKED) {
+						focusedButton.setStyle(uiSkin.get("default-level-btn",
+								TextButtonStyle.class));
+						focusedButton.getDownNeighbour().setStyle(
+								uiSkin.get("level-button-focused",
+										TextButtonStyle.class));
+						focusedButton.getDownNeighbour().setFocused(true);
+						focusedButton.setFocused(false);
+					}
+	
+					return true;
+	
+				} else if (keycode == Input.Keys.UP) {
+					if (focusedButton.getUpNeighbour().getType() != MenuButton.LEVEL_LOCKED) {
+						focusedButton.setStyle(uiSkin.get("default-level-btn",
+								TextButtonStyle.class));
+						focusedButton.getUpNeighbour().setStyle(
+								uiSkin.get("level-button-focused",
+										TextButtonStyle.class));
+						focusedButton.getUpNeighbour().setFocused(true);
+						focusedButton.setFocused(false);
+					} 
+					
+					return true;
+	
+				} else if (keycode == Input.Keys.RIGHT) {
+					if (focusedButton.getRightNeighbour().getType() != MenuButton.LEVEL_LOCKED) {
+						focusedButton.setStyle(uiSkin.get("default-level-btn",
+								TextButtonStyle.class));
+						focusedButton.getRightNeighbour().setStyle(
+								uiSkin.get("level-button-focused",
+										TextButtonStyle.class));
+						focusedButton.getRightNeighbour().setFocused(true);
+						focusedButton.setFocused(false);
+					}
+	
+					return true;
+	
+				} else if (keycode == Input.Keys.LEFT) {
+					if (focusedButton.getLeftNeighbour().getType() != MenuButton.LEVEL_LOCKED) {
+						focusedButton.setStyle(uiSkin.get("default-level-btn",
+								TextButtonStyle.class));
+						focusedButton.getLeftNeighbour().setStyle(
+								uiSkin.get("level-button-focused",
+										TextButtonStyle.class));
+						focusedButton.getLeftNeighbour().setFocused(true);
+						focusedButton.setFocused(false);
+					}
+					
+					return true;
 				}
-
-				return true;
-
-			} else if (keycode == Input.Keys.UP) {
-				focusedButton = MenuButton.getFocusedButton(levelButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-level-btn",
-							TextButtonStyle.class));
-					focusedButton.getUpNeighbour().setStyle(
-							uiSkin.get("level-button-focused",
-									TextButtonStyle.class));
-					focusedButton.getUpNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					levelButtons[NUM_LEVELS - 1].setStyle(uiSkin.get(
-							"level-button-focused", TextButtonStyle.class));
-					levelButtons[NUM_LEVELS - 1].setFocused(true);
+				else if (keycode == Input.Keys.ENTER) {
+					if (focusedButton != null) {
+						int level = Integer.parseInt(focusedButton.getText().toString());
+	
+						game.ingameScreen.level.levelNumber = level;
+						game.setScreen(game.ingameScreen);
+						return true;
+					}
 				}
-
-				return true;
-
-			} else if (keycode == Input.Keys.RIGHT) {
-				focusedButton = MenuButton.getFocusedButton(levelButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-level-btn",
-							TextButtonStyle.class));
-					focusedButton.getRightNeighbour().setStyle(
-							uiSkin.get("level-button-focused",
-									TextButtonStyle.class));
-					focusedButton.getRightNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					levelButtons[0].setStyle(uiSkin.get("level-button-focused",
-							TextButtonStyle.class));
-					levelButtons[0].setFocused(true);
-				}
-
-				return true;
-
-			} else if (keycode == Input.Keys.LEFT) {
-				focusedButton = MenuButton.getFocusedButton(levelButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-level-btn",
-							TextButtonStyle.class));
-					focusedButton.getLeftNeighbour().setStyle(
-							uiSkin.get("level-button-focused",
-									TextButtonStyle.class));
-					focusedButton.getLeftNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					levelButtons[NUM_LEVELS - 1].setStyle(uiSkin.get(
-							"level-button-focused", TextButtonStyle.class));
-					levelButtons[NUM_LEVELS - 1].setFocused(true);
-				}
-
-				return true;
+			}
+			else {
+				levelButtons[0].setStyle(uiSkin.get("level-button-focused",
+						TextButtonStyle.class));
+				levelButtons[0].setFocused(true);
 			}
 		}
 
@@ -205,18 +233,6 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 			return true;
 		}
 		
-		if (keycode == Input.Keys.ENTER) {
-			focusedButton = MenuButton.getFocusedButton(levelButtons);
-			if (focusedButton != null) {
-				int level = Integer.parseInt(focusedButton.getText().toString());
-
-				game.ingameScreen.level.levelNumber = level;
-				game.setScreen(game.ingameScreen);
-				return true;
-			}
-		}
-		
-
 //		if (keycode == Input.Keys.NUM_1) {
 //			game.ingameScreen.level.levelNumber = 1;
 //			game.setScreen(game.ingameScreen);
