@@ -21,7 +21,7 @@ public class TitleScreen implements Screen, InputProcessor {
 	private Sokobug game;
 	
 	private Sprite titleImage;
-	private float titleImageMinimumDuration;
+	private float titleScreenMinDuration;
 	private float pasedTimeCounter;
 	private boolean readyToSkip;
 	
@@ -38,8 +38,8 @@ public class TitleScreen implements Screen, InputProcessor {
 		
 		titleImage = new Sprite(game.assetManager.get("backgrounds/title.png", Texture.class));
 		titleImage.setPosition(0.f, 0.f);
-		titleImageMinimumDuration = 2.0f;
 		pasedTimeCounter = 0.0f;
+		titleScreenMinDuration = 3.5f;
 		
 		game.assetManager.load("fonts/Japonesa24.fnt", BitmapFont.class);
 		game.assetManager.load("fonts/Japonesa32.fnt", BitmapFont.class);
@@ -75,7 +75,7 @@ public class TitleScreen implements Screen, InputProcessor {
 		
 		pasedTimeCounter += delta;
 		if (game.assetManager.update()) {
-	        if(pasedTimeCounter > titleImageMinimumDuration) {
+	        if(pasedTimeCounter > titleScreenMinDuration) {
 	        	if (!readyToSkip) {
 	        		game.mainMenuScreen = new MainMenuScreen(game);
 	        		game.creditsScreen = new CreditsScreen(game);
@@ -83,7 +83,7 @@ public class TitleScreen implements Screen, InputProcessor {
 	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
 	        		game.ingameScreen = new IngameScreen(game);
 	        		game.victoryScreen = new VictoryScreen(game);
-	        		readyToSkip = true;
+	        		game.setScreen(game.mainMenuScreen);
 	        	}
 	        }
 		}
@@ -130,10 +130,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-    	if (readyToSkip) {
-	    	game.setScreen(game.mainMenuScreen);
-    	}
-    	return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -150,10 +148,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    	if (readyToSkip) {
-	    	game.setScreen(game.mainMenuScreen);
-    	}
-    	return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
