@@ -53,14 +53,15 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("backgrounds/potatoes.png", Texture.class, param);
 		
 		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/free.png", Texture.class, param);
-		game.assetManager.load("level/tiles/wall.png", Texture.class, param);
-		game.assetManager.load("level/animations/spot/spot.pack", TextureAtlas.class);
 		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class, param);
+		game.assetManager.load("level/tiles/wall.png", Texture.class, param);
+		game.assetManager.load("level/tiles/free.png", Texture.class, param);
+		game.assetManager.load("level/animations/spot/spotGlow.pack", TextureAtlas.class);
+		game.assetManager.load("level/tiles/spotOn.png", Texture.class, param);
+		game.assetManager.load("level/tiles/spotOff.png", Texture.class, param);
 		
 		game.assetManager.load("level/topBar.png", Texture.class, param);
 		game.assetManager.load("level/victoryWing.png", Texture.class, param);
-		
 		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
 	}
 

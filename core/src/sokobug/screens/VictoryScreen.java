@@ -42,7 +42,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 		font = game.assetManager.get("fonts/Japonesa120.fnt", BitmapFont.class);
 
 		font.setScale(1.0f);
-		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.PINK));
+		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.valueOf("CF0000FF")));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
 		
 		victoryWing = new Sprite(game.assetManager.get("level/victoryWing.png", Texture.class));
