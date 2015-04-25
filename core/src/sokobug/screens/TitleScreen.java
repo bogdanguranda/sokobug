@@ -83,7 +83,7 @@ public class TitleScreen implements Screen, InputProcessor {
 	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
 	        		game.ingameScreen = new IngameScreen(game);
 	        		game.victoryScreen = new VictoryScreen(game);
-	        		game.setScreen(game.mainMenuScreen);
+	        		readyToSkip = true;
 	        	}
 	        }
 		}
@@ -91,6 +91,10 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.batch.begin();
 		titleImage.draw(game.batch);
 		game.batch.end();
+		
+		if (readyToSkip) {
+			game.setScreen(game.mainMenuScreen);
+		}
 	}
 
 	@Override
