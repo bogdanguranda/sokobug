@@ -18,6 +18,7 @@ import sokobug.domain.entities.LabyrinthObject.Type;
 import sokobug.domain.entities.Layer;
 import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
+import sokobug.domain.entities.Pad;
 import sokobug.domain.entities.SpriteMovingObject;
 import sokobug.domain.entities.SpriteStaticObject;
 
@@ -33,6 +34,7 @@ public class Level implements InputProcessor{
 	private Layer[] labyrinthObjects = new Layer[2];
 	private int numberOfSpots;
 	private int sarcophagusesOnSpot;
+	private Pad arrowsPad;
 	
 	private boolean finishedLevel = false;
 	
@@ -42,6 +44,8 @@ public class Level implements InputProcessor{
 	
 	public Level(Sokobug game) {
 		this.game = game;
+		arrowsPad = new Pad(new Sprite(game.assetManager.get("level/pad.png", Texture.class)));
+		arrowsPad.setPosition(game.VIRTUAL_WIDTH - arrowsPad.getWidth(), 0.f);
 	}
 
 	public Vector2 getSize() {
@@ -182,6 +186,7 @@ public class Level implements InputProcessor{
 			labyrinthObject.draw(game.batch);
 		}
 		bug.draw(game.batch);
+		arrowsPad.draw(game.batch);
 		game.batch.end();
 	}
 	
@@ -339,11 +344,8 @@ public class Level implements InputProcessor{
 			Vector3 v = new Vector3(screenX, screenY, 0);
 			game.viewport.unproject(v);
 			int mouseX = (int)v.x, mouseY = (int)v.y;
-			
-			if (mouseX < bug.getPositionX()
-					&& mouseY < bug.getPositionY() + bug.getHeight()
-					&& mouseY > bug.getPositionY()) {
-				MoveDirection direction = MoveDirection.LEFT;
+			MoveDirection direction = arrowsPad.arrowDirectionByPoint(mouseX, mouseY);
+			if (direction != MoveDirection.NONE) {
 				if (bug.getOrientation() != direction) {
 					bug.setOrientation(direction);
 				}
@@ -363,79 +365,7 @@ public class Level implements InputProcessor{
 					}
 				}
 				return true;
-			}
-			else if (mouseX > bug.getPositionX() + bug.getWidth() 
-					&& mouseY < bug.getPositionY() + bug.getHeight()
-					&& mouseY > bug.getPositionY()) {
-				MoveDirection direction = MoveDirection.RIGHT;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
-			else if (mouseY > bug.getPositionY() + bug.getHeight() 
-					&& mouseX < bug.getPositionX() + bug.getWidth()
-					&& mouseX > bug.getPositionX()) {
-				MoveDirection direction = MoveDirection.UP;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
-			else if (mouseY < bug.getPositionY()
-					&& mouseX < bug.getPositionX() + bug.getWidth()
-					&& mouseX > bug.getPositionX()) {
-				MoveDirection direction = MoveDirection.DOWN;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
+			}		
 		}
 		return false;
 	}
