@@ -58,31 +58,31 @@ repeat: none
 level/lvlButtonDown
   rotate: false
   xy: 1, 1
-  size: 50, 50
-  orig: 50, 50
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 level/lvlButtonLocked
   rotate: false
-  xy: 53, 1
-  size: 50, 50
-  orig: 50, 50
+  xy: 103, 1
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 level/lvlButtonOver
   rotate: false
-  xy: 105, 1
-  size: 50, 50
-  orig: 50, 50
+  xy: 205, 1
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 level/lvlButtonUp
   rotate: false
-  xy: 157, 1
-  size: 50, 50
-  orig: 50, 50
+  xy: 307, 1
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
-  index: -1
+  index: -1 
 
 buttons4.png
 format: RGBA8888

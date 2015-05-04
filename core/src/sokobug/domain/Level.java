@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -17,6 +18,7 @@ import sokobug.domain.entities.LabyrinthObject.Type;
 import sokobug.domain.entities.Layer;
 import sokobug.domain.entities.MovingObject.MoveDirection;
 import sokobug.domain.entities.MovingObject;
+import sokobug.domain.entities.Pad;
 import sokobug.domain.entities.SpriteMovingObject;
 import sokobug.domain.entities.SpriteStaticObject;
 
@@ -30,6 +32,9 @@ public class Level implements InputProcessor{
 
 	private AnimationMovingObject bug;
 	private Layer[] labyrinthObjects = new Layer[2];
+	private int numberOfSpots;
+	private int sarcophagusesOnSpot;
+	private Pad arrowsPad;
 	
 	private boolean finishedLevel = false;
 	
@@ -39,6 +44,8 @@ public class Level implements InputProcessor{
 	
 	public Level(Sokobug game) {
 		this.game = game;
+		arrowsPad = new Pad(new Sprite(game.assetManager.get("level/pad.png", Texture.class)));
+		arrowsPad.setPosition(game.VIRTUAL_WIDTH - arrowsPad.getWidth(), 0.f);
 	}
 
 	public Vector2 getSize() {
@@ -48,6 +55,8 @@ public class Level implements InputProcessor{
 	public void load(int levelNumber) {
 		this.levelNumber = levelNumber;
 		this.finishedLevel = false;
+		this.numberOfSpots = 0;
+		this.sarcophagusesOnSpot = 0;
 		
 		Layer backgroundLayer = new Layer();
 		Layer foregroundLayer = new Layer();
@@ -69,11 +78,15 @@ public class Level implements InputProcessor{
 						backgroundLayer.addLabyrinthObject(freeGround);
 					}
 					else {
-						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
+						Sprite[] backgroundFrames = new Sprite[2];
+						backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
+						backgroundFrames[1] = new Sprite(game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+								backgroundFrames, Type.SPOT);
 						spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 						spot.setPositionColumn(j);
-						spot.setStaticFrame(1);
 						backgroundLayer.addLabyrinthObject(spot);
+						numberOfSpots++;
 					}
 				}
 				else if ((lineElements[j].compareTo("P") == 0) || (lineElements[j].compareTo("p") == 0)) {
@@ -88,19 +101,27 @@ public class Level implements InputProcessor{
 						backgroundLayer.addLabyrinthObject(freeGround);
 					}
 					else {
-						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
+						Sprite[] backgroundFrames = new Sprite[2];
+						backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
+						backgroundFrames[1] = new Sprite(game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+						AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+								backgroundFrames, Type.SPOT);
 						spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 						spot.setPositionColumn(j);
-						spot.setStaticFrame(1);
 						backgroundLayer.addLabyrinthObject(spot);
+						numberOfSpots++;
 					}
 				}
 				else if (lineElements[j].compareTo("S") == 0) {
-					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spot.pack"), Type.SPOT);
+					Sprite[] backgroundFrames = new Sprite[2];
+					backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
+					backgroundFrames[1] = new Sprite(game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+					AnimationStaticObject spot = new AnimationStaticObject((TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+							backgroundFrames, Type.SPOT);
 					spot.setPositionLine((LABYRINTH_ROWS-1) - i);
 					spot.setPositionColumn(j);
-					spot.setStaticFrame(1);
 					backgroundLayer.addLabyrinthObject(spot);
+					numberOfSpots++;
 				}
 				else if (lineElements[j].compareTo("W") == 0) {
 					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("level/tiles/wall.png", Texture.class), Type.WALL);
@@ -123,11 +144,12 @@ public class Level implements InputProcessor{
 	
 	public void update(float deltaTime) {
 		bug.update(deltaTime);
+		updateSpotsBackground();
 		
 		for (LabyrinthObject labyrinthObject: labyrinthObjects) {
 			labyrinthObject.update(deltaTime);
 		}
-			
+
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			keyDown(Input.Keys.LEFT);
 		}
@@ -164,6 +186,7 @@ public class Level implements InputProcessor{
 			labyrinthObject.draw(game.batch);
 		}
 		bug.draw(game.batch);
+		arrowsPad.draw(game.batch);
 		game.batch.end();
 	}
 	
@@ -182,22 +205,29 @@ public class Level implements InputProcessor{
 		return collider;
 	}
 	
-	public boolean isVictory() {
-		int numberOfSpots = 0;
-		int sarcophagusesOnSpot = 0;
-		
+	private void updateSpotsBackground() {
+		sarcophagusesOnSpot = 0;
+		boolean sarcophagusNotOnSpot;
 		for (LabyrinthObject backgroundObject: labyrinthObjects[LayerType.BACKGROUND.ordinal()].getLayerObjects()) {
 			if (backgroundObject.getType() == Type.SPOT) {
-				numberOfSpots++;
+				sarcophagusNotOnSpot = true;
 				for (LabyrinthObject foregroundObject: labyrinthObjects[LayerType.FOREGROUND.ordinal()].getLayerObjects()) {
 					if (foregroundObject.getType() == Type.SARCOPHAGUS) {
 						if (backgroundObject.getPositionLine() == foregroundObject.getPositionLine() && backgroundObject.getPositionColumn() == foregroundObject.getPositionColumn()) {
 							sarcophagusesOnSpot++;
+							((AnimationStaticObject)backgroundObject).setAnimate(false);
+							sarcophagusNotOnSpot = false;
 						}
 					}
-				}	
+				}
+				if (sarcophagusNotOnSpot) {
+					((AnimationStaticObject)backgroundObject).setAnimate(true);
+				}
 			}
 		}
+	}
+	
+	public boolean isVictory() {
 		return sarcophagusesOnSpot == numberOfSpots;
 	}
 	
@@ -314,11 +344,8 @@ public class Level implements InputProcessor{
 			Vector3 v = new Vector3(screenX, screenY, 0);
 			game.viewport.unproject(v);
 			int mouseX = (int)v.x, mouseY = (int)v.y;
-			
-			if (mouseX < bug.getPositionX()
-					&& mouseY < bug.getPositionY() + bug.getHeight()
-					&& mouseY > bug.getPositionY()) {
-				MoveDirection direction = MoveDirection.LEFT;
+			MoveDirection direction = arrowsPad.arrowDirectionByPoint(mouseX, mouseY);
+			if (direction != MoveDirection.NONE) {
 				if (bug.getOrientation() != direction) {
 					bug.setOrientation(direction);
 				}
@@ -338,79 +365,7 @@ public class Level implements InputProcessor{
 					}
 				}
 				return true;
-			}
-			else if (mouseX > bug.getPositionX() + bug.getWidth() 
-					&& mouseY < bug.getPositionY() + bug.getHeight()
-					&& mouseY > bug.getPositionY()) {
-				MoveDirection direction = MoveDirection.RIGHT;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
-			else if (mouseY > bug.getPositionY() + bug.getHeight() 
-					&& mouseX < bug.getPositionX() + bug.getWidth()
-					&& mouseX > bug.getPositionX()) {
-				MoveDirection direction = MoveDirection.UP;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
-			else if (mouseY < bug.getPositionY()
-					&& mouseX < bug.getPositionX() + bug.getWidth()
-					&& mouseX > bug.getPositionX()) {
-				MoveDirection direction = MoveDirection.DOWN;
-				if (bug.getOrientation() != direction) {
-					bug.setOrientation(direction);
-				}
-				else {
-					LabyrinthObject obj = isCollidingWith(bug, direction);
-					if (obj == null) {
-						bug.move(direction);
-					}
-					else {
-						if (obj.getType() == Type.SARCOPHAGUS) {
-							LabyrinthObject obj2 = isCollidingWith((MovingObject)obj, direction);
-							if (obj2 == null) {
-								bug.move(direction);
-								((MovingObject)obj).move(direction);
-							}
-						}
-					}
-				}
-				return true;
-			}
+			}		
 		}
 		return false;
 	}

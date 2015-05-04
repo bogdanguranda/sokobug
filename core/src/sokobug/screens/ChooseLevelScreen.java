@@ -31,8 +31,8 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	private InputMultiplexer multiplexer;
 
 	public static final int NUM_LEVELS = 30;
-	private static final int BUTTONS_PER_ROW = 10;
-	private static final int BUTTONS_PER_COLLUMN = 3;
+	private static final int BUTTONS_PER_ROW = 6;
+	private static final int BUTTONS_PER_COLLUMN = 5;
 
 	private MenuButton focusedButton;
 	public MenuButton[] levelButtons;

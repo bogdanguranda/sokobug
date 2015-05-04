@@ -1,0 +1,355 @@
+
+spotGlow.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spotGlow0001
+  rotate: false
+  xy: 1, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0002
+  rotate: false
+  xy: 1, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0003
+  rotate: false
+  xy: 83, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0004
+  rotate: false
+  xy: 1, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0005
+  rotate: false
+  xy: 83, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0006
+  rotate: false
+  xy: 165, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0007
+  rotate: false
+  xy: 1, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0008
+  rotate: false
+  xy: 83, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0009
+  rotate: false
+  xy: 165, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0010
+  rotate: false
+  xy: 247, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0011
+  rotate: false
+  xy: 1, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0012
+  rotate: false
+  xy: 83, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0013
+  rotate: false
+  xy: 165, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0014
+  rotate: false
+  xy: 247, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0015
+  rotate: false
+  xy: 329, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0016
+  rotate: false
+  xy: 1, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0017
+  rotate: false
+  xy: 83, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0018
+  rotate: false
+  xy: 165, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0019
+  rotate: false
+  xy: 247, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0020
+  rotate: false
+  xy: 329, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0021
+  rotate: false
+  xy: 411, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0022
+  rotate: false
+  xy: 83, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0023
+  rotate: false
+  xy: 165, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0024
+  rotate: false
+  xy: 247, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0025
+  rotate: false
+  xy: 329, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0026
+  rotate: false
+  xy: 411, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0027
+  rotate: false
+  xy: 493, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0028
+  rotate: false
+  xy: 165, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0029
+  rotate: false
+  xy: 247, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0030
+  rotate: false
+  xy: 329, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0031
+  rotate: false
+  xy: 411, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0032
+  rotate: false
+  xy: 493, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0033
+  rotate: false
+  xy: 575, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0034
+  rotate: false
+  xy: 247, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0035
+  rotate: false
+  xy: 329, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0036
+  rotate: false
+  xy: 411, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0037
+  rotate: false
+  xy: 493, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0038
+  rotate: false
+  xy: 575, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0039
+  rotate: false
+  xy: 657, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0040
+  rotate: false
+  xy: 329, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0041
+  rotate: false
+  xy: 411, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0042
+  rotate: false
+  xy: 493, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0043
+  rotate: false
+  xy: 575, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0044
+  rotate: false
+  xy: 657, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0045
+  rotate: false
+  xy: 739, 411
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0046
+  rotate: false
+  xy: 411, 1
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0047
+  rotate: false
+  xy: 493, 83
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0048
+  rotate: false
+  xy: 575, 165
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0049
+  rotate: false
+  xy: 657, 247
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+spotGlow0050
+  rotate: false
+  xy: 739, 329
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
