@@ -1,7 +1,7 @@
 package sokobug.domain;
 
 public class PlayerProgress {
-	private int currentLevel = 30;
+	private int currentLevel = 1;
 	
 	public PlayerProgress() {
 		
