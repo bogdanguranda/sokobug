@@ -1,11 +1,11 @@
-F F F F F W W W W W F F F F F F
-F F F W W W F F F W F F F F F F
-F F F W F F P S B W W F F F F F
-F F F W F F S P S F W F F F F F
-F F F W W W F p P F W F F F F F
-F F F F F W F F F W W F F F F F
-F F F F F W W W W W F F F F F F
-F F F F F F F F F F F F F F F F
+F F F F F W W W W F F F F F F F
+F F F F F W S S W F F F F F F F
+F F F F W W F S W W F F F F F F
+F F F F W F F P S W F F F F F F
+F F F W W F P F F W W F F F F F
+F F F W F F W P P F W F F F F F
+F F F W F F B F F F W F F F F F
+F F F W W W W W W W W F F F F F
 F F F F F F F F F F F F F F F F
 # W = wall, F = free, P = sarcophagus, S = spot, B = bug, b = bug on top of spot, p = sarcophagus on top of spot
 # Conditions: nr. of P = nr. of S.

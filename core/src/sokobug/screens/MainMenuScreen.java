@@ -41,33 +41,27 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png",Texture.class));
 		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		options = new MenuButton(game, "Options", MenuButton.OPTIONS, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
 
 		play.setUpNeighbour(exit);
-		play.setDownNeighbour(options);
-		options.setUpNeighbour(play);
-		options.setDownNeighbour(credits);
-		credits.setUpNeighbour(options);
+		play.setDownNeighbour(credits);
+		credits.setUpNeighbour(play);
 		credits.setDownNeighbour(exit);
 		exit.setUpNeighbour(credits);
 		exit.setDownNeighbour(play);
 
-		menuButtons = new MenuButton[4];
+		menuButtons = new MenuButton[3];
 		menuButtons[0] = play;
-		menuButtons[1] = options;
-		menuButtons[2] = credits;
-		menuButtons[3] = exit;
+		menuButtons[1] = credits;
+		menuButtons[2] = exit;
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
-		table.add(play).row();
-		table.add(options).row();
-		table.add(credits).row();
-		table.add(exit).row();
+		table.add(play).padBottom(20).row();
+		table.add(credits).padBottom(20).row();
+		table.add(exit).padBottom(20).row();
 		table.setFillParent(true);
-		// table.setDebug(true);
 
 		stage.addActor(table);
 		
@@ -99,8 +93,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		// Each time MainMenuScreen is set again, the focused button
-		// is set to none.
 		MenuButton.defocusButtons(menuButtons);
 
 		for (MenuButton button : menuButtons)
@@ -176,8 +168,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 			if (focusedButton != null) {
 				if (focusedButton.getType() == MenuButton.PLAY)
 					game.setScreen(game.chooseLevelScreen);
-				else if (focusedButton.getType() == MenuButton.OPTIONS)
-					game.setScreen(game.optionsScreen);
 				else if (focusedButton.getType() == MenuButton.CREDITS)
 					game.setScreen(game.creditsScreen);
 				else if (focusedButton.getType() == MenuButton.EXIT)

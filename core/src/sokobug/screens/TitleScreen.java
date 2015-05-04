@@ -80,7 +80,6 @@ public class TitleScreen implements Screen, InputProcessor {
 	        	if (!readyToSkip) {
 	        		game.mainMenuScreen = new MainMenuScreen(game);
 	        		game.creditsScreen = new CreditsScreen(game);
-	        		game.optionsScreen = new OptionsScreen(game);
 	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
 	        		game.ingameScreen = new IngameScreen(game);
 	        		game.victoryScreen = new VictoryScreen(game);
