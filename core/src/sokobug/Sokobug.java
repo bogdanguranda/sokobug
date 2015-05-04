@@ -5,7 +5,6 @@ import sokobug.screens.CreditsScreen;
 import sokobug.screens.IngameScreen;
 import sokobug.screens.TitleScreen;
 import sokobug.screens.MainMenuScreen;
-import sokobug.screens.OptionsScreen;
 import sokobug.screens.VictoryScreen;
 
 import com.badlogic.gdx.Game;
@@ -18,7 +17,6 @@ public class Sokobug extends Game {
 	public TitleScreen titleScreen;
 	public MainMenuScreen mainMenuScreen;
 	public CreditsScreen creditsScreen;
-	public OptionsScreen optionsScreen;
 	public ChooseLevelScreen chooseLevelScreen;
 	public IngameScreen ingameScreen;
 	public VictoryScreen victoryScreen;

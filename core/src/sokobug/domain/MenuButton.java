@@ -140,28 +140,6 @@ public class MenuButton extends TextButton {
 				}
 			});
 		}
-		else if (buttonType == OPTIONS) {
-			this.addListener(new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					game.setScreen(game.optionsScreen);
-				}
-
-				@Override
-				//this is called when mouse if over or touch is over a widget (button)
-				public void enter(InputEvent event, float x, float y,
-						int pointer, Actor fromActor) {
-
-					MenuButton focusedButton = getFocusedButton(game.mainMenuScreen.menuButtons);
-
-					if (focusedButton != null)
-						focusedButton.setStyle(game.mainMenuScreen.uiSkin
-								.get(TextButtonStyle.class));
-
-					defocusButtons(game.mainMenuScreen.menuButtons);
-				}
-			});
-		}
 		else if (buttonType == CREDITS) {
 			this.addListener(new ClickListener() {
 				@Override
