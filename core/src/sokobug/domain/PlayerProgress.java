@@ -1,7 +1,7 @@
 package sokobug.domain;
 
 public class PlayerProgress {
-	private int currentLevel = 1;
+	private int currentLevel = 30;
 	
 	public PlayerProgress() {
 		
@@ -14,14 +14,4 @@ public class PlayerProgress {
 	public void setCurrentLevel(int level) {
 		currentLevel = level;
 	}
-
-//	@Override
-//	public void write(Json json) {
-//		json.writeValue("currentLevel", currentLevel);
-//	}
-//
-//	@Override
-//	public void read(Json json, JsonValue jsonData) {
-//		currentLevel = json.readValue("currentLevel", int.class, jsonData);
-//	}
 }
