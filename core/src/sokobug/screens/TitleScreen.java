@@ -63,6 +63,7 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("level/topBar.png", Texture.class, param);
 		game.assetManager.load("level/pad.png", Texture.class, param);
 		game.assetManager.load("level/victoryWing.png", Texture.class, param);
+		game.assetManager.load("level/finish.png", Texture.class, param);
 		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
 	}
 

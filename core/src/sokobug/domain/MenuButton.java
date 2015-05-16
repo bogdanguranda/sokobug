@@ -32,7 +32,7 @@ public class MenuButton extends TextButton {
 	public static final int LEVEL_LOCKED = 9;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
-		this(game, buttonText, buttonType, skin, "default");
+		this(game, buttonText, buttonType, skin, "default-menu");
 	}
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin, String styleName) {
@@ -211,7 +211,7 @@ public class MenuButton extends TextButton {
 
 					if (focusedButton != null)
 						focusedButton.setStyle(game.mainMenuScreen.uiSkin
-								.get("default-level-btn", TextButtonStyle.class));
+								.get("default-level", TextButtonStyle.class));
 
 					defocusButtons(game.mainMenuScreen.menuButtons);
 				}

@@ -27,7 +27,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private Sokobug game;
 
 	private MenuButton play;
-	private MenuButton options;
 	private MenuButton credits;
 	private MenuButton exit;
 	private MenuButton focusedButton;
@@ -96,7 +95,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		MenuButton.defocusButtons(menuButtons);
 
 		for (MenuButton button : menuButtons)
-			button.setStyle(uiSkin.get("default", TextButtonStyle.class));
+			button.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
 
 		Gdx.input.setInputProcessor(multiplexer);
 	}
@@ -129,14 +128,14 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default",
+					focusedButton.setStyle(uiSkin.get("default-menu",
 							TextButtonStyle.class));
 					focusedButton.getDownNeighbour().setStyle(
-							uiSkin.get("menu-button-focused", TextButtonStyle.class));
+							uiSkin.get("menu-focused", TextButtonStyle.class));
 					focusedButton.getDownNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					play.setStyle(uiSkin.get("menu-button-focused",
+					play.setStyle(uiSkin.get("menu-focused",
 							TextButtonStyle.class));
 					play.setFocused(true);
 				}
@@ -147,14 +146,14 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default",
+					focusedButton.setStyle(uiSkin.get("default-menu",
 							TextButtonStyle.class));
 					focusedButton.getUpNeighbour().setStyle(
-							uiSkin.get("menu-button-focused", TextButtonStyle.class));
+							uiSkin.get("menu-focused", TextButtonStyle.class));
 					focusedButton.getUpNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					exit.setStyle(uiSkin.get("menu-button-focused",
+					exit.setStyle(uiSkin.get("menu-focused",
 							TextButtonStyle.class));
 					exit.setFocused(true);
 				}

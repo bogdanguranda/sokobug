@@ -41,10 +41,10 @@ public class IngameScreen implements Screen, InputProcessor {
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 		
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back-btn");
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back");
 		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); 
 	
-		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-restart-btn");
+		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-restart");
 		restart.setPosition(game.VIRTUAL_WIDTH - restart.getWidth() * 3.f/2.f, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
 		
 		stage.addActor(backToMenu);
@@ -64,7 +64,6 @@ public class IngameScreen implements Screen, InputProcessor {
 		game.batch.setProjectionMatrix(game.camera.combined);
 		
 		font.setColor(Color.BLACK);
-		font.setScale(1);
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();

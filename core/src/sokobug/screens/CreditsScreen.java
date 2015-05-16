@@ -37,7 +37,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 		background.setPosition(0, 0);
 
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back-btn");
+				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
 		
 		stage.addActor(backToMenu);
@@ -62,10 +62,8 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 		game.batch.begin();
 		background.draw(game.batch);
-		font60.setScale(1.f);
 		font60.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font60.getBounds(title).width / 2, 
 				game.VIRTUAL_HEIGHT + 7.f);
-		font32.setScale(1.f);
 		font32.drawMultiLine(game.batch, text, backToMenu.getX() + backToMenu.getWidth() * 1.2f, font32.getBounds(title).width);
 		game.batch.end();
 

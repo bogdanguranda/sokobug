@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,8 +15,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class VictoryScreen implements Screen, InputProcessor {
@@ -27,7 +24,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 	
 	private MenuButton backButton;
 	private MenuButton forwardButton;
-	private Label victoryMessage;
+	private Sprite victoryMessage;
 	private Sprite victoryWing;
 	private Animation victoryGlow;
 	private float animationTime;
@@ -42,16 +39,16 @@ public class VictoryScreen implements Screen, InputProcessor {
 		font = game.assetManager.get("fonts/Japonesa120.fnt", BitmapFont.class);
 
 		font.setScale(1.0f);
-		victoryMessage = new Label("VICTORY!", new LabelStyle(font, Color.valueOf("FFAC30FF")));
+		victoryMessage = new Sprite(game.assetManager.get("level/finish.png", Texture.class));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT / 2.f + victoryMessage.getHeight() / 2.f);
 		
 		victoryWing = new Sprite(game.assetManager.get("level/victoryWing.png", Texture.class));
 		victoryWing.setPosition(victoryMessage.getX() + (victoryMessage.getWidth() - victoryWing.getWidth()) / 2.f, victoryMessage.getY() - victoryWing.getHeight());
 		
-		backButton = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back-btn");
+		backButton = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back");
 		backButton.setPosition(victoryWing.getX(), victoryWing.getY() - backButton.getHeight());
 		
-		forwardButton = new MenuButton(game, "", MenuButton.FORWARD, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-forward-btn");
+		forwardButton = new MenuButton(game, "", MenuButton.FORWARD, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-forward");
 		forwardButton.setPosition(victoryWing.getX() + victoryWing.getWidth() - forwardButton.getWidth(), backButton.getY());
 		
 		victoryGlow = new Animation(1/24.f, game.assetManager.get("level/animations/victory/victoryGlow.pack", TextureAtlas.class).getRegions());
@@ -60,7 +57,6 @@ public class VictoryScreen implements Screen, InputProcessor {
         
 		stage.addActor(backButton);
 		stage.addActor(forwardButton);
-		stage.addActor(victoryMessage);
 		
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -76,6 +72,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 		animationTime += delta;
 
 		game.batch.begin();
+		victoryMessage.draw(game.batch);
 		victoryWing.draw(game.batch);
 		game.batch.draw(victoryGlow.getKeyFrame(animationTime), 
 				victoryWing.getX() + (victoryWing.getWidth() - victoryGlow.getKeyFrames()[0].getRegionWidth()) / 2.f, 
