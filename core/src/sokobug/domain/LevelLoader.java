@@ -33,7 +33,6 @@ public class LevelLoader {
 
 	private static String stringDecode(String codedText) {
 		String decodedText = "";
-		System.out.println(codedText);
 		int substitutes[] = {1, 2, 2, 3, 3, 4};
 		for (int i = 0; i < codedText.length(); i++) {
 			char c = codedText.charAt(i);
