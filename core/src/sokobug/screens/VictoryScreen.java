@@ -101,6 +101,9 @@ public class VictoryScreen implements Screen, InputProcessor {
 		if (levelFinished == currentMaxLevelUnlocked) {
 			PlayerProgressManager.getPlayerProgressManager().setCurrentLevel(currentMaxLevelUnlocked + 1);
 		}
+		else if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(levelFinished)) {
+			PlayerProgressManager.getPlayerProgressManager().markAsFinished(levelFinished);
+		}
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

@@ -1,6 +1,7 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.LevelLoader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -81,6 +82,7 @@ public class TitleScreen implements Screen, InputProcessor {
 	        	if (!readyToSkip) {
 	        		game.mainMenuScreen = new MainMenuScreen(game);
 	        		game.creditsScreen = new CreditsScreen(game);
+	        		game.chooseChapterScreen = new ChooseChapterScreen(game);
 	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
 	        		game.ingameScreen = new IngameScreen(game);
 	        		game.victoryScreen = new VictoryScreen(game);

@@ -12,9 +12,13 @@ public class LvlBtnOrganizer {
 				button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
 						MenuButton.LEVEL, screen.uiSkin, styles[i]);
 			}
-			else {
+			else if (styles[i].compareTo("level-locked") == 0) {
 				button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
 						MenuButton.LEVEL_LOCKED, screen.uiSkin, styles[i]);
+			}
+			else if (styles[i].compareTo("default-skiped-level") == 0) {
+				button[i] = new MenuButton(screen.game, Integer.toString(i + 1),
+						MenuButton.LEVEL, screen.uiSkin, styles[i]);
 			}
 		}
 		

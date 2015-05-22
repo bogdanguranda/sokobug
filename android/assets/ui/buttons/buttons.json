@@ -14,18 +14,18 @@
 
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 		"default-menu": { "up": "menuUp", "down": "menuDown", "over": "menuOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
-		"menu-button-focused": { "up": "menuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"menu-button-down": { "up": "menuDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"menu-focused": { "up": "menuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"menu-down": { "up": "menuDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
 		"default-level": { "up": "levelUp", "down": "levelDown", "over": "levelOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 5, "unpressedOffsetY": 10, "pressedOffsetX": 0, "unpressedOffsetX": -5},
 		"level-focused": { "up": "levelOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"level-down": { "up": "levelDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"level-locked": { "up": "levelLocked", "font": japonesa60, "pressedOffsetY": 8, "unpressedOffsetY": 8},
+		"level-locked": { "up": "levelLocked", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 8},
 		"default-forward": { "up": "forwardUp", "down": "forwardDown", "over": "forwardOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"ingame-back": { "up": "backIngameUp", "down": "backIngameDown", "over": "backIngameOver","font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"menu-back": { "up": "backMenuUp", "down": "backMenuDown", "over": "backMenuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"default-restart": { "up": "restartUp", "down": "restartDown", "over": "restartOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"default-chapter1": { "up": "chapter1Up", "down": "chapter1Down", "over": "chapter1Over", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"default-skiped-level": { "up": "skipedLevelUp", "down": "skipedLevelDown", "over": "skipedLevelOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-skiped-level": { "up": "skipedLevelUp", "down": "skipedLevelDown", "over": "skipedLevelOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"soundOn": { "up": "soundOn", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"soundOff": { "up": "soundOff", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 	}

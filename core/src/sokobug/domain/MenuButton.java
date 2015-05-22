@@ -30,6 +30,9 @@ public class MenuButton extends TextButton {
 	public static final int FORWARD = 7;
 	public static final int RESTART = 8;
 	public static final int LEVEL_LOCKED = 9;
+	public static final int SKIP_LEVEL = 10;
+	public static final int CHAPTER = 11;
+	public static final int BACKTOCHOOSECHAPTER = 12;
 	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default-menu");
@@ -122,7 +125,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.setScreen(game.chooseLevelScreen);
+					game.setScreen(game.chooseChapterScreen);
 				}
 
 				@Override
@@ -225,6 +228,14 @@ public class MenuButton extends TextButton {
 				}
 			});
 		}
+		else if (buttonType == BACKTOCHOOSECHAPTER) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.chooseChapterScreen);
+				}
+			});
+		}
 		else if (buttonType == FORWARD) {
 			this.addListener(new ClickListener() {
 				@Override
@@ -250,6 +261,23 @@ public class MenuButton extends TextButton {
 		}
 		else if (buttonType == LEVEL_LOCKED) {
 			// nothing
+		}
+		else if (buttonType == SKIP_LEVEL) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					PlayerProgressManager.getPlayerProgressManager().skipCurentLevel();
+					game.setScreen(game.chooseLevelScreen);
+				}
+			});
+		}
+		else if (buttonType == CHAPTER) {
+			this.addListener(new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.chooseLevelScreen);
+				}
+			});
 		}
 		else
 			throw new Exception("Error: Wrong button type...");

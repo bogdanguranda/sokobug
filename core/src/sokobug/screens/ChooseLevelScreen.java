@@ -26,7 +26,8 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	public Skin uiSkin;
 	private Stage stage;
 	private Table table;
-	private MenuButton backToMenu;
+	private MenuButton backToChooseChapter;
+	private MenuButton skipCurrentLevel;
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
@@ -48,15 +49,22 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		currentMaxUnlockedLevel = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, 
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back");
-		backToMenu.setPosition(0, 0);
+		backToChooseChapter = new MenuButton(game, "", MenuButton.BACKTOCHOOSECHAPTER, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "menu-back");
+		backToChooseChapter.setPosition(0, 0);
+		
+		skipCurrentLevel = new MenuButton(game, "Skip level", MenuButton.SKIP_LEVEL, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "default-menu");
+		skipCurrentLevel.setPosition(game.VIRTUAL_WIDTH - skipCurrentLevel.getWidth(), 0);
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 		
 		String styles[] = new String[NUM_LEVELS];
 		for (int i = 0; i < NUM_LEVELS; i++) {
-			if (i < currentMaxUnlockedLevel) {
+			if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(i + 1)) {
+				styles[i] = "default-skiped-level";
+			}
+			else if (i < currentMaxUnlockedLevel) {
 				styles[i] = "default-level";
 			}
 			else {
@@ -67,12 +75,13 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS, styles);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
-			table.add(levelButtons[i]).pad(25);
+			table.add(levelButtons[i]).pad(10);
 			if ((i + 1) % BUTTONS_PER_ROW == 0)
 				table.row();
 		}
 		
-		stage.addActor(backToMenu);
+		stage.addActor(backToChooseChapter);
+		stage.addActor(skipCurrentLevel);
 		table.setFillParent(true);
 		stage.addActor(table);
 		
@@ -114,7 +123,10 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		table.clear();
 		String styles[] = new String[NUM_LEVELS];
 		for (int i = 0; i < NUM_LEVELS; i++) {
-			if (i < currentMaxUnlockedLevel) {
+			if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(i + 1)) {
+				styles[i] = "default-skiped-level";
+			}
+			else if (i < currentMaxUnlockedLevel) {
 				styles[i] = "default-level";
 			}
 			else {
@@ -125,7 +137,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		levelButtons = LvlBtnOrganizer.linkButtons(this, BUTTONS_PER_ROW, BUTTONS_PER_COLLUMN, NUM_LEVELS, styles);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
-			table.add(levelButtons[i]).pad(25);
+			table.add(levelButtons[i]).pad(10);
 			if ((i + 1) % BUTTONS_PER_ROW == 0)
 				table.row();
 		}
