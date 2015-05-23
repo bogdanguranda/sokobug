@@ -33,6 +33,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private MenuButton focusedButton;
 	public MenuButton[] menuButtons;
 	private boolean firstStart = true;
+	private MenuButton sound;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -47,6 +48,9 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				Skin.class));
 		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class));
+		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "soundOn");
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f/2.f, game.VIRTUAL_HEIGHT - sound.getHeight() * 3.f/2.f);
 
 		play.setUpNeighbour(exit);
 		play.setDownNeighbour(credits);
@@ -67,6 +71,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		table.add(exit).padBottom(20).row();
 		table.setFillParent(true);
 
+		stage.addActor(sound);
 		stage.addActor(table);
 
 		multiplexer.addProcessor(stage);
@@ -76,7 +81,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		game.soundManager.updateMusicState();
-		
+
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -104,7 +109,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 			game.soundManager.startPlayingMusic();
 			firstStart = false;
 		}
-		
+
 		MenuButton.defocusButtons(menuButtons);
 
 		for (MenuButton button : menuButtons)

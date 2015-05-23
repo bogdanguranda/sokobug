@@ -69,13 +69,13 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("level/finish.png", Texture.class, param);
 		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
 		
-		game.assetManager.load("sound/music/newgrounds_egypt.mp3", Music.class);
-		game.assetManager.load("sound/music/lonely_desert.mp3", Music.class);
-		game.assetManager.load("sound/music/arabian_nights.mp3", Music.class);
-		game.assetManager.load("sound/music/egyptian_nights.mp3", Music.class);
-		game.assetManager.load("sound/music/newgrounds_arabia.mp3", Music.class);
-		game.assetManager.load("sound/music/gardens_of_sand.mp3", Music.class);
-		game.assetManager.load("sound/music/pyramid.mp3", Music.class);
+//		game.assetManager.load("sound/music/newgrounds_egypt.mp3", Music.class);
+//		game.assetManager.load("sound/music/lonely_desert.mp3", Music.class);
+//		game.assetManager.load("sound/music/arabian_nights.mp3", Music.class);
+//		game.assetManager.load("sound/music/egyptian_nights.mp3", Music.class);
+//		game.assetManager.load("sound/music/newgrounds_arabia.mp3", Music.class);
+//		game.assetManager.load("sound/music/gardens_of_sand.mp3", Music.class);
+//		game.assetManager.load("sound/music/pyramid.mp3", Music.class);
 		
 		game.assetManager.load("sound/effects/bugMove.wav", Sound.class);
 		game.assetManager.load("sound/effects/buttonClick.wav", Sound.class);
