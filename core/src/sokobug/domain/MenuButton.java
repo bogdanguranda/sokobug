@@ -34,6 +34,8 @@ public class MenuButton extends TextButton {
 	public static final int CHAPTER = 11;
 	public static final int BACKTOCHOOSECHAPTER = 12;
 	
+	private static final float DEFAULT_BUTTON_CLICK_VOLUME = 0.3f;
+	
 	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin) {
 		this(game, buttonText, buttonType, skin, "default-menu");
 	}
@@ -125,6 +127,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.chooseChapterScreen);
 				}
 
@@ -147,6 +150,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.creditsScreen);
 				}
 
@@ -169,6 +173,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					Gdx.app.exit();
 				}
 
@@ -191,6 +196,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
@@ -199,6 +205,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					int level = Integer.parseInt(((MenuButton)event.getListenerActor()).getText().toString());
 					
 					game.ingameScreen.level.levelNumber = level;
@@ -224,6 +231,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
@@ -232,6 +240,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.chooseChapterScreen);
 				}
 			});
@@ -240,6 +249,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					int nextLevel = game.ingameScreen.level.levelNumber + 1;
 					if (nextLevel <= ChooseLevelScreen.NUM_LEVELS) {
 						game.ingameScreen.level.levelNumber = nextLevel;
@@ -255,6 +265,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.ingameScreen);
 				}
 			});
@@ -266,6 +277,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					PlayerProgressManager.getPlayerProgressManager().skipCurentLevel();
 					game.setScreen(game.chooseLevelScreen);
 				}
@@ -275,6 +287,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
+					game.soundManager.getSound("buttonClick.wav").play(DEFAULT_BUTTON_CLICK_VOLUME);
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});

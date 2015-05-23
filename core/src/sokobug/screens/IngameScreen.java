@@ -57,8 +57,6 @@ public class IngameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
-		game.soundManager.updateMusicState();
-		
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
