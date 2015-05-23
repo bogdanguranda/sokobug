@@ -64,6 +64,8 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void render(float delta) {
+		game.soundManager.updateMusicState();
+		
 		game.ingameScreen.render(delta);
 		
 		game.camera.update();

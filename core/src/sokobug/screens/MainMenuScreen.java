@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -31,6 +32,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private MenuButton exit;
 	private MenuButton focusedButton;
 	public MenuButton[] menuButtons;
+	private boolean firstStart = true;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -38,10 +40,13 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		background = new Sprite(game.assetManager.get("backgrounds/menu.png",Texture.class));
-		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
-		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json", Skin.class));
+		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
+		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class));
+		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class));
+		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class));
 
 		play.setUpNeighbour(exit);
 		play.setDownNeighbour(credits);
@@ -63,13 +68,15 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		table.setFillParent(true);
 
 		stage.addActor(table);
-		
+
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
 	}
 
 	@Override
 	public void render(float delta) {
+		game.soundManager.updateMusicState();
+		
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -92,6 +99,12 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		if (firstStart) {
+			game.soundManager = new SoundManager(game.assetManager);
+			game.soundManager.startPlayingMusic();
+			firstStart = false;
+		}
+		
 		MenuButton.defocusButtons(menuButtons);
 
 		for (MenuButton button : menuButtons)
@@ -128,15 +141,12 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-menu",
-							TextButtonStyle.class));
-					focusedButton.getDownNeighbour().setStyle(
-							uiSkin.get("menu-focused", TextButtonStyle.class));
+					focusedButton.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
+					focusedButton.getDownNeighbour().setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
 					focusedButton.getDownNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					play.setStyle(uiSkin.get("menu-focused",
-							TextButtonStyle.class));
+					play.setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
 					play.setFocused(true);
 				}
 
@@ -146,15 +156,12 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				focusedButton = MenuButton.getFocusedButton(menuButtons);
 
 				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-menu",
-							TextButtonStyle.class));
-					focusedButton.getUpNeighbour().setStyle(
-							uiSkin.get("menu-focused", TextButtonStyle.class));
+					focusedButton.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
+					focusedButton.getUpNeighbour().setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
 					focusedButton.getUpNeighbour().setFocused(true);
 					focusedButton.setFocused(false);
 				} else {
-					exit.setStyle(uiSkin.get("menu-focused",
-							TextButtonStyle.class));
+					exit.setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
 					exit.setFocused(true);
 				}
 

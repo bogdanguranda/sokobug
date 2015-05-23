@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -66,6 +67,13 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("level/victoryWing.png", Texture.class, param);
 		game.assetManager.load("level/finish.png", Texture.class, param);
 		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
+		
+		game.assetManager.load("sound/music/newgrounds_egypt.mp3", Music.class);
+		game.assetManager.load("sound/music/lonely_desert.mp3", Music.class);
+		game.assetManager.load("sound/music/arabian_nights.mp3", Music.class);
+		game.assetManager.load("sound/music/newgrounds_arabia.mp3", Music.class);
+		game.assetManager.load("sound/music/gardens_of_sand.mp3", Music.class);
+		game.assetManager.load("sound/music/pyramid.mp3", Music.class);
 	}
 
 	@Override
