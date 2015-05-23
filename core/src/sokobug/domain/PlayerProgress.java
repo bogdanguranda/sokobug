@@ -1,7 +1,13 @@
 package sokobug.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerProgress {
-	private int currentLevel = 1;
+	private static final int DEFAULT_STARTING_LEVEL = 1;
+	public static final int MAXIMUM_SKIPPED_LEVELS_ALLOWED = 3;
+	private int currentLevel = DEFAULT_STARTING_LEVEL;
+	private List<Integer> skippedLevels = new ArrayList<Integer>();
 	
 	public PlayerProgress() {
 		
@@ -15,13 +21,13 @@ public class PlayerProgress {
 		currentLevel = level;
 	}
 
-//	@Override
-//	public void write(Json json) {
-//		json.writeValue("currentLevel", currentLevel);
-//	}
-//
-//	@Override
-//	public void read(Json json, JsonValue jsonData) {
-//		currentLevel = json.readValue("currentLevel", int.class, jsonData);
-//	}
+	public List<Integer> getSkippedLevels() {
+		return skippedLevels;
+	}
+
+	public void setSkippedLevels(List<Integer> skippedLevels) {
+		this.skippedLevels = skippedLevels;
+	}
+	
+	
 }

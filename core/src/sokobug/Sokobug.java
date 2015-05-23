@@ -1,5 +1,7 @@
 package sokobug;
 
+import sokobug.domain.SoundManager;
+import sokobug.screens.ChooseChapterScreen;
 import sokobug.screens.ChooseLevelScreen;
 import sokobug.screens.CreditsScreen;
 import sokobug.screens.IngameScreen;
@@ -17,11 +19,13 @@ public class Sokobug extends Game {
 	public TitleScreen titleScreen;
 	public MainMenuScreen mainMenuScreen;
 	public CreditsScreen creditsScreen;
+	public ChooseChapterScreen chooseChapterScreen;
 	public ChooseLevelScreen chooseLevelScreen;
 	public IngameScreen ingameScreen;
 	public VictoryScreen victoryScreen;
 	
 	public AssetManager assetManager;
+	public SoundManager soundManager;
 	public SpriteBatch batch;
 	
 	public final float VIRTUAL_WIDTH = 1280;

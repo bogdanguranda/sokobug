@@ -1,12 +1,16 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.LevelLoader;
+import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -63,7 +67,21 @@ public class TitleScreen implements Screen, InputProcessor {
 		game.assetManager.load("level/topBar.png", Texture.class, param);
 		game.assetManager.load("level/pad.png", Texture.class, param);
 		game.assetManager.load("level/victoryWing.png", Texture.class, param);
+		game.assetManager.load("level/finish.png", Texture.class, param);
 		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
+		
+//		game.assetManager.load("sound/music/newgrounds_egypt.mp3", Music.class);
+//		game.assetManager.load("sound/music/lonely_desert.mp3", Music.class);
+//		game.assetManager.load("sound/music/arabian_nights.mp3", Music.class);
+//		game.assetManager.load("sound/music/egyptian_nights.mp3", Music.class);
+//		game.assetManager.load("sound/music/newgrounds_arabia.mp3", Music.class);
+//		game.assetManager.load("sound/music/gardens_of_sand.mp3", Music.class);
+//		game.assetManager.load("sound/music/pyramid.mp3", Music.class);
+		
+		game.assetManager.load("sound/effects/bugMove.wav", Sound.class);
+		game.assetManager.load("sound/effects/buttonClick.wav", Sound.class);
+		game.assetManager.load("sound/effects/sarcophagusMove.wav", Sound.class);
+		game.assetManager.load("sound/effects/victory.wav", Sound.class);
 	}
 
 	@Override
@@ -80,6 +98,7 @@ public class TitleScreen implements Screen, InputProcessor {
 	        	if (!readyToSkip) {
 	        		game.mainMenuScreen = new MainMenuScreen(game);
 	        		game.creditsScreen = new CreditsScreen(game);
+	        		game.chooseChapterScreen = new ChooseChapterScreen(game);
 	        		game.chooseLevelScreen = new ChooseLevelScreen(game);
 	        		game.ingameScreen = new IngameScreen(game);
 	        		game.victoryScreen = new VictoryScreen(game);

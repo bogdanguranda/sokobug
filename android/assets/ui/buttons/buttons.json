@@ -1,4 +1,11 @@
 {
+	"com.badlogic.gdx.graphics.Color": {
+		green: { a: 1, b: 0, g: 1, r: 0 },
+		white: { a: 1, b: 1, g: 1, r: 1 },
+		red: { a: 1, b: 0, g: 0, r: 1 },
+		black: { a: 1, b: 0, g: 0, r: 0 }
+	},
+	
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
 		"japonesa24": { "file": "fonts/Japonesa24.fnt"},
 		"japonesa32": { "file": "fonts/Japonesa32.fnt"},
@@ -6,16 +13,20 @@
 	},
 
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-		"default": { "up": "menu/buttonUp", "down": "menu/buttonDown", "over": "menu/buttonOver", "font": japonesa60, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
-		"menu-button-focused": { "up": "menu/buttonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"menu-button-down": { "up": "menu/buttonDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
-		"default-level-btn": { "up": "level/lvlButtonUp", "down": "level/lvlButtonDown", "over": "level/lvlButtonOver", "font": japonesa60, "pressedOffsetY": 5, "unpressedOffsetY": 10, "pressedOffsetX": 0, "unpressedOffsetX": -5},
-		"level-button-focused": { "up": "level/lvlButtonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"level-button-down": { "up": "level/lvlButtonDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"level-button-locked": { "up": "level/lvlButtonLocked", "font": japonesa60, "pressedOffsetY": 8, "unpressedOffsetY": 8},
-		"default-forward-btn": { "up": "forward/fwButtonUp", "down": "forward/fwButtonDown", "over": "forward/fwButtonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"ingame-back-btn": { "up": "back-ingame/backButtonUp", "down": "back-ingame/backButtonDown", "over": "back-ingame/backButtonOver","font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"menu-back-btn": { "up": "back-menu/buttonUp", "down": "back-menu/buttonDown", "over": "back-menu/buttonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"default-restart-btn": { "up": "restart/restartButtonUp", "down": "restart/restartButtonDown", "over": "restart/restartButtonOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-menu": { "up": "menuUp", "down": "menuDown", "over": "menuOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"menu-focused": { "up": "menuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"menu-down": { "up": "menuDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12}, 
+		"default-level": { "up": "levelUp", "down": "levelDown", "over": "levelOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 5, "unpressedOffsetY": 10, "pressedOffsetX": 0, "unpressedOffsetX": -5},
+		"level-focused": { "up": "levelOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"level-down": { "up": "levelDown", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"level-locked": { "up": "levelLocked", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 8},
+		"default-forward": { "up": "forwardUp", "down": "forwardDown", "over": "forwardOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"ingame-back": { "up": "backIngameUp", "down": "backIngameDown", "over": "backIngameOver","font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"menu-back": { "up": "backMenuUp", "down": "backMenuDown", "over": "backMenuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-restart": { "up": "restartUp", "down": "restartDown", "over": "restartOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-chapter1": { "up": "chapter1Up", "down": "chapter1Down", "over": "chapter1Over", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-skiped-level": { "up": "skipedLevelUp", "down": "skipedLevelDown", "over": "skipedLevelOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"soundOn": { "up": "soundOn", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"soundOff": { "up": "soundOff", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 	}
 }

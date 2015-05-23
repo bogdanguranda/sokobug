@@ -36,7 +36,7 @@ public abstract class MovingObject extends LabyrinthObject {
 	protected float positionX;
 	protected float positionY;
 	
-	private float moveSpeed = 400.f; // 400 de pixeli pe secunda
+	private float moveSpeed = 300.f;
 	private MoveDirection moveDirection = MoveDirection.NONE;
 	private float distanceToMove = LabyrinthObject.OBJECT_SIZE;
 	private float movedDistance = 0;
@@ -113,8 +113,9 @@ public abstract class MovingObject extends LabyrinthObject {
 			positionX = positionX + moveX;
 			positionY = positionY + moveY;
 			
-			float finalDistance = distanceToMove / 20.f;
-			if (movedDistance + finalDistance >= distanceToMove) {
+			//float finalDistance = distanceToMove / 20.f;
+			//if (movedDistance + finalDistance >= distanceToMove) {
+			if (movedDistance >= distanceToMove) {
 				setPositionColumn(getPositionColumn() + moveDirection.jAddition);
 				setPositionLine(getPositionLine() + moveDirection.iAddition);
 				movedDistance = 0;

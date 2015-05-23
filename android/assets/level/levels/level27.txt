@@ -1,12 +1,9 @@
-F F F F W W W W W W W W W W W F
-F F F W W F F F F F W F F S W F
-F F F W F F P W P F W S S S W F
-F W W W F F P F F P W F F S W F
-F W F F P P P F F F P F B S W F
-F W F W F F P F W W W F F S W F
-F W F F P F P F W F W S S S W F
-F W F F F F W W W F W F F S W F
-F W W W W W W F F F W W W W W F
-# W = wall, F = free, P = sarcophagus, S = spot, B = bug, b = bug on top of spot, p = sarcophagus on top of spot
-# Conditions: nr. of P = nr. of S.
-# Note: the bug(B) and sarcophagus(P) are on top of a free(F) ground
+F F F F F W W W W W F F F F F F
+F F F W W W F F F W F F F F F F
+F F F W F F P S B W W F F F F F
+F F F W F F S P S F W F F F F F
+F F F W W W F p P F W F F F F F
+F F F F F W F F F W W F F F F F
+F F F F F W W W W W F F F F F F
+F F F F F F F F F F F F F F F F
+F F F F F F F F F F F F F F F F
