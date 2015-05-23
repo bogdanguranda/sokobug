@@ -2,9 +2,12 @@ package sokobug.domain;
 
 import java.util.Random;
 
+import sokobug.Sokobug;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class SoundManager {
 	private AssetManager assetManager;
@@ -53,12 +56,11 @@ public class SoundManager {
 	public boolean isMuted() {
 		return mute;
 	}
-	
+
 	public void setMute(boolean mute) {
 		if (mute) {
 			currentPlayingMusic.pause();
-		}
-		else {
+		} else {
 			currentPlayingMusic.play();
 		}
 		this.mute = mute;

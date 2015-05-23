@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.LevelLoader;
+import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

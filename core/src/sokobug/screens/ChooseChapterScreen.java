@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class ChooseChapterScreen implements Screen, InputProcessor {
 
@@ -20,6 +22,7 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 	private Stage stage;
 	private MenuButton backToMenu;
 	private MenuButton chapter1;
+	private MenuButton sound;
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
@@ -36,9 +39,14 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 		chapter1 = new MenuButton(game, "", MenuButton.CHAPTER, game.assetManager.get(
 				"ui/buttons/buttons.json", Skin.class), "default-chapter1");
 		chapter1.setPosition(chapter1.getWidth() / 2.f, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f/2.f);
+		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "soundOn");
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
+				* 3.f / 2.f);
 
 		stage.addActor(backToMenu);
 		stage.addActor(chapter1);
+		stage.addActor(sound);
 
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -75,6 +83,14 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		if (game.soundManager.isMuted()) {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+					TextButtonStyle.class));
+		} else {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+					TextButtonStyle.class));
+		}
+		
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

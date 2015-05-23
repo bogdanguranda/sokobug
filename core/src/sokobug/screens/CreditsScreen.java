@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class CreditsScreen implements Screen, InputProcessor {
 
@@ -23,6 +25,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 	private BitmapFont font60;
 	private Stage stage;
 	private MenuButton backToMenu;
+	private MenuButton sound;
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
@@ -39,8 +42,13 @@ public class CreditsScreen implements Screen, InputProcessor {
 		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
 				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
+		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "soundOn");
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
+				* 3.f / 2.f);
 		
 		stage.addActor(backToMenu);
+		stage.addActor(sound);
 		
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -86,6 +94,14 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		if (game.soundManager.isMuted()) {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+					TextButtonStyle.class));
+		} else {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+					TextButtonStyle.class));
+		}
+		
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

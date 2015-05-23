@@ -50,7 +50,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 				Skin.class));
 		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
-		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f/2.f, game.VIRTUAL_HEIGHT - sound.getHeight() * 3.f/2.f);
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
+				* 3.f / 2.f);
 
 		play.setUpNeighbour(exit);
 		play.setDownNeighbour(credits);
@@ -108,6 +109,14 @@ public class MainMenuScreen implements Screen, InputProcessor {
 			game.soundManager = new SoundManager(game.assetManager);
 			game.soundManager.startPlayingMusic();
 			firstStart = false;
+		} else {
+			if (game.soundManager.isMuted()) {
+				sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+						TextButtonStyle.class));
+			} else {
+				sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+						TextButtonStyle.class));
+			}
 		}
 
 		MenuButton.defocusButtons(menuButtons);

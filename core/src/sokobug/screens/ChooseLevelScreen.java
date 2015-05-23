@@ -28,6 +28,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 	private Table table;
 	private MenuButton backToChooseChapter;
 	private MenuButton skipCurrentLevel;
+	private MenuButton sound;
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
@@ -56,6 +57,11 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		skipCurrentLevel = new MenuButton(game, "Skip level", MenuButton.SKIP_LEVEL, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-menu");
 		skipCurrentLevel.setPosition(game.VIRTUAL_WIDTH - skipCurrentLevel.getWidth(), 0);
+		
+		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "soundOn");
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
+				* 3.f / 2.f);
 
 		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 		
@@ -84,6 +90,7 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		stage.addActor(skipCurrentLevel);
 		table.setFillParent(true);
 		stage.addActor(table);
+		stage.addActor(sound);
 		
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -120,6 +127,14 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
+		if (game.soundManager.isMuted()) {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+					TextButtonStyle.class));
+		} else {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+					TextButtonStyle.class));
+		}
+		
 		currentMaxUnlockedLevel = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
 		
 		table.clear();
