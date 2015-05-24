@@ -1,12 +1,8 @@
 package sokobug.android;
 
-import android.app.Dialog;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -23,32 +19,19 @@ public class AndroidLauncher extends AndroidApplication {
 
 	@Override
 	public void onBackPressed() {
-
-		final Dialog dialog = new Dialog(this);
-		dialog.setTitle("Quit game?");
-		
-		LinearLayout linerLayout = new LinearLayout(this);
-		linerLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-		Button buttonQuit = new Button(this);
-		buttonQuit.setText("Quit");
-		buttonQuit.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Quit game?");
+		builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
 				finish();
 			}
 		});
-		linerLayout.addView(buttonQuit);
-
-		Button buttonResume = new Button(this);
-		buttonResume.setText("Resume");
-		buttonResume.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+		builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.dismiss();
 			}
 		});
-		linerLayout.addView(buttonResume);
-
-		dialog.setContentView(linerLayout);
+		AlertDialog dialog = builder.create();
 		dialog.show();
 	}
 }
