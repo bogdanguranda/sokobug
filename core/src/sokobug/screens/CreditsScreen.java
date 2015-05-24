@@ -63,9 +63,12 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 		font32.setColor(Color.BLACK);
 		font60.setColor(Color.BLACK);
-		String text = "Game Design: Bogdan Guranda\n" + "Programming: Bogdan Guranda, Ciprian Corvin Tiperciuc\n"
-				+ "Art and Design: Andrei Guranda\n" + "Music and SoundFX: Andrei Guranda\n"
-				+ "Music composers (newgrounds): IPSBLT, Sephirot24, slaleky, Inoni_Bird,\n mhb";
+		String text = "Lead programming and game design: Bogdan Guranda\n"
+				+ "Graphics and Audio: Andrei Guranda\n"
+				+ "Additional programming: Ciprian Corvin Tiperciuc\n"
+				+ "Testing: Ciprian Corvin Tiperciuc, Clapa Lucian, Andrei Guranda\n"
+				+ "Composers (newgrounds): IPSBLT, Sephirot24, slaleky, Inoni_Bird, mhb";
+		
 
 		game.batch.begin();
 		background.draw(game.batch);
