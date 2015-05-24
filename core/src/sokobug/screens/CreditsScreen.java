@@ -2,10 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
-import sokobug.domain.SoundManager;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -36,20 +33,20 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 		font32 = game.assetManager.get("fonts/Japonesa32.fnt", BitmapFont.class);
 		font60 = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
-		background = new Sprite(game.assetManager.get("backgrounds/potatoes.png",Texture.class));
+		background = new Sprite(game.assetManager.get("backgrounds/potatoes.png", Texture.class));
 		background.setPosition(0, 0);
 
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU,
-				game.assetManager.get("ui/buttons/buttons.json", Skin.class), "menu-back");
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
 		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);
-		
+
 		stage.addActor(backToMenu);
 		stage.addActor(sound);
-		
+
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
 	}
@@ -57,7 +54,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		game.soundManager.updateMusicState();
-		
+
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -66,15 +63,14 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 		font32.setColor(Color.BLACK);
 		font60.setColor(Color.BLACK);
-		String title = "Credits";
-		String text = "Developers: Bogdan Guranda, Ciprian Corvin Tiperciuc\n"
-				+ "Artist: Andrei Guranda";
+		String text = "Game Design: Bogdan Guranda\n" + "Programming: Bogdan Guranda, Ciprian Corvin Tiperciuc\n"
+				+ "Art and Design: Andrei Guranda\n" + "Music and SoundFX: Andrei Guranda\n"
+				+ "Music composers (newgrounds): IPSBLT, Sephirot24, slaleky, Inoni_Bird,\n mhb";
 
 		game.batch.begin();
 		background.draw(game.batch);
-		font60.draw(game.batch, title, (game.VIRTUAL_WIDTH / 2) - font60.getBounds(title).width / 2, 
-				game.VIRTUAL_HEIGHT + 7.f);
-		font32.drawMultiLine(game.batch, text, backToMenu.getX() + backToMenu.getWidth() * 1.2f, font32.getBounds(title).width);
+		font32.drawMultiLine(game.batch, text, backToMenu.getX() + backToMenu.getWidth(),
+				font32.getBounds(text).height * 6.7f);
 		game.batch.end();
 
 		stage.act();
@@ -101,7 +97,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
-		
+
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
@@ -122,10 +118,6 @@ public class CreditsScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
-			game.setScreen(game.mainMenuScreen);
-			return true;
-		}
 		return false;
 	}
 

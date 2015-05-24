@@ -8,15 +8,15 @@ public class PlayerProgress {
 	public static final int MAXIMUM_SKIPPED_LEVELS_ALLOWED = 3;
 	private int currentLevel = DEFAULT_STARTING_LEVEL;
 	private List<Integer> skippedLevels = new ArrayList<Integer>();
-	
+
 	public PlayerProgress() {
-		
+
 	}
-	
+
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
-	
+
 	public void setCurrentLevel(int level) {
 		currentLevel = level;
 	}
@@ -28,6 +28,5 @@ public class PlayerProgress {
 	public void setSkippedLevels(List<Integer> skippedLevels) {
 		this.skippedLevels = skippedLevels;
 	}
-	
-	
+
 }

@@ -5,7 +5,6 @@ import sokobug.domain.MenuButton;
 import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -24,16 +23,13 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private Sprite background;
 	private InputMultiplexer multiplexer;
 
-	public Skin uiSkin;
 	private Sokobug game;
 
 	private MenuButton play;
 	private MenuButton credits;
 	private MenuButton exit;
-	private MenuButton focusedButton;
-	public MenuButton[] menuButtons;
-	private boolean firstStart = true;
 	private MenuButton sound;
+	private boolean firstStart = true;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
@@ -43,29 +39,15 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
 		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class));
+				Skin.class), "default-menu");
 		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class));
+				Skin.class), "default-menu");
 		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class));
+				Skin.class), "default-menu");
 		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);
-
-		play.setUpNeighbour(exit);
-		play.setDownNeighbour(credits);
-		credits.setUpNeighbour(play);
-		credits.setDownNeighbour(exit);
-		exit.setUpNeighbour(credits);
-		exit.setDownNeighbour(play);
-
-		menuButtons = new MenuButton[3];
-		menuButtons[0] = play;
-		menuButtons[1] = credits;
-		menuButtons[2] = exit;
-
-		uiSkin = game.assetManager.get("ui/buttons/buttons.json", Skin.class);
 
 		table.add(play).padBottom(20).row();
 		table.add(credits).padBottom(20).row();
@@ -118,12 +100,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 						TextButtonStyle.class));
 			}
 		}
-
-		MenuButton.defocusButtons(menuButtons);
-
-		for (MenuButton button : menuButtons)
-			button.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
-
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
@@ -149,52 +125,6 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// Reacting only if mouse is not over a menu widget
-		if (!MenuButton.isMouseOverButton(menuButtons)) {
-			if (keycode == Input.Keys.DOWN) {
-				focusedButton = MenuButton.getFocusedButton(menuButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
-					focusedButton.getDownNeighbour().setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
-					focusedButton.getDownNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					play.setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
-					play.setFocused(true);
-				}
-
-				return true;
-
-			} else if (keycode == Input.Keys.UP) {
-				focusedButton = MenuButton.getFocusedButton(menuButtons);
-
-				if (focusedButton != null) {
-					focusedButton.setStyle(uiSkin.get("default-menu", TextButtonStyle.class));
-					focusedButton.getUpNeighbour().setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
-					focusedButton.getUpNeighbour().setFocused(true);
-					focusedButton.setFocused(false);
-				} else {
-					exit.setStyle(uiSkin.get("menu-focused", TextButtonStyle.class));
-					exit.setFocused(true);
-				}
-
-				return true;
-			}
-		}
-
-		if (keycode == Input.Keys.ENTER) {
-			focusedButton = MenuButton.getFocusedButton(menuButtons);
-			if (focusedButton != null) {
-				if (focusedButton.getType() == MenuButton.PLAY)
-					game.setScreen(game.chooseLevelScreen);
-				else if (focusedButton.getType() == MenuButton.CREDITS)
-					game.setScreen(game.creditsScreen);
-				else if (focusedButton.getType() == MenuButton.EXIT)
-					Gdx.app.exit();
-				return true;
-			}
-		}
 		return false;
 	}
 

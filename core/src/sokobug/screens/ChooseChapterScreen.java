@@ -36,9 +36,9 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 				Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
 
-		chapter1 = new MenuButton(game, "", MenuButton.CHAPTER, game.assetManager.get(
-				"ui/buttons/buttons.json", Skin.class), "default-chapter1");
-		chapter1.setPosition(chapter1.getWidth() / 2.f, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f/2.f);
+		chapter1 = new MenuButton(game, "", MenuButton.CHAPTER, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "default-chapter1");
+		chapter1.setPosition(chapter1.getWidth() / 2.f, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f / 2.f);
 		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
@@ -55,7 +55,7 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		game.soundManager.updateMusicState();
-		
+
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -90,7 +90,7 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
-		
+
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

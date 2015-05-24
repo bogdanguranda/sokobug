@@ -5,7 +5,6 @@ import sokobug.domain.Level;
 import sokobug.domain.MenuButton;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -27,37 +26,41 @@ public class IngameScreen implements Screen, InputProcessor {
 	private MenuButton restart;
 	private MenuButton sound;
 	private InputMultiplexer multiplexer;
-	
+
 	public Sprite topBar;
 	public Level level;
-	
+
 	public IngameScreen(Sokobug myGame) {
 		game = myGame;
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
 		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
-		
+
 		level = new Level(game);
-		
+
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
-		
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "ingame-back");
-		backToMenu.setPosition(backToMenu.getWidth() / 2, level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2)); 
-	
+
+		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get(
+				"ui/buttons/buttons.json", Skin.class), "ingame-back");
+		backToMenu.setPosition(backToMenu.getWidth() / 2,
+				level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
+
 		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
-		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f/2.f, level.getSize().y + (topBar.getHeight() / 2) - (sound.getHeight() / 2));
-		
-		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-restart");
-		restart.setPosition(sound.getX() - restart.getWidth() * 3.f/2.f, level.getSize().y + (topBar.getHeight() / 2) - (restart.getHeight() / 2));
-		
+		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, level.getSize().y
+				+ (topBar.getHeight() / 2) - (sound.getHeight() / 2));
+
+		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json",
+				Skin.class), "default-restart");
+		restart.setPosition(sound.getX() - restart.getWidth() * 3.f / 2.f, level.getSize().y + (topBar.getHeight() / 2)
+				- (restart.getHeight() / 2));
 
 		stage.addActor(backToMenu);
 		stage.addActor(restart);
 		stage.addActor(sound);
-		
+
 		multiplexer.addProcessor(level);
 		multiplexer.addProcessor(stage);
 		multiplexer.addProcessor(this);
@@ -70,18 +73,19 @@ public class IngameScreen implements Screen, InputProcessor {
 
 		game.camera.update();
 		game.batch.setProjectionMatrix(game.camera.combined);
-		
+
 		font.setColor(Color.BLACK);
 		String levelText = "Level " + String.valueOf(level.levelNumber);
 
 		game.batch.begin();
 		topBar.draw(game.batch);
-		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2, game.VIRTUAL_HEIGHT - 12.f);
+		font.draw(game.batch, levelText, game.VIRTUAL_WIDTH / 2 - font.getBounds(levelText).width / 2,
+				game.VIRTUAL_HEIGHT - 12.f);
 		game.batch.end();
-		
+
 		stage.act();
 		stage.draw();
-		
+
 		level.render(delta);
 	}
 
@@ -105,9 +109,9 @@ public class IngameScreen implements Screen, InputProcessor {
 			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
-		
+
 		level.load(level.levelNumber);
-		
+
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
@@ -131,10 +135,6 @@ public class IngameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Input.Keys.ESCAPE) {
-			game.setScreen(game.chooseLevelScreen);
-			return true;
-		}
 		return false;
 	}
 
