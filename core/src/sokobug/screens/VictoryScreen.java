@@ -103,7 +103,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		game.soundManager.getSound("victory.wav").play(0.5f);
+		game.soundManager.getSound("victory.ogg").play(0.5f);
 		if (!game.soundManager.isMuted()) {
 			game.soundManager.getCurrentPlayingMusic().pause();
 		}

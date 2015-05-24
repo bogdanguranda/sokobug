@@ -78,10 +78,10 @@ public class TitleScreen implements Screen, InputProcessor {
 //		game.assetManager.load("sound/music/gardens_of_sand.mp3", Music.class);
 //		game.assetManager.load("sound/music/pyramid.mp3", Music.class);
 		
-		game.assetManager.load("sound/effects/bugMove.wav", Sound.class);
-		game.assetManager.load("sound/effects/buttonClick.wav", Sound.class);
-		game.assetManager.load("sound/effects/sarcophagusMove.wav", Sound.class);
-		game.assetManager.load("sound/effects/victory.wav", Sound.class);
+		game.assetManager.load("sound/effects/bugMove.ogg", Sound.class);
+		game.assetManager.load("sound/effects/buttonClick.ogg", Sound.class);
+		game.assetManager.load("sound/effects/sarcophagusMove.ogg", Sound.class);
+		game.assetManager.load("sound/effects/victory.ogg", Sound.class);
 	}
 
 	@Override
