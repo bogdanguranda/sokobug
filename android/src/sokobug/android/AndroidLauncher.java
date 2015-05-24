@@ -25,8 +25,8 @@ public class AndroidLauncher extends AndroidApplication {
 	public void onBackPressed() {
 
 		final Dialog dialog = new Dialog(this);
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+		dialog.setTitle("Quit game?");
+		
 		LinearLayout linerLayout = new LinearLayout(this);
 		linerLayout.setOrientation(LinearLayout.HORIZONTAL);
 
