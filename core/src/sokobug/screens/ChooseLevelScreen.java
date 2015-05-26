@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.MenuButton.Type;
 import sokobug.domain.PlayerProgressManager;
 
 import com.badlogic.gdx.Gdx;
@@ -44,28 +45,28 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 		currentMaxUnlockedLevel = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
-		backToChooseChapter = new MenuButton(game, "", MenuButton.BACKTOCHOOSECHAPTER, game.assetManager.get(
+		backToChooseChapter = new MenuButton(game, "", MenuButton.Type.BACKTOCHOOSECHAPTER, game.assetManager.get(
 				"ui/buttons/buttons.json", Skin.class), "menu-back");
 		backToChooseChapter.setPosition(0, 0);
 
-		skipCurrentLevel = new MenuButton(game, "Skip level", MenuButton.SKIP_LEVEL, game.assetManager.get(
+		skipCurrentLevel = new MenuButton(game, "Skip level", MenuButton.Type.SKIP_LEVEL_BUTTON, game.assetManager.get(
 				"ui/buttons/buttons.json", Skin.class), "default-menu");
 		skipCurrentLevel.setPosition(game.VIRTUAL_WIDTH - skipCurrentLevel.getWidth(), 0);
 
-		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
 			if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(i + 1)) {
-				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.LEVEL,
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL,
 						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-skiped-level");
-			} else if (i < currentMaxUnlockedLevel) {
-				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.LEVEL,
+			} else if (i + 1 <= currentMaxUnlockedLevel) {
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL,
 						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-level");
 			} else {
-				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.LEVEL,
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL_LOCKED,
 						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "level-locked");
 			}
 		}
@@ -129,16 +130,38 @@ public class ChooseLevelScreen implements Screen, InputProcessor {
 
 		for (int i = 0; i < NUM_LEVELS; i++) {
 			if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(i + 1)) {
-				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
-						"default-skiped-level", TextButtonStyle.class));
-			} else if (i < currentMaxUnlockedLevel) {
-				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
-						"default-level", TextButtonStyle.class));
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL,
+						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-skiped-level");
+			} else if (i + 1 <= currentMaxUnlockedLevel) {
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL,
+						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "default-level");
 			} else {
-				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
-						"level-locked", TextButtonStyle.class));
+				levelButtons[i] = new MenuButton(game, Integer.toString(i + 1), MenuButton.Type.LEVEL_LOCKED,
+						game.assetManager.get("ui/buttons/buttons.json", Skin.class), "level-locked");
 			}
 		}
+		table.clear();
+		for (int i = 0; i < NUM_LEVELS; i++) {
+			table.add(levelButtons[i]).pad(15);
+			if ((i + 1) % BUTTONS_PER_ROW == 0)
+				table.row();
+		}
+		
+//		for (int i = 0; i < NUM_LEVELS; i++) {
+//			if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(i + 1)) {
+//				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
+//						"default-skiped-level", TextButtonStyle.class));
+//				levelButtons[i].setType(Type.LEVEL);
+//			} else if (i + 1 <= currentMaxUnlockedLevel) {
+//				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
+//						"default-level", TextButtonStyle.class));
+//				levelButtons[i].setType(Type.LEVEL);
+//			} else {
+//				levelButtons[i].setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get(
+//						"level-locked", TextButtonStyle.class));
+//				levelButtons[i].setType(Type.LEVEL_LOCKED);
+//			}
+//		}
 
 		Gdx.input.setInputProcessor(multiplexer);
 	}

@@ -47,11 +47,11 @@ public class VictoryScreen implements Screen, InputProcessor {
 		victoryWing.setPosition(victoryMessage.getX() + (victoryMessage.getWidth() - victoryWing.getWidth()) / 2.f,
 				victoryMessage.getY() - victoryWing.getHeight());
 
-		backButton = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get(
+		backButton = new MenuButton(game, "", MenuButton.Type.BACKTOCHOOSELEVEL, game.assetManager.get(
 				"ui/buttons/buttons.json", Skin.class), "ingame-back");
 		backButton.setPosition(victoryWing.getX(), victoryWing.getY() - backButton.getHeight());
 
-		forwardButton = new MenuButton(game, "", MenuButton.FORWARD, game.assetManager.get("ui/buttons/buttons.json",
+		forwardButton = new MenuButton(game, "", MenuButton.Type.FORWARD, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-forward");
 		forwardButton.setPosition(victoryWing.getX() + victoryWing.getWidth() - forwardButton.getWidth(),
 				backButton.getY());

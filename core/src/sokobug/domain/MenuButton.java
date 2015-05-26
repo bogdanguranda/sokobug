@@ -10,27 +10,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MenuButton extends TextButton {
-	private Sokobug game;
-	private int buttonType;
-
-	public static final int PLAY = 0;
-	public static final int OPTIONS = 1;
-	public static final int CREDITS = 2;
-	public static final int EXIT = 3;
-	public static final int BACKTOMENU = 4;
-	public static final int BACKTOCHOOSELEVEL = 5;
-	public static final int LEVEL = 6;
-	public static final int FORWARD = 7;
-	public static final int RESTART = 8;
-	public static final int LEVEL_LOCKED = 9;
-	public static final int SKIP_LEVEL = 10;
-	public static final int CHAPTER = 11;
-	public static final int BACKTOCHOOSECHAPTER = 12;
-	public static final int SOUNDONOFF = 13;
+	public enum Type {
+		PLAY, OPTIONS, CREDITS, EXIT, BACKTOMENU, BACKTOCHOOSELEVEL, LEVEL, 
+		FORWARD, RESTART, LEVEL_LOCKED, SKIP_LEVEL_BUTTON, CHAPTER, BACKTOCHOOSECHAPTER, SOUNDONOFF
+	}
 
 	private static final String CLICK_SOUND = "buttonClick.ogg";
+	private Sokobug game;
+	private Type buttonType;
 
-	public MenuButton(Sokobug game, String buttonText, int buttonType, Skin skin, String styleName) {
+	public MenuButton(Sokobug game, String buttonText, Type buttonType, Skin skin, String styleName) {
 		super(buttonText, skin, styleName);
 		this.buttonType = buttonType;
 		this.game = game;
@@ -38,12 +27,18 @@ public class MenuButton extends TextButton {
 		addButtonBehaviour();
 	}
 
-	public int getType() {
+	public Type getType() {
 		return buttonType;
 	}
 
+//	public void setType(Type buttonType) {
+//		this.buttonType = buttonType;
+//		this.getListeners().
+//		addButtonBehaviour();
+//	}
+
 	private void addButtonBehaviour() {
-		if (buttonType == PLAY) {
+		if (buttonType == Type.PLAY) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -51,7 +46,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseChapterScreen);
 				}
 			});
-		} else if (buttonType == CREDITS) {
+		} else if (buttonType == Type.CREDITS) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -59,7 +54,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.creditsScreen);
 				}
 			});
-		} else if (buttonType == EXIT) {
+		} else if (buttonType == Type.EXIT) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -67,7 +62,7 @@ public class MenuButton extends TextButton {
 					Gdx.app.exit();
 				}
 			});
-		} else if (buttonType == BACKTOMENU) {
+		} else if (buttonType == Type.BACKTOMENU) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -75,7 +70,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
-		} else if (buttonType == LEVEL) {
+		} else if (buttonType == Type.LEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -86,7 +81,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.ingameScreen);
 				}
 			});
-		} else if (buttonType == BACKTOCHOOSELEVEL) {
+		} else if (buttonType == Type.BACKTOCHOOSELEVEL) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -94,7 +89,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
-		} else if (buttonType == BACKTOCHOOSECHAPTER) {
+		} else if (buttonType == Type.BACKTOCHOOSECHAPTER) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -102,7 +97,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseChapterScreen);
 				}
 			});
-		} else if (buttonType == FORWARD) {
+		} else if (buttonType == Type.FORWARD) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -116,7 +111,7 @@ public class MenuButton extends TextButton {
 					}
 				}
 			});
-		} else if (buttonType == RESTART) {
+		} else if (buttonType == Type.RESTART) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -124,9 +119,9 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.ingameScreen);
 				}
 			});
-		} else if (buttonType == LEVEL_LOCKED) {
+		} else if (buttonType == Type.LEVEL_LOCKED) {
 			// nothing
-		} else if (buttonType == SKIP_LEVEL) {
+		} else if (buttonType == Type.SKIP_LEVEL_BUTTON) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -135,7 +130,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
-		} else if (buttonType == CHAPTER) {
+		} else if (buttonType == Type.CHAPTER) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
@@ -143,7 +138,7 @@ public class MenuButton extends TextButton {
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
-		} else if (buttonType == SOUNDONOFF) {
+		} else if (buttonType == Type.SOUNDONOFF) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {

@@ -38,13 +38,13 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		multiplexer = new InputMultiplexer();
 
 		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
-		play = new MenuButton(game, "Play", MenuButton.PLAY, game.assetManager.get("ui/buttons/buttons.json",
+		play = new MenuButton(game, "Play", MenuButton.Type.PLAY, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-menu");
-		credits = new MenuButton(game, "Credits", MenuButton.CREDITS, game.assetManager.get("ui/buttons/buttons.json",
+		credits = new MenuButton(game, "Credits", MenuButton.Type.CREDITS, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-menu");
-		exit = new MenuButton(game, "Exit", MenuButton.EXIT, game.assetManager.get("ui/buttons/buttons.json",
+		exit = new MenuButton(game, "Exit", MenuButton.Type.EXIT, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-menu");
-		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);

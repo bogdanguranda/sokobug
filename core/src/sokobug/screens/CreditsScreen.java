@@ -36,10 +36,10 @@ public class CreditsScreen implements Screen, InputProcessor {
 		background = new Sprite(game.assetManager.get("backgrounds/potatoes.png", Texture.class));
 		background.setPosition(0, 0);
 
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json",
+		backToMenu = new MenuButton(game, "", MenuButton.Type.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
-		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);

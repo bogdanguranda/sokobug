@@ -42,17 +42,17 @@ public class IngameScreen implements Screen, InputProcessor {
 		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 
-		backToMenu = new MenuButton(game, "", MenuButton.BACKTOCHOOSELEVEL, game.assetManager.get(
+		backToMenu = new MenuButton(game, "", MenuButton.Type.BACKTOCHOOSELEVEL, game.assetManager.get(
 				"ui/buttons/buttons.json", Skin.class), "ingame-back");
 		backToMenu.setPosition(backToMenu.getWidth() / 2,
 				level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
 
-		sound = new MenuButton(game, "", MenuButton.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, level.getSize().y
 				+ (topBar.getHeight() / 2) - (sound.getHeight() / 2));
 
-		restart = new MenuButton(game, "", MenuButton.RESTART, game.assetManager.get("ui/buttons/buttons.json",
+		restart = new MenuButton(game, "", MenuButton.Type.RESTART, game.assetManager.get("ui/buttons/buttons.json",
 				Skin.class), "default-restart");
 		restart.setPosition(sound.getX() - restart.getWidth() * 3.f / 2.f, level.getSize().y + (topBar.getHeight() / 2)
 				- (restart.getHeight() / 2));
