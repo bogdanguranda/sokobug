@@ -248,14 +248,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
+						game.soundManager.playSound(BUG_MOVE_SOUND);
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
-								game.soundManager.getSound(SARCOPHAGUS_MOVE_SOUND).play(1.f);
+								game.soundManager.playSound(BUG_MOVE_SOUND);
+								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -270,14 +270,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
+						game.soundManager.playSound(BUG_MOVE_SOUND);
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
-								game.soundManager.getSound(SARCOPHAGUS_MOVE_SOUND).play(1.f);
+								game.soundManager.playSound(BUG_MOVE_SOUND);
+								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -292,14 +292,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
+						game.soundManager.playSound(BUG_MOVE_SOUND);
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
-								game.soundManager.getSound(SARCOPHAGUS_MOVE_SOUND).play(1.f);
+								game.soundManager.playSound(BUG_MOVE_SOUND);
+								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -314,14 +314,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
+						game.soundManager.playSound(BUG_MOVE_SOUND);
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
-								game.soundManager.getSound(SARCOPHAGUS_MOVE_SOUND).play(1.f);
+								game.soundManager.playSound(BUG_MOVE_SOUND);
+								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -359,14 +359,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
+						game.soundManager.playSound(BUG_MOVE_SOUND);
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.getSound(BUG_MOVE_SOUND).play(1.f);
-								game.soundManager.getSound(SARCOPHAGUS_MOVE_SOUND).play(1.f);
+								game.soundManager.playSound(BUG_MOVE_SOUND);
+								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}

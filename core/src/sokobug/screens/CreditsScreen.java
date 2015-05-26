@@ -66,7 +66,7 @@ public class CreditsScreen implements Screen, InputProcessor {
 		String text = "Lead programming and game design: Bogdan Guranda\n"
 				+ "Graphics and Audio: Andrei Guranda\n"
 				+ "Additional programming: Ciprian Corvin Tiperciuc\n"
-				+ "Testing: Ciprian Corvin Tiperciuc, Clapa Lucian, Andrei Guranda\n"
+				+ "Testing: Ciprian Corvin Tiperciuc, Lucian Clapa, Andrei G., Bogdan G.\n"
 				+ "Composers (newgrounds): IPSBLT, Sephirot24, slaleky, Inoni_Bird, mhb";
 		
 

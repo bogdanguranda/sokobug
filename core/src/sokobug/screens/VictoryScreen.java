@@ -105,7 +105,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 	public void show() {
 		game.soundManager.getSound("victory.ogg").play(0.5f);
 		if (!game.soundManager.isMuted()) {
-			game.soundManager.getCurrentPlayingMusic().pause();
+			game.soundManager.setPaused(true); 
 		}
 
 		int currentMaxLevelUnlocked = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
@@ -121,7 +121,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 	@Override
 	public void hide() {
 		if (!game.soundManager.isMuted()) {
-			game.soundManager.getCurrentPlayingMusic().play();
+			game.soundManager.setPaused(false); 
 		}
 	}
 

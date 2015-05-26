@@ -91,15 +91,16 @@ public class MainMenuScreen implements Screen, InputProcessor {
 			game.soundManager = new SoundManager(game.assetManager);
 			game.soundManager.startPlayingMusic();
 			firstStart = false;
-		} else {
-			if (game.soundManager.isMuted()) {
-				sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
-						TextButtonStyle.class));
-			} else {
-				sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
-						TextButtonStyle.class));
-			}
 		}
+		
+		if (game.soundManager.isMuted()) {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+					TextButtonStyle.class));
+		} else {
+			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+					TextButtonStyle.class));
+		}
+		
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

@@ -15,8 +15,10 @@ public class SoundManager {
 	private String[] allMusic = { "newgrounds_egypt.ogg", "lonely_desert.ogg", "egyptian_nights.ogg",
 			"newgrounds_arabia.ogg", "pyramid.ogg" };
 	private Random random = new Random();
-	private static final float DEFAULT_MUSIC_VOLUME = 50.f / 100.f;
+	private static final float DEFAULT_MUSIC_VOLUME = 0.5f;
+	private static final float DEFAULT_SOUNDS_VOLUME = 0.5f;
 	private boolean mute = false;
+	private boolean paused = false;
 
 	public SoundManager(AssetManager assetManager) {
 		this.assetManager = assetManager;
@@ -36,7 +38,7 @@ public class SoundManager {
 	}
 
 	public void updateMusicState() {
-		if (!currentPlayingMusic.isPlaying() && !isMuted()) {
+		if (!currentPlayingMusic.isPlaying() && !isPaused() && !isMuted()) {
 			currentPlayingMusic.dispose();
 			int randomIndex = random.nextInt(allMusic.length);
 			assetManager.load(musicAssetDirectory + allMusic[randomIndex], Music.class);
@@ -49,17 +51,31 @@ public class SoundManager {
 	public Sound getSound(String fileName) {
 		return assetManager.get(soundEffectsAssetDirectory + fileName, Sound.class);
 	}
+	
+	public void playSound(String fileName) {
+		assetManager.get(soundEffectsAssetDirectory + fileName, Sound.class).play(DEFAULT_SOUNDS_VOLUME);
+	}
 
 	public boolean isMuted() {
 		return mute;
 	}
 
 	public void setMute(boolean mute) {
-		if (mute) {
+		setPaused(mute);
+		this.mute = mute;
+	}
+	
+	public boolean isPaused() {
+		return paused;
+	}
+	
+	public void setPaused(boolean paused) {
+		if (paused) {
 			currentPlayingMusic.pause();
-		} else {
+		}
+		else {
 			currentPlayingMusic.play();
 		}
-		this.mute = mute;
+		this.paused = paused;
 	}
 }
