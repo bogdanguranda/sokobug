@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerProgress {
-	private static final int DEFAULT_STARTING_LEVEL = 29;
+	private static final int DEFAULT_STARTING_LEVEL = 1;
 	public static final int MAXIMUM_SKIPPED_LEVELS_ALLOWED = 3;
 	private int currentLevel = DEFAULT_STARTING_LEVEL;
 	private List<Integer> skippedLevels = new ArrayList<Integer>();
