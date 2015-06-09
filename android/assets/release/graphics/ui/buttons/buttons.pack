@@ -3,191 +3,191 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-chapterDown
-  rotate: false
-  xy: 1, 817
-  size: 350, 200
-  orig: 350, 200
-  offset: 0, 0
-  index: -1
-chapterOver
-  rotate: false
-  xy: 1, 615
-  size: 350, 200
-  orig: 350, 200
-  offset: 0, 0
-  index: -1
-chapterUp
-  rotate: false
-  xy: 353, 817
-  size: 350, 200
-  orig: 350, 200
-  offset: 0, 0
-  index: -1
 backMenuDown
   rotate: false
-  xy: 1, 513
+  xy: 1, 403
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
 backMenuOver
   rotate: false
-  xy: 353, 715
+  xy: 1, 301
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
 backMenuUp
   rotate: false
-  xy: 1, 411
+  xy: 353, 403
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
 menuDown
   rotate: false
-  xy: 353, 613
+  xy: 1, 199
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
 menuOver
   rotate: false
-  xy: 1, 309
+  xy: 353, 301
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
 menuUp
   rotate: false
-  xy: 353, 511
+  xy: 1, 97
   size: 350, 100
   orig: 350, 100
   offset: 0, 0
   index: -1
+chapterDown
+  rotate: false
+  xy: 353, 205
+  size: 350, 94
+  orig: 350, 94
+  offset: 0, 0
+  index: -1
+chapterOver
+  rotate: false
+  xy: 1, 1
+  size: 350, 94
+  orig: 350, 94
+  offset: 0, 0
+  index: -1
+chapterUp
+  rotate: false
+  xy: 353, 109
+  size: 350, 94
+  orig: 350, 94
+  offset: 0, 0
+  index: -1
 backIngameDown
   rotate: false
-  xy: 705, 967
+  xy: 705, 453
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 backIngameOver
   rotate: false
-  xy: 1, 257
+  xy: 353, 57
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 backIngameUp
   rotate: false
-  xy: 353, 459
+  xy: 705, 401
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 forwardDown
   rotate: false
-  xy: 705, 915
+  xy: 857, 453
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 forwardOver
   rotate: false
-  xy: 857, 967
+  xy: 353, 5
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 forwardUp
   rotate: false
-  xy: 1, 205
+  xy: 505, 57
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 levelDown
   rotate: false
-  xy: 153, 207
+  xy: 705, 299
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 levelLocked
   rotate: false
-  xy: 353, 357
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-levelOver
-  rotate: false
-  xy: 705, 813
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-levelUp
-  rotate: false
-  xy: 1, 103
+  xy: 705, 197
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 restartDown
   rotate: false
-  xy: 505, 459
+  xy: 857, 401
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
+levelOver
+  rotate: false
+  xy: 807, 299
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+levelUp
+  rotate: false
+  xy: 807, 197
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 restartOver
   rotate: false
-  xy: 857, 915
+  xy: 505, 5
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 restartUp
   rotate: false
-  xy: 455, 407
+  xy: 705, 145
   size: 150, 50
   orig: 150, 50
   offset: 0, 0
   index: -1
 skipedLevelDown
   rotate: false
-  xy: 705, 711
+  xy: 909, 299
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 skipedLevelOver
   rotate: false
-  xy: 807, 813
+  xy: 909, 197
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 skipedLevelUp
   rotate: false
-  xy: 1, 1
+  xy: 857, 95
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 soundOff
   rotate: false
-  xy: 255, 257
+  xy: 959, 145
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 soundOn
   rotate: false
-  xy: 705, 659
+  xy: 959, 93
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

@@ -38,7 +38,7 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 
 		chapter1 = new MenuButton(game, "Chapter 1", MenuButton.Type.CHAPTER, game.assetManager.get(
 				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-chapter");
-		chapter1.setPosition(chapter1.getWidth() / 2.f, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f / 2.f);
+		chapter1.setPosition(80, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f);
 
 		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get(
 				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "soundOn");
