@@ -59,19 +59,18 @@ public class PlayerProgressManager {
 	public boolean hasOlderVersionSavingSystem() {
 		String codedKey = Base64Coder.encodeString("currentLevel");
 		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
-		
+
 		String codedKey2 = Base64Coder.encodeString("chapter1");
 		String stringUncodedValue2 = Base64Coder.decodeString(pref.getString(codedKey2));
-		
+
 		if (stringUncodedValue.compareTo("") == 0) {
 			return false;
 		} else {
 			if (stringUncodedValue2.compareTo("") == 0) {
 				return true;
-			}
-			else {
+			} else {
 				return false;
-			}			
+			}
 		}
 	}
 
@@ -88,17 +87,23 @@ public class PlayerProgressManager {
 		// loadSkippedLevels
 		String codedKey2 = Base64Coder.encodeString("skippedLevels");
 		String stringUncodedValue2 = Base64Coder.decodeString(pref.getString(codedKey2));
+		boolean noSkippedLevels = stringUncodedValue2.compareTo("") == 0;
 		String stringSkippedLevels[] = stringUncodedValue2.split(" ");
+
 		for (int i = 0; i < chapter1LevelsStatus.length; i++) {
-			for (int j = 0; j < stringSkippedLevels.length; j++) {
-				if (i + 1 <= currentLevel) {
-					if (stringSkippedLevels[j].compareTo("") != 0) {
-						if (i + 1 == Integer.valueOf(stringSkippedLevels[j])) {
-							chapter1LevelsStatus[i] = PlayerProgress.LevelType.SKIPPED_LEVEL.ordinal();
-						} else {
-							chapter1LevelsStatus[i] = PlayerProgress.LevelType.OPENED_LEVEL.ordinal();
-						}
+			boolean found = false;
+			if (!noSkippedLevels) {
+				for (int j = 0; j < stringSkippedLevels.length; j++) {
+					if ((i + 1) == Integer.valueOf(stringSkippedLevels[j])) {
+						chapter1LevelsStatus[i] = PlayerProgress.LevelType.SKIPPED_LEVEL.ordinal();
+						found = true;
 					}
+				}
+			}
+
+			if (!found) {
+				if (i + 1 <= currentLevel) {
+					chapter1LevelsStatus[i] = PlayerProgress.LevelType.OPENED_LEVEL.ordinal();
 				} else {
 					chapter1LevelsStatus[i] = PlayerProgress.LevelType.LOCKED_LEVEL.ordinal();
 				}
