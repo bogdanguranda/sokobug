@@ -1,5 +1,8 @@
 package sokobug.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Base64Coder;
@@ -53,11 +56,55 @@ public class PlayerProgressManager {
 		saveLevelsStatus();
 	}
 
-	private void loadOlderVersionChapter1() {
-		
+	public boolean hasOlderVersionSavingSystem() {
+		String codedKey = Base64Coder.encodeString("currentLevel");
+		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
+		if (stringUncodedValue.compareTo("") == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
-	
+
+	private void loadOlderVersionChapter1() {
+		int currentLevel;
+
+		// loadCurrentLevel
+		String codedKey = Base64Coder.encodeString("currentLevel");
+		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
+		currentLevel = Integer.valueOf(stringUncodedValue);
+
+		int chapter1LevelsStatus[] = playerProgress.getLevelsStatus(1);
+
+		// loadSkippedLevels
+		String codedKey2 = Base64Coder.encodeString("skippedLevels");
+		String stringUncodedValue2 = Base64Coder.decodeString(pref.getString(codedKey2));
+		String stringSkippedLevels[] = stringUncodedValue2.split(" ");
+		for (int i = 0; i < chapter1LevelsStatus.length; i++) {
+			for (int j = 0; j < stringSkippedLevels.length; j++) {
+				if (i + 1 <= currentLevel) {
+					if (stringSkippedLevels[j].compareTo("") != 0) {
+						if (i + 1 == Integer.valueOf(stringSkippedLevels[j])) {
+							chapter1LevelsStatus[i] = PlayerProgress.LevelType.SKIPPED_LEVEL.ordinal();
+						} else {
+							chapter1LevelsStatus[i] = PlayerProgress.LevelType.OPENED_LEVEL.ordinal();
+						}
+					}
+				} else {
+					chapter1LevelsStatus[i] = PlayerProgress.LevelType.LOCKED_LEVEL.ordinal();
+				}
+			}
+		}
+
+		playerProgress.setLevelsStatus(chapter1LevelsStatus, 1);
+		savePlayerProgress();
+	}
+
 	private void loadLevelsStatus() {
+		if (hasOlderVersionSavingSystem()) {
+			loadOlderVersionChapter1();
+		}
+
 		for (int i = 0; i < PlayerProgress.NUMBER_OF_CHAPTERS; i++) {
 			String codedKey = Base64Coder.encodeString("chapter" + (i + 1));
 			String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
