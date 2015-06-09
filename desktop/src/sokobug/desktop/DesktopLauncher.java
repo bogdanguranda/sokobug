@@ -12,9 +12,9 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 800;
 		config.title = "Sokobug";
-		config.addIcon("desktopIcons/icon-16x16.png", FileType.Internal);
-		config.addIcon("desktopIcons/icon-32x32.png", FileType.Internal);
-		config.addIcon("desktopIcons/icon-128x128.png", FileType.Internal);
+		config.addIcon("release/graphics/desktopIcons/icon-16x16.png", FileType.Internal);
+		config.addIcon("release/graphics/desktopIcons/icon-32x32.png", FileType.Internal);
+		config.addIcon("release/graphics/desktopIcons/icon-128x128.png", FileType.Internal);
 
 		new LwjglApplication(new Sokobug(), config);
 	}

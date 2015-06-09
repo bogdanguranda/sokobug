@@ -4,14 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 public class LevelLoader {
-	public static String readLevel(String lvlFile) {
-		return deserializeLevel(lvlFile);
+	public static String readLevel(int level, int chapter) {
+		return deserializeLevel(level, chapter);
 	}
 
-	private static String deserializeLevel(String lvlFile) {
-		FileHandle file = Gdx.files.internal("level/levels/" + lvlFile);
+	private static String deserializeLevel(int level, int chapter) {
+		FileHandle file = Gdx.files.internal(Resources.LEVELS_DATA.getPath() + "chapter" + chapter + "/level" + level + ".lvl");
 		String decodedLevel = stringDecode(file.readString());
 		return decodedLevel;
+	}
+
+	public static void serializeLevel(int level, int chapter) {
+		FileHandle file = Gdx.files.internal("development/data/levels/" + "chapter" + chapter + "/level" + level + ".txt");
+		String newName = "level" + level + ".lvl";
+		FileHandle fileLvl = Gdx.files.local("../android/assets/" + Resources.LEVELS_DATA.getPath() + "chapter" + chapter + "/" + newName);
+		fileLvl.writeString(stringEncode(file.readString()), false);
 	}
 
 	private static String stringDecode(String codedText) {
@@ -23,14 +30,7 @@ public class LevelLoader {
 		}
 		return decodedText;
 	}
-
-	public static void serializeLevel(String txtFile) {
-		FileHandle file = Gdx.files.internal("level/levels/" + txtFile);
-		String newName = txtFile.substring(0, txtFile.length() - 3) + "lvl";
-		FileHandle fileLvl = Gdx.files.local("../android/assets/level/levels/" + newName);
-		fileLvl.writeString(stringEncode(file.readString()), false);
-	}
-
+	
 	private static String stringEncode(String plainText) {
 		String codedText = "";
 		int substitutes[] = { 1, 2, 2, 3, 3, 4 };

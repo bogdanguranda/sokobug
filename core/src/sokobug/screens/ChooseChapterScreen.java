@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.Resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,9 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 public class ChooseChapterScreen implements Screen, InputProcessor {
-
 	public Sokobug game;
-
 	private Stage stage;
 	private MenuButton backToMenu;
 	private MenuButton chapter1;
@@ -31,16 +30,18 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
-		backToMenu = new MenuButton(game, "", MenuButton.Type.BACKTOMENU, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "menu-back");
+		background = new Sprite(game.assetManager.get(Resources.BACKGROUNDS_MENU.getPath(), Texture.class));
+
+		backToMenu = new MenuButton(game, "", MenuButton.Type.BACKTOMENU, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "menu-back");
 		backToMenu.setPosition(0, 0);
 
-		chapter1 = new MenuButton(game, "", MenuButton.Type.CHAPTER, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "default-chapter1");
+		chapter1 = new MenuButton(game, "Chapter 1", MenuButton.Type.CHAPTER, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-chapter");
 		chapter1.setPosition(chapter1.getWidth() / 2.f, game.VIRTUAL_HEIGHT - chapter1.getHeight() * 3.f / 2.f);
-		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "soundOn");
+
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);
 
@@ -84,10 +85,10 @@ public class ChooseChapterScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		if (game.soundManager.isMuted()) {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOff",
 					TextButtonStyle.class));
 		} else {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
 

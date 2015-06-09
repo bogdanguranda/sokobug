@@ -3,21 +3,21 @@ buttons.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-chapter1Down
+chapterDown
   rotate: false
   xy: 1, 817
   size: 350, 200
   orig: 350, 200
   offset: 0, 0
   index: -1
-chapter1Over
+chapterOver
   rotate: false
   xy: 1, 615
   size: 350, 200
   orig: 350, 200
   offset: 0, 0
   index: -1
-chapter1Up
+chapterUp
   rotate: false
   xy: 353, 817
   size: 350, 200

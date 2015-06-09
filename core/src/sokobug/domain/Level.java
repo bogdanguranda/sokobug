@@ -25,12 +25,10 @@ public class Level implements InputProcessor {
 
 	private Sokobug game;
 	public int levelNumber;
+	public int chapterNumber;
 
 	private static final int LABYRINTH_ROWS = 9;
 	private static final int LABYRINTH_COLUMNS = 16;
-
-	private static final String BUG_MOVE_SOUND = "bugMove.ogg";
-	private static final String SARCOPHAGUS_MOVE_SOUND = "sarcophagusMove.ogg";
 
 	private AnimationMovingObject bug;
 	private Layer[] labyrinthObjects = new Layer[2];
@@ -46,7 +44,7 @@ public class Level implements InputProcessor {
 
 	public Level(Sokobug game) {
 		this.game = game;
-		arrowsPad = new Pad(new Sprite(game.assetManager.get("level/pad.png", Texture.class)));
+		arrowsPad = new Pad(new Sprite(game.assetManager.get(Resources.METAITEMS_PAD.getPath(), Texture.class)));
 		arrowsPad.setPosition(game.VIRTUAL_WIDTH - arrowsPad.getWidth(), 0.f);
 	}
 
@@ -55,8 +53,9 @@ public class Level implements InputProcessor {
 				* LabyrinthObject.OBJECT_SIZE);
 	}
 
-	public void load(int levelNumber) {
+	public void load(int levelNumber, int chapterNumber) {
 		this.levelNumber = levelNumber;
+		this.chapterNumber = chapterNumber;
 		this.finishedLevel = false;
 		this.numberOfSpots = 0;
 		this.sarcophagusesOnSpot = 0;
@@ -64,7 +63,7 @@ public class Level implements InputProcessor {
 		Layer backgroundLayer = new Layer();
 		Layer foregroundLayer = new Layer();
 
-		String text = LevelLoader.readLevel("level" + String.valueOf(levelNumber) + ".lvl");
+		String text = LevelLoader.readLevel(levelNumber, chapterNumber);
 
 		String[] lines = text.split("\\r?\\n");
 		for (int i = 0; i < LABYRINTH_ROWS; i++) {
@@ -72,22 +71,22 @@ public class Level implements InputProcessor {
 			for (int j = 0; j < LABYRINTH_COLUMNS; j++) {
 				if ((lineElements[j].compareTo("B") == 0) || (lineElements[j].compareTo("b") == 0)) {
 					bug = new AnimationMovingObject(
-							(TextureAtlas) game.assetManager.get("level/animations/bug/bug.pack"), Type.BUG);
+							(TextureAtlas) game.assetManager.get(Resources.ANIMATIONS_PACK_BUG.getPath()), Type.BUG);
 					bug.setPositionLine((LABYRINTH_ROWS - 1) - i);
 					bug.setPositionColumn(j);
 					if (lineElements[j].compareTo("B") == 0) {
 						SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get(
-								"level/tiles/free.png", Texture.class), Type.FREE);
+								Resources.TILES_FREE.getPath(), Texture.class), Type.FREE);
 						freeGround.setPositionLine((LABYRINTH_ROWS - 1) - i);
 						freeGround.setPositionColumn(j);
 						backgroundLayer.addLabyrinthObject(freeGround);
 					} else {
 						Sprite[] backgroundFrames = new Sprite[2];
-						backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
+						backgroundFrames[0] = new Sprite(game.assetManager.get(Resources.TILES_SPOTON.getPath(), Texture.class));
 						backgroundFrames[1] = new Sprite(
-								game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+								game.assetManager.get(Resources.TILES_SPOTOFF.getPath(), Texture.class));
 						AnimationStaticObject spot = new AnimationStaticObject(
-								(TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+								(TextureAtlas) game.assetManager.get(Resources.ANIMATIONS_PACK_SPOTGLOW.getPath()),
 								backgroundFrames, Type.SPOT);
 						spot.setPositionLine((LABYRINTH_ROWS - 1) - i);
 						spot.setPositionColumn(j);
@@ -95,24 +94,24 @@ public class Level implements InputProcessor {
 						numberOfSpots++;
 					}
 				} else if ((lineElements[j].compareTo("P") == 0) || (lineElements[j].compareTo("p") == 0)) {
-					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get("level/tiles/sarcophagus.png",
+					SpriteMovingObject v = new SpriteMovingObject(game.assetManager.get(Resources.TILES_SARCOPHAGUS.getPath(),
 							Texture.class), Type.SARCOPHAGUS);
 					v.setPositionLine((LABYRINTH_ROWS - 1) - i);
 					v.setPositionColumn(j);
 					foregroundLayer.addLabyrinthObject(v);
 					if (lineElements[j].compareTo("P") == 0) {
 						SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get(
-								"level/tiles/free.png", Texture.class), Type.FREE);
+								Resources.TILES_FREE.getPath(), Texture.class), Type.FREE);
 						freeGround.setPositionLine((LABYRINTH_ROWS - 1) - i);
 						freeGround.setPositionColumn(j);
 						backgroundLayer.addLabyrinthObject(freeGround);
 					} else {
 						Sprite[] backgroundFrames = new Sprite[2];
-						backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
+						backgroundFrames[0] = new Sprite(game.assetManager.get(Resources.TILES_SPOTON.getPath(), Texture.class));
 						backgroundFrames[1] = new Sprite(
-								game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+								game.assetManager.get(Resources.TILES_SPOTOFF.getPath(), Texture.class));
 						AnimationStaticObject spot = new AnimationStaticObject(
-								(TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+								(TextureAtlas) game.assetManager.get(Resources.ANIMATIONS_PACK_SPOTGLOW.getPath()),
 								backgroundFrames, Type.SPOT);
 						spot.setPositionLine((LABYRINTH_ROWS - 1) - i);
 						spot.setPositionColumn(j);
@@ -121,24 +120,24 @@ public class Level implements InputProcessor {
 					}
 				} else if (lineElements[j].compareTo("S") == 0) {
 					Sprite[] backgroundFrames = new Sprite[2];
-					backgroundFrames[0] = new Sprite(game.assetManager.get("level/tiles/spotOn.png", Texture.class));
-					backgroundFrames[1] = new Sprite(game.assetManager.get("level/tiles/spotOff.png", Texture.class));
+					backgroundFrames[0] = new Sprite(game.assetManager.get(Resources.TILES_SPOTON.getPath(), Texture.class));
+					backgroundFrames[1] = new Sprite(game.assetManager.get(Resources.TILES_SPOTOFF.getPath(), Texture.class));
 					AnimationStaticObject spot = new AnimationStaticObject(
-							(TextureAtlas) game.assetManager.get("level/animations/spot/spotGlow.pack"),
+							(TextureAtlas) game.assetManager.get(Resources.ANIMATIONS_PACK_SPOTGLOW.getPath()),
 							backgroundFrames, Type.SPOT);
 					spot.setPositionLine((LABYRINTH_ROWS - 1) - i);
 					spot.setPositionColumn(j);
 					backgroundLayer.addLabyrinthObject(spot);
 					numberOfSpots++;
 				} else if (lineElements[j].compareTo("W") == 0) {
-					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get("level/tiles/wall.png",
+					SpriteStaticObject wall = new SpriteStaticObject(game.assetManager.get(Resources.TILES_WALL.getPath(),
 							Texture.class), Type.WALL);
 					wall.setPositionLine((LABYRINTH_ROWS - 1) - i);
 					wall.setPositionColumn(j);
 					foregroundLayer.addLabyrinthObject(wall);
 				} else if (lineElements[j].compareTo("F") == 0) {
 					SpriteStaticObject freeGround = new SpriteStaticObject(game.assetManager.get(
-							"level/tiles/free.png", Texture.class), Type.FREE);
+							Resources.TILES_FREE.getPath(), Texture.class), Type.FREE);
 					freeGround.setPositionLine((LABYRINTH_ROWS - 1) - i);
 					freeGround.setPositionColumn(j);
 					backgroundLayer.addLabyrinthObject(freeGround);
@@ -248,14 +247,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.playSound(BUG_MOVE_SOUND);
+						game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.playSound(BUG_MOVE_SOUND);
-								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
+								game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
+								game.soundManager.playSound(Resources.SOUND_SARCOPHAGUSMOVE.getPath());
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -270,14 +269,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.playSound(BUG_MOVE_SOUND);
+						game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.playSound(BUG_MOVE_SOUND);
-								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
+								game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
+								game.soundManager.playSound(Resources.SOUND_SARCOPHAGUSMOVE.getPath());
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -292,14 +291,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.playSound(BUG_MOVE_SOUND);
+						game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.playSound(BUG_MOVE_SOUND);
-								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
+								game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
+								game.soundManager.playSound(Resources.SOUND_SARCOPHAGUSMOVE.getPath());
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -314,14 +313,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.playSound(BUG_MOVE_SOUND);
+						game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.playSound(BUG_MOVE_SOUND);
-								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
+								game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
+								game.soundManager.playSound(Resources.SOUND_SARCOPHAGUSMOVE.getPath());
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}
@@ -359,14 +358,14 @@ public class Level implements InputProcessor {
 				} else {
 					LabyrinthObject obj = isCollidingWith(bug, direction);
 					if (obj == null) {
-						game.soundManager.playSound(BUG_MOVE_SOUND);
+						game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
 						bug.move(direction);
 					} else {
 						if (obj.getType() == Type.SARCOPHAGUS) {
 							LabyrinthObject obj2 = isCollidingWith((MovingObject) obj, direction);
 							if (obj2 == null) {
-								game.soundManager.playSound(BUG_MOVE_SOUND);
-								game.soundManager.playSound(SARCOPHAGUS_MOVE_SOUND);
+								game.soundManager.playSound(Resources.SOUND_BUGMOVE.getPath());
+								game.soundManager.playSound(Resources.SOUND_SARCOPHAGUSMOVE.getPath());
 								bug.move(direction);
 								((MovingObject) obj).move(direction);
 							}

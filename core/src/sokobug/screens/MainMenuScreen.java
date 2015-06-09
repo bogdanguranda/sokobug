@@ -2,6 +2,7 @@ package sokobug.screens;
 
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
+import sokobug.domain.Resources;
 import sokobug.domain.SoundManager;
 
 import com.badlogic.gdx.Gdx;
@@ -29,23 +30,29 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private MenuButton credits;
 	private MenuButton exit;
 	private MenuButton sound;
-	private boolean firstStart = true;
+	private boolean firstStart;
 
 	public MainMenuScreen(Sokobug game) {
 		this.game = game;
 		table = new Table();
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
+		firstStart = true;
 
-		background = new Sprite(game.assetManager.get("backgrounds/menu.png", Texture.class));
-		play = new MenuButton(game, "Play", MenuButton.Type.PLAY, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "default-menu");
-		credits = new MenuButton(game, "Credits", MenuButton.Type.CREDITS, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "default-menu");
-		exit = new MenuButton(game, "Exit", MenuButton.Type.EXIT, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "default-menu");
-		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "soundOn");
+		background = new Sprite(game.assetManager.get(Resources.BACKGROUNDS_MENU.getPath(), Texture.class));
+
+		play = new MenuButton(game, "Play", MenuButton.Type.PLAY, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-menu");
+
+		credits = new MenuButton(game, "Credits", MenuButton.Type.CREDITS, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-menu");
+
+		exit = new MenuButton(game, "Exit", MenuButton.Type.EXIT, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-menu");
+
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "soundOn");
+
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, game.VIRTUAL_HEIGHT - sound.getHeight()
 				* 3.f / 2.f);
 
@@ -92,15 +99,15 @@ public class MainMenuScreen implements Screen, InputProcessor {
 			game.soundManager.startPlayingMusic();
 			firstStart = false;
 		}
-		
+
 		if (game.soundManager.isMuted()) {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOff",
 					TextButtonStyle.class));
 		} else {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
-		
+
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 

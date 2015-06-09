@@ -9,23 +9,24 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundManager {
 	private AssetManager assetManager;
 	private Music currentPlayingMusic;
-	private String musicAssetDirectory = "sound/music/";
-	private String soundEffectsAssetDirectory = "sound/effects/";
-	private String[] startingMusic = { "newgrounds_egypt.ogg", "lonely_desert.ogg", "egyptian_nights.ogg" };
-	private String[] allMusic = { "newgrounds_egypt.ogg", "lonely_desert.ogg", "egyptian_nights.ogg",
-			"newgrounds_arabia.ogg", "pyramid.ogg" };
 	private Random random = new Random();
 	private static final float DEFAULT_MUSIC_VOLUME = 0.5f;
 	private static final float DEFAULT_SOUNDS_VOLUME = 0.5f;
 	private boolean mute = false;
 	private boolean paused = false;
+	
+	private String[] startingMusic = { Resources.MUSIC_NEWGROUNDS_EGYPT.getPath(),
+			Resources.MUSIC_LONELY_DESERT.getPath(), Resources.MUSIC_EGYPTIAN_NIGHTS.getPath() };
+	private String[] allMusic = { Resources.MUSIC_NEWGROUNDS_EGYPT.getPath(), Resources.MUSIC_LONELY_DESERT.getPath(),
+			Resources.MUSIC_EGYPTIAN_NIGHTS.getPath(), Resources.MUSIC_NEWGROUNDS_ARABIA.getPath(),
+			Resources.MUSIC_PYRAMID.getPath() };
 
 	public SoundManager(AssetManager assetManager) {
 		this.assetManager = assetManager;
 		int randomIndex = random.nextInt(startingMusic.length);
-		assetManager.load(musicAssetDirectory + startingMusic[randomIndex], Music.class);
+		assetManager.load(startingMusic[randomIndex], Music.class);
 		assetManager.finishLoading();
-		currentPlayingMusic = assetManager.get(musicAssetDirectory + startingMusic[randomIndex], Music.class);
+		currentPlayingMusic = assetManager.get(startingMusic[randomIndex], Music.class);
 	}
 
 	public void startPlayingMusic() {
@@ -41,19 +42,15 @@ public class SoundManager {
 		if (!currentPlayingMusic.isPlaying() && !isPaused() && !isMuted()) {
 			currentPlayingMusic.dispose();
 			int randomIndex = random.nextInt(allMusic.length);
-			assetManager.load(musicAssetDirectory + allMusic[randomIndex], Music.class);
+			assetManager.load(allMusic[randomIndex], Music.class);
 			assetManager.finishLoading();
-			currentPlayingMusic = assetManager.get(musicAssetDirectory + allMusic[randomIndex], Music.class);
+			currentPlayingMusic = assetManager.get(allMusic[randomIndex], Music.class);
 			startPlayingMusic();
 		}
 	}
 
-	public Sound getSound(String fileName) {
-		return assetManager.get(soundEffectsAssetDirectory + fileName, Sound.class);
-	}
-	
-	public void playSound(String fileName) {
-		assetManager.get(soundEffectsAssetDirectory + fileName, Sound.class).play(DEFAULT_SOUNDS_VOLUME);
+	public void playSound(String filePath) {
+		assetManager.get(filePath, Sound.class).play(DEFAULT_SOUNDS_VOLUME);
 	}
 
 	public boolean isMuted() {
@@ -64,16 +61,15 @@ public class SoundManager {
 		setPaused(mute);
 		this.mute = mute;
 	}
-	
+
 	public boolean isPaused() {
 		return paused;
 	}
-	
+
 	public void setPaused(boolean paused) {
 		if (paused) {
 			currentPlayingMusic.pause();
-		}
-		else {
+		} else {
 			currentPlayingMusic.play();
 		}
 		this.paused = paused;

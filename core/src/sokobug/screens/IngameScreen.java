@@ -3,6 +3,7 @@ package sokobug.screens;
 import sokobug.Sokobug;
 import sokobug.domain.Level;
 import sokobug.domain.MenuButton;
+import sokobug.domain.Resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -35,25 +36,25 @@ public class IngameScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Japonesa60.fnt", BitmapFont.class);
+		font = game.assetManager.get(Resources.FONTS_JAPONESA60.getPath(), BitmapFont.class);
 
 		level = new Level(game);
 
-		topBar = new Sprite(game.assetManager.get("level/topBar.png", Texture.class));
+		topBar = new Sprite(game.assetManager.get(Resources.METAITEMS_TOPBAR.getPath(), Texture.class));
 		topBar.setPosition(0, level.getSize().y);
 
 		backToMenu = new MenuButton(game, "", MenuButton.Type.BACKTOCHOOSELEVEL, game.assetManager.get(
-				"ui/buttons/buttons.json", Skin.class), "ingame-back");
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "ingame-back");
 		backToMenu.setPosition(backToMenu.getWidth() / 2,
 				level.getSize().y + (topBar.getHeight() / 2) - (backToMenu.getHeight() / 2));
 
-		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "soundOn");
+		sound = new MenuButton(game, "", MenuButton.Type.SOUNDONOFF, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "soundOn");
 		sound.setPosition(game.VIRTUAL_WIDTH - sound.getWidth() * 3.f / 2.f, level.getSize().y
 				+ (topBar.getHeight() / 2) - (sound.getHeight() / 2));
 
-		restart = new MenuButton(game, "", MenuButton.Type.RESTART, game.assetManager.get("ui/buttons/buttons.json",
-				Skin.class), "default-restart");
+		restart = new MenuButton(game, "", MenuButton.Type.RESTART, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-restart");
 		restart.setPosition(sound.getX() - restart.getWidth() * 3.f / 2.f, level.getSize().y + (topBar.getHeight() / 2)
 				- (restart.getHeight() / 2));
 
@@ -69,7 +70,7 @@ public class IngameScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		game.soundManager.updateMusicState();
-		
+
 		Gdx.gl.glClearColor(Color.BLACK.r, Color.BLACK.g, Color.BLACK.b, Color.BLACK.a);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -105,14 +106,14 @@ public class IngameScreen implements Screen, InputProcessor {
 	@Override
 	public void show() {
 		if (game.soundManager.isMuted()) {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOff",
 					TextButtonStyle.class));
 		} else {
-			sound.setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+			sound.setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOn",
 					TextButtonStyle.class));
 		}
 
-		level.load(level.levelNumber);
+		level.load(level.levelNumber, level.chapterNumber);
 
 		Gdx.input.setInputProcessor(multiplexer);
 	}

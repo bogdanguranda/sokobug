@@ -7,9 +7,9 @@
 	},
 	
 	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
-		"japonesa24": { "file": "fonts/Japonesa24.fnt"},
-		"japonesa32": { "file": "fonts/Japonesa32.fnt"},
-		"japonesa60": { "file": "fonts/Japonesa60.fnt"},
+		"japonesa24": { "file": "release/graphics/fonts/Japonesa24.fnt"},
+		"japonesa32": { "file": "release/graphics/fonts/Japonesa32.fnt"},
+		"japonesa60": { "file": "release/graphics/fonts/Japonesa60.fnt"},
 	},
 
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
@@ -24,7 +24,7 @@
 		"ingame-back": { "up": "backIngameUp", "down": "backIngameDown", "over": "backIngameOver","font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"menu-back": { "up": "backMenuUp", "down": "backMenuDown", "over": "backMenuOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"default-restart": { "up": "restartUp", "down": "restartDown", "over": "restartOver", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
-		"default-chapter1": { "up": "chapter1Up", "down": "chapter1Down", "over": "chapter1Over", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
+		"default-chapter": { "up": "chapterUp", "down": "chapterDown", "over": "chapterOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 5, "pressedOffsetX": 0, "unpressedOffsetY": 100, "unpressedOffsetX": -5},
 		"default-skiped-level": { "up": "skipedLevelUp", "down": "skipedLevelDown", "over": "skipedLevelOver", "font": japonesa60, "fontColor": black, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"soundOn": { "up": "soundOn", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},
 		"soundOff": { "up": "soundOff", "font": japonesa32, "pressedOffsetY": 8, "unpressedOffsetY": 12},

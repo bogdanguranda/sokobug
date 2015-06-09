@@ -15,7 +15,6 @@ public class MenuButton extends TextButton {
 		FORWARD, RESTART, LEVEL_LOCKED, SKIP_LEVEL_BUTTON, CHAPTER, BACKTOCHOOSECHAPTER, SOUNDONOFF
 	}
 
-	private static final String CLICK_SOUND = "buttonClick.ogg";
 	private Sokobug game;
 	private Type buttonType;
 
@@ -31,18 +30,12 @@ public class MenuButton extends TextButton {
 		return buttonType;
 	}
 
-//	public void setType(Type buttonType) {
-//		this.buttonType = buttonType;
-//		this.getListeners().
-//		addButtonBehaviour();
-//	}
-
 	private void addButtonBehaviour() {
 		if (buttonType == Type.PLAY) {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.chooseChapterScreen);
 				}
 			});
@@ -50,7 +43,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.creditsScreen);
 				}
 			});
@@ -58,7 +51,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					Gdx.app.exit();
 				}
 			});
@@ -66,7 +59,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.mainMenuScreen);
 				}
 			});
@@ -74,10 +67,11 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					int level = Integer.parseInt(((MenuButton) event.getListenerActor()).getText().toString());
 
 					game.ingameScreen.level.levelNumber = level;
+					game.ingameScreen.level.chapterNumber = 1;
 					game.setScreen(game.ingameScreen);
 				}
 			});
@@ -85,7 +79,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
@@ -93,7 +87,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.chooseChapterScreen);
 				}
 			});
@@ -101,7 +95,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					int nextLevel = game.ingameScreen.level.levelNumber + 1;
 					if (nextLevel <= ChooseLevelScreen.NUM_LEVELS) {
 						game.ingameScreen.level.levelNumber = nextLevel;
@@ -115,7 +109,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.ingameScreen);
 				}
 			});
@@ -125,7 +119,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					PlayerProgressManager.getPlayerProgressManager().skipCurentLevel();
 					game.setScreen(game.chooseLevelScreen);
 				}
@@ -134,7 +128,7 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
@@ -142,14 +136,14 @@ public class MenuButton extends TextButton {
 			this.addListener(new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
-					game.soundManager.playSound(CLICK_SOUND);
+					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					if (game.soundManager.isMuted()) {
 						game.soundManager.setMute(false);
-						setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOn",
+						setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOn",
 								TextButtonStyle.class));
 					} else {
 						game.soundManager.setMute(true);
-						setStyle(game.assetManager.get("ui/buttons/buttons.json", Skin.class).get("soundOff",
+						setStyle(game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(), Skin.class).get("soundOff",
 								TextButtonStyle.class));
 					}
 				}

@@ -1,6 +1,8 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.Resources;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -33,44 +35,46 @@ public class TitleScreen implements Screen, InputProcessor {
 		param.minFilter = TextureFilter.Linear;
 		param.magFilter = TextureFilter.Linear;
 
-		game.assetManager.load("backgrounds/title.png", Texture.class, param);
+		game.assetManager.load(Resources.BACKGROUNDS_TITLE.getPath(), Texture.class, param);
 		game.assetManager.finishLoading();
 
-		titleImage = new Sprite(game.assetManager.get("backgrounds/title.png", Texture.class));
+		titleImage = new Sprite(game.assetManager.get(Resources.BACKGROUNDS_TITLE.getPath(), Texture.class));
 		titleImage.setPosition(0.f, 0.f);
 		pasedTimeCounter = 0.0f;
 		titleScreenMinDuration = 3.5f;
 
-		game.assetManager.load("fonts/Japonesa24.fnt", BitmapFont.class);
-		game.assetManager.load("fonts/Japonesa32.fnt", BitmapFont.class);
-		game.assetManager.load("fonts/Japonesa60.fnt", BitmapFont.class);
-		game.assetManager.load("fonts/Japonesa120.fnt", BitmapFont.class);
+		game.assetManager.load(Resources.FONTS_JAPONESA24.getPath(), BitmapFont.class);
+		game.assetManager.load(Resources.FONTS_JAPONESA32.getPath(), BitmapFont.class);
+		game.assetManager.load(Resources.FONTS_JAPONESA60.getPath(), BitmapFont.class);
+		game.assetManager.load(Resources.FONTS_JAPONESA120.getPath(), BitmapFont.class);
 
-		game.assetManager.load("ui/buttons/buttons.pack", TextureAtlas.class);
-		game.assetManager.load("ui/buttons/buttons.json", Skin.class, new SkinLoader.SkinParameter(
-				"ui/buttons/buttons.pack"));
+		game.assetManager.load(Resources.UI_BUTTONS_PACK.getPath(), TextureAtlas.class);
+		game.assetManager.load(Resources.UI_BUTTONS_JSON.getPath(), Skin.class, new SkinLoader.SkinParameter(
+				Resources.UI_BUTTONS_PACK.getPath()));
 
-		game.assetManager.load("backgrounds/menu.png", Texture.class, param);
-		game.assetManager.load("backgrounds/potatoes.png", Texture.class, param);
+		game.assetManager.load(Resources.BACKGROUNDS_MENU.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.BACKGROUNDS_POTATOES.getPath(), Texture.class, param);
 
-		game.assetManager.load("level/animations/bug/bug.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/sarcophagus.png", Texture.class, param);
-		game.assetManager.load("level/tiles/wall.png", Texture.class, param);
-		game.assetManager.load("level/tiles/free.png", Texture.class, param);
-		game.assetManager.load("level/animations/spot/spotGlow.pack", TextureAtlas.class);
-		game.assetManager.load("level/tiles/spotOn.png", Texture.class, param);
-		game.assetManager.load("level/tiles/spotOff.png", Texture.class, param);
+		game.assetManager.load(Resources.ANIMATIONS_PACK_BUG.getPath(), TextureAtlas.class);
+		game.assetManager.load(Resources.ANIMATIONS_PACK_SPOTGLOW.getPath(), TextureAtlas.class);
+		game.assetManager.load(Resources.ANIMATIONS_PACK_VICTORYGLOW.getPath(), TextureAtlas.class);
+		
+		game.assetManager.load(Resources.TILES_SARCOPHAGUS.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.TILES_WALL.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.TILES_FREE.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.TILES_SPOTON.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.TILES_SPOTOFF.getPath(), Texture.class, param);
 
-		game.assetManager.load("level/topBar.png", Texture.class, param);
-		game.assetManager.load("level/pad.png", Texture.class, param);
-		game.assetManager.load("level/victoryWing.png", Texture.class, param);
-		game.assetManager.load("level/finish.png", Texture.class, param);
-		game.assetManager.load("level/animations/victory/victoryGlow.pack", TextureAtlas.class);
+		game.assetManager.load(Resources.METAITEMS_TOPBAR.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.METAITEMS_PAD.getPath(), Texture.class, param);
+		game.assetManager.load(Resources.METAITEMS_VICTORYWING.getPath(), Texture.class, param);
+		
+		game.assetManager.load(Resources.LABELS_FINISH.getPath(), Texture.class, param);	
 
-		game.assetManager.load("sound/effects/bugMove.ogg", Sound.class);
-		game.assetManager.load("sound/effects/buttonClick.ogg", Sound.class);
-		game.assetManager.load("sound/effects/sarcophagusMove.ogg", Sound.class);
-		game.assetManager.load("sound/effects/victory.ogg", Sound.class);
+		game.assetManager.load(Resources.SOUND_BUGMOVE.getPath(), Sound.class);
+		game.assetManager.load(Resources.SOUND_BUTTONCLICK.getPath(), Sound.class);
+		game.assetManager.load(Resources.SOUND_SARCOPHAGUSMOVE.getPath(), Sound.class);
+		game.assetManager.load(Resources.SOUND_VICTORY.getPath(), Sound.class);
 	}
 
 	@Override
@@ -117,7 +121,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		game.assetManager.unload("backgrounds/title.png");
+		game.assetManager.unload(Resources.BACKGROUNDS_TITLE.getPath());
 		game.titleScreen = null;
 	}
 

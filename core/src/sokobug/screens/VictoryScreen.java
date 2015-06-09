@@ -3,6 +3,7 @@ package sokobug.screens;
 import sokobug.Sokobug;
 import sokobug.domain.MenuButton;
 import sokobug.domain.PlayerProgressManager;
+import sokobug.domain.Resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -36,27 +37,27 @@ public class VictoryScreen implements Screen, InputProcessor {
 		stage = new Stage(game.viewport);
 		multiplexer = new InputMultiplexer();
 
-		font = game.assetManager.get("fonts/Japonesa120.fnt", BitmapFont.class);
+		font = game.assetManager.get(Resources.FONTS_JAPONESA120.getPath(), BitmapFont.class);
 
 		font.setScale(1.0f);
-		victoryMessage = new Sprite(game.assetManager.get("level/finish.png", Texture.class));
+		victoryMessage = new Sprite(game.assetManager.get(Resources.LABELS_FINISH.getPath(), Texture.class));
 		victoryMessage.setPosition(game.VIRTUAL_WIDTH / 2.f - victoryMessage.getWidth() / 2.f, game.VIRTUAL_HEIGHT
 				/ 2.f + victoryMessage.getHeight() / 2.f);
 
-		victoryWing = new Sprite(game.assetManager.get("level/victoryWing.png", Texture.class));
+		victoryWing = new Sprite(game.assetManager.get(Resources.METAITEMS_VICTORYWING.getPath(), Texture.class));
 		victoryWing.setPosition(victoryMessage.getX() + (victoryMessage.getWidth() - victoryWing.getWidth()) / 2.f,
 				victoryMessage.getY() - victoryWing.getHeight());
 
 		backButton = new MenuButton(game, "", MenuButton.Type.BACKTOCHOOSELEVEL, game.assetManager.get(
-				"ui/buttons/buttons.json", Skin.class), "ingame-back");
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "ingame-back");
 		backButton.setPosition(victoryWing.getX(), victoryWing.getY() - backButton.getHeight());
 
-		forwardButton = new MenuButton(game, "", MenuButton.Type.FORWARD, game.assetManager.get("ui/buttons/buttons.json",
+		forwardButton = new MenuButton(game, "", MenuButton.Type.FORWARD, game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(),
 				Skin.class), "default-forward");
 		forwardButton.setPosition(victoryWing.getX() + victoryWing.getWidth() - forwardButton.getWidth(),
 				backButton.getY());
 
-		victoryGlow = new Animation(1 / 24.f, game.assetManager.get("level/animations/victory/victoryGlow.pack",
+		victoryGlow = new Animation(1 / 24.f, game.assetManager.get(Resources.ANIMATIONS_PACK_VICTORYGLOW.getPath(),
 				TextureAtlas.class).getRegions());
 		victoryGlow.setPlayMode(PlayMode.LOOP);
 		animationTime = 0.f;
@@ -103,7 +104,7 @@ public class VictoryScreen implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		game.soundManager.getSound("victory.ogg").play(0.5f);
+		game.soundManager.playSound(Resources.SOUND_VICTORY.getPath());
 		if (!game.soundManager.isMuted()) {
 			game.soundManager.setPaused(true); 
 		}
