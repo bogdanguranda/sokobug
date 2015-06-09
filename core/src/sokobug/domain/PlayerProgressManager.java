@@ -59,10 +59,19 @@ public class PlayerProgressManager {
 	public boolean hasOlderVersionSavingSystem() {
 		String codedKey = Base64Coder.encodeString("currentLevel");
 		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
+		
+		String codedKey2 = Base64Coder.encodeString("chapter1");
+		String stringUncodedValue2 = Base64Coder.decodeString(pref.getString(codedKey2));
+		
 		if (stringUncodedValue.compareTo("") == 0) {
 			return false;
 		} else {
-			return true;
+			if (stringUncodedValue2.compareTo("") == 0) {
+				return true;
+			}
+			else {
+				return false;
+			}			
 		}
 	}
 
@@ -74,7 +83,7 @@ public class PlayerProgressManager {
 		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
 		currentLevel = Integer.valueOf(stringUncodedValue);
 
-		int chapter1LevelsStatus[] = playerProgress.getLevelsStatus(1);
+		int chapter1LevelsStatus[] = new int[PlayerProgress.NUMBER_OF_LEVELS];
 
 		// loadSkippedLevels
 		String codedKey2 = Base64Coder.encodeString("skippedLevels");
