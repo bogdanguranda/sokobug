@@ -52,8 +52,8 @@ public class VictoryScreen implements Screen, InputProcessor {
 				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "ingame-back");
 		backButton.setPosition(victoryWing.getX(), victoryWing.getY() - backButton.getHeight());
 
-		forwardButton = new MenuButton(game, "", MenuButton.Type.FORWARD, game.assetManager.get(Resources.UI_BUTTONS_JSON.getPath(),
-				Skin.class), "default-forward");
+		forwardButton = new MenuButton(game, "", MenuButton.Type.FORWARD, game.assetManager.get(
+				Resources.UI_BUTTONS_JSON.getPath(), Skin.class), "default-forward");
 		forwardButton.setPosition(victoryWing.getX() + victoryWing.getWidth() - forwardButton.getWidth(),
 				backButton.getY());
 
@@ -106,23 +106,19 @@ public class VictoryScreen implements Screen, InputProcessor {
 	public void show() {
 		game.soundManager.playSound(Resources.SOUND_VICTORY.getPath());
 		if (!game.soundManager.isMuted()) {
-			game.soundManager.setPaused(true); 
+			game.soundManager.setPaused(true);
 		}
 
-		int currentMaxLevelUnlocked = PlayerProgressManager.getPlayerProgressManager().getCurrentLevel();
-		int levelFinished = game.ingameScreen.level.levelNumber;
-		if (levelFinished == currentMaxLevelUnlocked) {
-			PlayerProgressManager.getPlayerProgressManager().setCurrentLevel(currentMaxLevelUnlocked + 1);
-		} else if (PlayerProgressManager.getPlayerProgressManager().isLevelSkipped(levelFinished)) {
-			PlayerProgressManager.getPlayerProgressManager().markAsFinished(levelFinished);
-		}
+		PlayerProgressManager.getPlayerProgressManager().markAsFinished(game.ingameScreen.level.levelNumber,
+				game.chooseChapterScreen.currentChapter);
+
 		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override
 	public void hide() {
 		if (!game.soundManager.isMuted()) {
-			game.soundManager.setPaused(false); 
+			game.soundManager.setPaused(false);
 		}
 	}
 

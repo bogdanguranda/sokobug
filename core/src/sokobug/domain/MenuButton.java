@@ -71,7 +71,7 @@ public class MenuButton extends TextButton {
 					int level = Integer.parseInt(((MenuButton) event.getListenerActor()).getText().toString());
 
 					game.ingameScreen.level.levelNumber = level;
-					game.ingameScreen.level.chapterNumber = 1;
+					game.ingameScreen.level.chapterNumber = game.chooseChapterScreen.currentChapter;
 					game.setScreen(game.ingameScreen);
 				}
 			});
@@ -97,7 +97,7 @@ public class MenuButton extends TextButton {
 				public void clicked(InputEvent event, float x, float y) {
 					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
 					int nextLevel = game.ingameScreen.level.levelNumber + 1;
-					if (nextLevel <= ChooseLevelScreen.NUM_LEVELS) {
+					if (nextLevel <= ChooseLevelScreen.NUMBER_OF_LEVELS) {
 						game.ingameScreen.level.levelNumber = nextLevel;
 						game.setScreen(game.ingameScreen);
 					} else {
@@ -120,7 +120,7 @@ public class MenuButton extends TextButton {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
-					PlayerProgressManager.getPlayerProgressManager().skipCurentLevel();
+					PlayerProgressManager.getPlayerProgressManager().skipCurentLevel(game.chooseChapterScreen.currentChapter);
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});
@@ -129,6 +129,9 @@ public class MenuButton extends TextButton {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					game.soundManager.playSound(Resources.SOUND_BUTTONCLICK.getPath());
+					String chapterText = ((MenuButton) event.getListenerActor()).getText().toString();
+					int chapter = Integer.parseInt(chapterText.substring(chapterText.length() - 1, chapterText.length()));
+					game.chooseChapterScreen.currentChapter = chapter;
 					game.setScreen(game.chooseLevelScreen);
 				}
 			});

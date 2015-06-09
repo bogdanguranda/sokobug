@@ -1,7 +1,5 @@
 package sokobug.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.Base64Coder;
@@ -27,82 +25,68 @@ public class PlayerProgressManager {
 		return playerProgressManager;
 	}
 
-	public int getCurrentLevel() {
-		return playerProgress.getCurrentLevel();
+	public int getCurrentLevel(int chapter) {
+		return playerProgress.getCurrentLevel(chapter);
 	}
 
-	public void setCurrentLevel(int level) {
-		playerProgress.setCurrentLevel(level);
-		saveCurrentLevel();
-	}
-
-	public void skipCurentLevel() {
-		if (playerProgress.getSkippedLevels().size() < PlayerProgress.MAXIMUM_SKIPPED_LEVELS_ALLOWED) {
-			playerProgress.getSkippedLevels().add(playerProgress.getCurrentLevel());
-			playerProgress.setCurrentLevel(playerProgress.getCurrentLevel() + 1);
+	public void skipCurentLevel(int chapter) {
+		if (playerProgress.numberOfSkippedLevels(chapter) < PlayerProgress.MAXIMUM_SKIPPED_LEVELS_ALLOWED) {
+			playerProgress.skipCurrentLevel(chapter);
 			savePlayerProgress();
 		}
 	}
 
-	public void markAsFinished(int level) {
-		playerProgress.getSkippedLevels().remove(Integer.valueOf(level));
-		saveSkippedLevels();
+	public void markAsFinished(int level, int chapter) {
+		playerProgress.markAsFinished(level, chapter);
+		saveLevelsStatus();
 	}
 
-	public boolean isLevelSkipped(int level) {
-		return playerProgress.getSkippedLevels().contains(level);
+	public boolean isLevelSkipped(int level, int chapter) {
+		return playerProgress.isLevelSkipped(level, chapter);
 	}
 
 	private void loadPlayerProgress() {
-		loadCurrentLevel();
-		loadSkippedLevels();
+		loadLevelsStatus();
 	}
 
 	public void savePlayerProgress() {
-		saveCurrentLevel();
-		saveSkippedLevels();
+		saveLevelsStatus();
 	}
 
-	private void loadCurrentLevel() {
-		String codedKey = Base64Coder.encodeString("currentLevel");
-		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
-		if (stringUncodedValue.compareTo("") == 0) {
-			savePlayerProgress();
-		} else {
-			playerProgress.setCurrentLevel(Integer.valueOf(stringUncodedValue));
-		}
+	private void loadOlderVersionChapter1() {
+		
 	}
-
-	private void saveCurrentLevel() {
-		pref.putString(Base64Coder.encodeString("currentLevel"),
-				Base64Coder.encodeString(String.valueOf(playerProgress.getCurrentLevel())));
-		pref.flush();
-	}
-
-	private void loadSkippedLevels() {
-		String codedKey = Base64Coder.encodeString("skippedLevels");
-		String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
-		if (stringUncodedValue.compareTo("") == 0) {
-			saveSkippedLevels();
-		} else {
-			List<Integer> skippedLevels = new ArrayList<Integer>();
-			String stringSkippedLevels[] = stringUncodedValue.split(" ");
-			for (String stringLevel : stringSkippedLevels) {
-				skippedLevels.add(Integer.valueOf(stringLevel));
+	
+	private void loadLevelsStatus() {
+		for (int i = 0; i < PlayerProgress.NUMBER_OF_CHAPTERS; i++) {
+			String codedKey = Base64Coder.encodeString("chapter" + (i + 1));
+			String stringUncodedValue = Base64Coder.decodeString(pref.getString(codedKey));
+			if (stringUncodedValue.compareTo("") == 0) {
+				saveLevelsStatus();
+				break;
+			} else {
+				String stringLevelsStatus[] = stringUncodedValue.split(" ");
+				int levelsStatus[] = new int[stringLevelsStatus.length];
+				for (int j = 0; j < stringLevelsStatus.length; j++) {
+					levelsStatus[j] = Integer.valueOf(stringLevelsStatus[j]);
+				}
+				playerProgress.setLevelsStatus(levelsStatus, i + 1);
 			}
-			playerProgress.setSkippedLevels(skippedLevels);
 		}
 	}
 
-	private void saveSkippedLevels() {
-		StringBuilder stringBuilder = new StringBuilder();
-		for (Integer integerLevel : playerProgress.getSkippedLevels()) {
-			stringBuilder.append(String.valueOf(integerLevel)).append(" ");
+	private void saveLevelsStatus() {
+		for (int i = 0; i < PlayerProgress.NUMBER_OF_CHAPTERS; i++) {
+			StringBuilder stringBuilder = new StringBuilder();
+			for (Integer levelStatus : playerProgress.getLevelsStatus(i + 1)) {
+				stringBuilder.append(String.valueOf(levelStatus)).append(" ");
+			}
+			if (stringBuilder.length() != 0) {
+				stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+			}
+			pref.putString(Base64Coder.encodeString("chapter" + (i + 1)),
+					Base64Coder.encodeString(stringBuilder.toString()));
 		}
-		if (stringBuilder.length() != 0) {
-			stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-		}
-		pref.putString(Base64Coder.encodeString("skippedLevels"), Base64Coder.encodeString(stringBuilder.toString()));
 		pref.flush();
 	}
 }
