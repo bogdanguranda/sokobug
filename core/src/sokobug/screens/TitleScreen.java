@@ -1,6 +1,7 @@
 package sokobug.screens;
 
 import sokobug.Sokobug;
+import sokobug.domain.LevelLoader;
 import sokobug.domain.Resources;
 
 import com.badlogic.gdx.Gdx;
