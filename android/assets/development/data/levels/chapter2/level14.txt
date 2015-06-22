@@ -1,9 +1,0 @@
-F F F F F F F F F F F F F F F F
-F F F F F F F F F F F F F F F F
-F F W W W W W W W W W W W F F F
-F F W F F P F F p S p F W F F F
-F F W F F P F F p S p F W F F F
-F F W F F P F F p S p B W F F F
-F F W F F P F F p S p F W F F F
-F F W W F P F F p S p F W F F F
-F F F W W W W W W W W W W F F F
