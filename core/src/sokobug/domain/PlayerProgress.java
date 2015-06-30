@@ -8,7 +8,7 @@ public class PlayerProgress {
 		OPENED_LEVEL, LOCKED_LEVEL, SKIPPED_LEVEL
 	}
 
-	private static final int DEFAULT_STARTING_LEVEL = 1;
+	private static final int DEFAULT_STARTING_LEVEL = 30;
 	public static final int MAXIMUM_SKIPPED_LEVELS_ALLOWED = 3;
 	
 	public static final int NUMBER_OF_LEVELS = 30;
@@ -51,13 +51,10 @@ public class PlayerProgress {
 			levelsStatus[chapter - 1][getCurrentLevel(chapter) - 1] = LevelType.SKIPPED_LEVEL.ordinal();
 			levelsStatus[chapter - 1][getCurrentLevel(chapter)] = LevelType.OPENED_LEVEL.ordinal();
 		}
-		else {
-			levelsStatus[chapter - 1][getCurrentLevel(chapter) - 1] = LevelType.SKIPPED_LEVEL.ordinal();
-		}
 	}
 
 	public void markAsFinished(int level, int chapter) {
-		if (level == getCurrentLevel(chapter) && level <= ChooseLevelScreen.NUMBER_OF_LEVELS) {
+		if (level == getCurrentLevel(chapter) && level < ChooseLevelScreen.NUMBER_OF_LEVELS) {
 			levelsStatus[chapter - 1][level] = LevelType.OPENED_LEVEL.ordinal();
 		} else {
 			levelsStatus[chapter - 1][level - 1] = LevelType.OPENED_LEVEL.ordinal();
